@@ -9,6 +9,10 @@ use Livewire\Component;
 
 class TodoList extends Component
 {
+    protected $listeners = [
+        'todo:saved' => 'appendTodo',
+    ];
+
     public Collection $todos;
     public Category $category;
 
@@ -17,7 +21,13 @@ class TodoList extends Component
         $this->category = $category;
         $this->todos = Todo::where("user_id", auth()->id())
             ->where("category_id", $category->id)
+            ->latest()
             ->get();
+    }
+
+    public function appendTodo(Todo $todo)
+    {
+        $this->todos->prepend($todo);
     }
 
     public function render()

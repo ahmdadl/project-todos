@@ -13,7 +13,7 @@ class AddTodo extends Component
     ];
 
     public Category $category;
-    public string $body;
+    public string $body = '';
 
     public function mount(Category $category):void
     {
@@ -24,14 +24,17 @@ class AddTodo extends Component
     {
         $this->validate();
 
-        $this->category->todos()->create([
+        $todo = $this->category->todos()->create([
             'body' => $this->body,
             'user_id' => auth()->id()
         ]);
 
         session()->flash('message', 'Todo Seccessfully Saved');
 
-        $this->emit('todo:saved');
+        $this->emitUp('todo:saved', $todo->id);
+
+        $this->clearValidation();
+        $this->body = '';
     }
 
     public function render()
