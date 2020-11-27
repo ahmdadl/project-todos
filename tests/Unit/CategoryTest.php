@@ -23,5 +23,13 @@ class CategoryTest extends TestCase
 
         $this->assertCount(1, $cat->todos);
     }
+
+    public function testItHasSlug()
+    {
+        $cat = Category::factory()->create();
+
+        $this->assertIsString($cat->slug);
+    }
+    
     
 }
