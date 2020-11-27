@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             ->count(3)
             ->sequence(
                 ['email' => 'admin@site.test'],
-                ['eamil' => 'super@site.test'],
+                ['email' => 'super@site.test'],
                 ['email' => 'user@site.test'],
             )->create();
     }
