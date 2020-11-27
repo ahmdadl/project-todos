@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GetCategoryList;
+use App\Http\Livewire\AddTodo;
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\TodoList;
 use Illuminate\Support\Facades\Route;
@@ -16,14 +17,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/", function () {
+    return view("welcome");
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(["auth:sanctum", "verified"])
+    ->get("/dashboard", function () {
+        return view("dashboard");
+    })
+    ->name("dashboard");
 
-Route::get('/categories', GetCategoryList::class)->middleware('auth');
+Route::group(
+    [
+        "prefix" => "/categories",
+        "middleware" => ["auth"],
+    ],
+    function () {
+        Route::get("", GetCategoryList::class);
 
-Route::get('/categories/{category}', TodoList::class);
+        Route::prefix("/{category}/{todos?}")
+            ->where([
+                "category" => "[a-z0-9]+(?:-[a-z0-9]+)*",
+            ])
+            ->group(function () {
+                Route::get("", TodoList::class);
+                Route::post("", AddTodo::class);
+            });
+    }
+);
