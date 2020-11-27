@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GetCategoryList;
 use App\Http\Livewire\Counter;
+use App\Http\Livewire\TodoList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/categories', GetCategoryList::class)->middleware('auth');
+
+Route::get('/categories/{category}', TodoList::class);
