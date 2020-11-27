@@ -24,8 +24,8 @@ class TodoFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory()->create()->id,
-            'category_id' => Category::factory()->create()->id,
+            'user_id' => fn() => User::factory()->create()->id,
+            'category_id' => fn() => Category::factory()->create()->id,
             'body' => $this->faker->sentence,
             'completed' => (bool) random_int(0, 1),
         ];

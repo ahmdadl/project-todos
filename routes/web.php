@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GetCategoryList;
 use App\Http\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,5 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/categories', GetCategoryList::class)->middleware('auth');

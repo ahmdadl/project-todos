@@ -24,11 +24,10 @@ class TodoSeeder extends Seeder
         $users = User::all();
         
         $categories->each(function (Category $category) use ($users) {
-            $category->todos()->createMany(
-                Todo::factory()->count(5)->raw([
-                    'user_id' => $users->random()
-                ])
-            );
+            Todo::factory()->count(random_int(5, 10))->create([
+                'user_id' => ($users->random())->id,
+                'category_id' => $category->id,
+            ]);
         });
 
         DB::commit();
