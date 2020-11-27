@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 
 /*
