@@ -29,7 +29,7 @@ class AddTodo extends Component
             'user_id' => auth()->id()
         ]);
 
-        session()->flash('message', 'Todo Seccessfully Saved');
+        session()->flash('todo_saved', 'Todo Successfully Saved');
 
         $this->emitUp('todo:saved', $todo->id);
 

@@ -1,5 +1,10 @@
 <div>
     <div class="mx-auto mb-4 w-3/4">
+        @if(session()->has('todo_saved'))
+            <x-alert type='success'>
+                {{ session('todo_saved') }}
+            </x-alert>
+        @endif
         <form wire:submit.prevent='store'>
             <div class="inline w-3/4">
                 <x-jet-input type='text' class='bg-transparent border-gray-600 focus:bg-gray-100 indent-1 w-3/4'
