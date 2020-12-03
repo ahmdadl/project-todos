@@ -7,7 +7,7 @@
         @endif
         <form wire:submit.prevent='store'>
             <div class="inline w-3/4">
-                <x-jet-input type='text' class='bg-transparent border-gray-600 focus:bg-gray-100 indent-1 w-3/4'
+                <x-jet-input type='text' class='bg-transparent border-gray-600 focus:bg-gray-700 indent-1 w-3/4'
                     placeholder='Add New Task' wire:model.lazy='body' />
                 <x-jet-input-error for='body' class='w-3/4 pt-1'></x-jet-input-error>
             </div>
