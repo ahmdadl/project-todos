@@ -12,6 +12,12 @@
                     class="{{ $todo->done ? 'line-through text-green-500' : '' }}">
                     {{ $todo->body }}
                 </span>
+                <button
+                    class='bg-red-700 hover:bg-red-900 focus:bg-red-900 py-1 px-2 font-bold uppercase disabled:opacity-50'
+                    wire:click.prevent="remove({{ $todo->id }})" wire:loading.attr='disabled'
+                    wire:loading.class='cursor-not-allowed'>
+                    x
+                </button>
             </p>
         </div>
     @empty

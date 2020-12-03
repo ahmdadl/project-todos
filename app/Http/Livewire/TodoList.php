@@ -10,7 +10,7 @@ use Livewire\Component;
 class TodoList extends Component
 {
     protected $listeners = [
-        'todo:saved' => 'appendTodo',
+        "todo:saved" => "appendTodo",
     ];
 
     public Collection $todos;
@@ -28,6 +28,15 @@ class TodoList extends Component
     public function appendTodo(Todo $todo)
     {
         $this->todos->prepend($todo);
+    }
+
+    public function remove(int $id): void
+    {
+        Todo::find($id)->delete();
+
+        $this->todos = $this->todos->filter(
+            fn(Todo $todo) => $todo->id !== $id
+        );
     }
 
     public function render()
