@@ -6,18 +6,19 @@
     <livewire:add-todo :category="$category" />
 
     @forelse($todos as $todo)
-        <div class="w-3/4 mx-auto py-2 px-3 rounded shadow mb-2 bg-gray-900">
+        <div class="w-3/4 mx-auto py-2 px-3 rounded shadow mb-2 bg-gray-900" :key='$todo->id'>
             <p class='block w-100 font-bold'>
                 <span
                     class="{{ $todo->done ? 'line-through text-green-500' : '' }}">
                     {{ $todo->body }}
                 </span>
-                <button
-                    class='bg-red-700 hover:bg-red-900 focus:bg-red-900 py-1 px-2 font-bold uppercase disabled:opacity-50'
-                    wire:click.prevent="remove({{ $todo->id }})" wire:loading.attr='disabled'
-                    wire:loading.class='cursor-not-allowed'>
-                    x
-                </button>
+                <x-jet-button class='bg-blue-600 hover:bg-blue-800 focus:bg-blue-800 p-1'
+                    wire:click.prevent='edit({{ $todo->id }})' icon='fas fa-edit' target='edit({{ $todo->id }})'>
+                </x-jet-button>
+                <x-jet-button class='bg-red-700 hover:bg-red-900 focus:bg-red-900 uppercase disabled:opacity-50 p-1'
+                    wire:click.prevent="remove({{ $todo->id }})" icon='fas fa-trash-alt'
+                    target='remove'>
+                </x-jet-button>
             </p>
         </div>
     @empty

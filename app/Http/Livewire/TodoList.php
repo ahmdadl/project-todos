@@ -11,6 +11,7 @@ class TodoList extends Component
 {
     protected $listeners = [
         "todo:saved" => "appendTodo",
+        'todo:updated' => 'updateTodoList',
     ];
 
     public Collection $todos;
@@ -37,6 +38,22 @@ class TodoList extends Component
         $this->todos = $this->todos->filter(
             fn(Todo $todo) => $todo->id !== $id
         );
+    }
+
+    public function edit(int $id): void
+    {
+        $todo = $this->todos->find($id);
+
+        $this->emit("editTodo", $todo);
+    }
+
+    public function updateTodoList(int $id, string $body)
+    {
+        $this->todos->each(function (Todo $todo) use ($id, $body) {
+            if ($todo->id === $id) {
+                $todo->body = $body;
+            }
+        });
     }
 
     public function render()
