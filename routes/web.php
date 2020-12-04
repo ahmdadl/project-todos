@@ -3,6 +3,7 @@
 use App\Http\Controllers\GetCategoryList;
 use App\Http\Livewire\AddTodo;
 use App\Http\Livewire\Counter;
+use App\Http\Livewire\GetTodoList;
 use App\Http\Livewire\TodoList;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +41,7 @@ Route::group(
                 "category" => "[a-z0-9]+(?:-[a-z0-9]+)*",
             ])
             ->group(function () {
-                Route::get("", TodoList::class);
+                Route::get("", GetTodoList::class);
                 Route::post("", AddTodo::class);
             });
     }

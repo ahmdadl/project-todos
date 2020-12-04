@@ -9,51 +9,28 @@ use Livewire\Component;
 
 class TodoList extends Component
 {
-    protected $listeners = [
-        "todo:saved" => "appendTodo",
-        'todo:updated' => 'updateTodoList',
-    ];
-
-    public Collection $todos;
     public Category $category;
+    public Todo $todo;
 
-    public function mount(Category $category): void
+    public function remove(): void
     {
-        $this->category = $category;
-        $this->todos = Todo::where("user_id", auth()->id())
-            ->where("category_id", $category->id)
-            ->latest()
-            ->get();
+        if (!$this->todo->delete()) {
+            return;
+        }
+
+        $this->emit("todo:deleted", $this->todo->id);
     }
 
-    public function appendTodo(Todo $todo)
+    public function edit(): void
     {
-        $this->todos->prepend($todo);
+        $this->emit("editTodo", $this->todo);
     }
 
-    public function remove(int $id): void
+    public function check(): void
     {
-        Todo::find($id)->delete();
-
-        $this->todos = $this->todos->filter(
-            fn(Todo $todo) => $todo->id !== $id
-        );
-    }
-
-    public function edit(int $id): void
-    {
-        $todo = $this->todos->find($id);
-
-        $this->emit("editTodo", $todo);
-    }
-
-    public function updateTodoList(int $id, string $body)
-    {
-        $this->todos->each(function (Todo $todo) use ($id, $body) {
-            if ($todo->id === $id) {
-                $todo->body = $body;
-            }
-        });
+        $this->todo->completed = !$this->todo->completed;
+        
+        $this->todo->update();
     }
 
     public function render()
