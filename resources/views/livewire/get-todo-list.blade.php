@@ -1,7 +1,11 @@
 <div class='h-100 pb-10'>
 
     <x-slot name='header'>
-        {{$category->title}}
+        <a href='/categories' class='hover:underline'>
+            Categories
+        </a>
+        <span class="px-1">/</span>
+        <span class='text-gray-300'>{{ $category->title }}</span>
     </x-slot>
 
     <livewire:add-todo :category="$category" />
