@@ -23,7 +23,9 @@ class AddTodoTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
-        $this->category = Category::factory()->create();
+        $this->category = Category::factory()
+            ->has(Todo::factory())
+            ->create();
     }
 
     public function testOnlyAuthriedUsersCanAddNewTodo()
@@ -66,5 +68,32 @@ class AddTodoTest extends TestCase
             ->call("store")
             ->assertHasErrors(["body"])
             ->assertNotEmitted("todo:saved");
+    }
+
+    public function testEditModeCanBeEnabled()
+    {
+        $this->signIn();
+
+        $todo = $this->category->todos->first();
+
+        Livewire::test(AddTodo::class, [
+            "category" => $this->category,
+        ])
+            ->emit("editTodo", $todo->id)
+            ->assertSet("todo", $todo)
+            ->assertSet("editMode", true)
+            ->assertSet("body", $todo->body)
+            ->assertDispatchedBrowserEvent("edit-mode")
+            ->set("body", $todo->body . "25")
+            ->call("submit")
+            ->assertEmitted("todo:updated")
+            // disableEditMode method was called
+            ->assertSet('body', '')
+            ->assertSet('editMode', false);
+
+        $this->assertTrue(Todo::whereBody($todo->body . "25")->exists());
+
+        // store method was not called
+        $this->assertCount(1, $this->category->todos);
     }
 }

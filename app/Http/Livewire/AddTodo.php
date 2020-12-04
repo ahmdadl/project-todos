@@ -57,7 +57,7 @@ class AddTodo extends Component
         return view("livewire.add-todo");
     }
 
-    private function store(): void
+    public function store(): void
     {
         $this->validate();
 
