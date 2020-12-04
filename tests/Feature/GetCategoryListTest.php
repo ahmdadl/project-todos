@@ -72,7 +72,7 @@ class GetCategoryListTest extends TestCase
         $this->category->todos()->create(
             Todo::factory()->raw([
                 "category_id" => $this->category->id,
-                'user_id' => auth()->id(),
+                "user_id" => auth()->id(),
             ])
         );
 
@@ -80,5 +80,34 @@ class GetCategoryListTest extends TestCase
             ->assertSee($this->category->title)
             ->assertSeeText("16\r\n")
             ->assertDontSeeText("15\r\n");
+    }
+
+    public function testDeletingTodoWillRefreshCachedCategoryList()
+    {
+        $this->signIn($this->user);
+
+        Event::fakeFor(function () {
+            $this->category->todos()->createMany(
+                Todo::factory()
+                    ->count(15)
+                    ->raw([
+                        "user_id" => $this->user->id,
+                        "category_id" => $this->category->id,
+                    ])
+            );
+        });
+
+        $this->get("/categories")
+            ->assertSee($this->category->title)
+            ->assertSeeText("15\r\n")
+            ->assertDontSeeText("16\r\n");
+
+        $todo = $this->category->todos->first();
+        $todo->delete();
+
+        $this->get("/categories")
+            ->assertSee($this->category->title)
+            ->assertSee("14\r\n")
+            ->assertDontSee("15\r\n");
     }
 }

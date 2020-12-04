@@ -16,6 +16,8 @@ class Todo extends Model
     {
         parent::boot();
 
-        self::created(fn() => RefreshCachedCategoryList::dispatch());
+        self::created(fn() => event(new RefreshCachedCategoryList));
+
+        self::deleted(fn() => event(new RefreshCachedCategoryList));
     }
 }
