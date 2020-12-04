@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Cache;
 use Illuminate\Http\Request;
 
 class GetCategoryList extends Controller
@@ -15,8 +16,11 @@ class GetCategoryList extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('categories.index', [
-            'categories' => Category::withCount('my_todos')->get(),
+        return view("categories.index", [
+            "categories" => Cache::rememberForever(
+                "categories" . auth()->id(),
+                fn() => Category::withCount("my_todos")->get()
+            ),
         ]);
     }
 }
