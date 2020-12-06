@@ -1,5 +1,9 @@
 <div class='h-100 pb-10'>
 
+    <x-slot name='title'>
+        {{ $category->title }}
+    </x-slot>
+
     <x-slot name='header'>
         <a href='/categories' class='hover:underline'>
             Categories
