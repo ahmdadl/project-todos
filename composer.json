@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-debugbar": "^3.5",
         "barryvdh/laravel-ide-helper": "^2.8",
         "beyondcode/laravel-websockets": "^1.9",
         "cviebrock/eloquent-sluggable": "^8.0",
