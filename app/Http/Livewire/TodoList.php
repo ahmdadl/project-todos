@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Todo;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class TodoList extends Component
@@ -29,7 +28,7 @@ class TodoList extends Component
     public function check(): void
     {
         $this->todo->completed = !$this->todo->completed;
-        
+
         $this->todo->update();
     }
 

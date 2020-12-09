@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\RefreshCachedCategoryList;
+use App\Events\TodoAdded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +17,10 @@ class Todo extends Model
     {
         parent::boot();
 
-        self::created(fn() => event(new RefreshCachedCategoryList));
+        self::created(function(Todo $todo) {
+            event(new RefreshCachedCategoryList);
+            TodoAdded::dispatch($todo);
+        });
 
         self::deleted(fn() => event(new RefreshCachedCategoryList));
     }

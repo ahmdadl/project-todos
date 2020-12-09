@@ -8130,6 +8130,8 @@ __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js"); /
 // event = document.createEvent('HTMLEvents');
 // event.initEvent('foo', true, true);
 // setTimeout(_ => document.documentElement.dispatchEvent(event));
+// const channel = window.Echo.join("todos.3");
+// channel.here((users) => console.log(users));
 
 /***/ }),
 

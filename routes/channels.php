@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Todo;
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,6 +16,13 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+// Broadcast::channel("App.Models.User.{id}", function ($user, $id) {
+//     return (int) $user->id === (int) $id;
+// });
+
+Broadcast::channel("todos.{categoryId}", function (
+    User $user,
+    int $categoryId
+) {
+    return $user->only("id", "name");
 });

@@ -9,12 +9,6 @@ use Livewire\Component;
 
 class GetTodoList extends Component
 {
-    protected $listeners = [
-        "todo:saved" => "appendTodo",
-        "todo:updated" => "updateTodoList",
-        "todo:deleted" => "removeFromTodoList",
-    ];
-
     public Collection $todos;
     public Category $category;
 
@@ -25,6 +19,16 @@ class GetTodoList extends Component
             ->whereUserId(auth()->id())
             ->latest()
             ->get();
+    }
+
+    public function getListeners()
+    {
+        return [
+            "todo:saved" => "appendTodo",
+            "todo:updated" => "updateTodoList",
+            "todo:deleted" => "removeFromTodoList",
+            "echo-private:todos.{$this->category->id},TodoAdded" => "appendTodo",
+        ];
     }
 
     public function appendTodo(Todo $todo)
