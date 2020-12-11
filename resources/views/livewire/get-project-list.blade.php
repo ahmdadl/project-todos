@@ -3,10 +3,17 @@
         {{ $user->name }} Projects
     </x-slot>
 
-    <x-slot name='header'>
-        <div class='grid grid-cols-1 sm:grid-cols-2 gap-8'>
-            <h1 class='pt-2'>{{ $user->name }} Projects</h1>
-    </x-slot>
+    <div class='flex items-center justify-between py-2 px-4 w-100 bg-indigo-800 mb-5'>
+        <h1 class='pt-2'>{{ $user->name }} Projects</h1>
+        <div class='text-right'>
+            <x-jet-button type='button'
+                class="m-0 {{ $this->onlyCompleted ? 'bg-red-300 hover:bg-red-700' : 'bg-green-600 hover:bg-green-800' }}"
+                wire:click.prevent='showOnlyCompleted' icon='fas fa-filter'>
+                completed
+            </x-jet-button>
+        </div>
+    </div>
+
 
     <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-2 md:gap-4'>
         @forelse($projects as $project)
