@@ -27,14 +27,4 @@ class Category extends Model
     {
         return 'slug';
     }
-
-    public function todos(): HasMany
-    {
-        return $this->hasMany(Todo::class);
-    }
-
-    public function my_todos(): HasMany
-    {
-        return $this->todos()->where('user_id', auth()->id());
-    }
 }

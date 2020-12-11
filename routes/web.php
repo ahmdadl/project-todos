@@ -36,20 +36,19 @@ Route::group(
     ],
     function () {
         Route::get('', GetCategoryList::class);
-
-        Route::prefix('/{category}/{todos?}')
-            ->where([
-                'category' => '[a-z0-9]+(?:-[a-z0-9]+)*',
-            ])
-            ->group(function () {
-                Route::get('', GetTodoList::class);
-                Route::post('', AddTodo::class);
-            });
     }
 );
 
 Route::middleware('auth')->group(function () {
     Route::prefix('/projects')->group(function () {
         Route::get('', GetProjectList::class);
+        Route::prefix('/{project}/{todos?}')
+            ->where([
+                'project' => '[a-z0-9]+(?:-[a-z0-9]+)*',
+            ])
+            ->group(function () {
+                Route::get('', GetTodoList::class);
+                Route::post('', AddTodo::class);
+            });
     });
 });

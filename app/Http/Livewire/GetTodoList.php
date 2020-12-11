@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Category;
+use App\Models\Project;
 use App\Models\Todo;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
@@ -10,13 +10,12 @@ use Livewire\Component;
 class GetTodoList extends Component
 {
     public Collection $todos;
-    public Category $category;
+    public Project $project;
 
-    public function mount(Category $category)
+    public function mount(Project $project)
     {
-        $this->category = $category;
-        $this->todos = Todo::whereCategoryId($category->id)
-            ->whereUserId(auth()->id())
+        $this->project = $project;
+        $this->todos = Todo::whereProjectId($project->id)
             ->latest()
             ->get();
     }
@@ -24,10 +23,10 @@ class GetTodoList extends Component
     public function getListeners()
     {
         return [
-            "todo:saved" => "appendTodo",
-            "todo:updated" => "updateTodoList",
-            "todo:deleted" => "removeFromTodoList",
-            "echo-private:todos.{$this->category->id},TodoAdded" => "appendTodo",
+            'todo:saved' => 'appendTodo',
+            'todo:updated' => 'updateTodoList',
+            'todo:deleted' => 'removeFromTodoList',
+            "echo-private:todos.{$this->project->id},TodoAdded" => 'appendTodo',
         ];
     }
 
@@ -54,6 +53,6 @@ class GetTodoList extends Component
 
     public function render()
     {
-        return view("livewire.get-todo-list", ["header" => "sadsad"]);
+        return view('livewire.get-todo-list');
     }
 }

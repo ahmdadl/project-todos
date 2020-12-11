@@ -5,5 +5,5 @@ import '@ryangjchandler/spruce';
 require("alpinejs");
 
 window.Spruce.store('modal', {
-    open: 'login',
+    open: true,
 });

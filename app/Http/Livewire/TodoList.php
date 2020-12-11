@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Category;
+use App\Models\Project;
 use App\Models\Todo;
 use Livewire\Component;
 
 class TodoList extends Component
 {
-    public Category $category;
+    public Project $project;
     public Todo $todo;
 
     public function remove(): void

@@ -8181,7 +8181,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
 window.Spruce.store('modal', {
-  open: 'login'
+  open: true
 });
 
 /***/ }),

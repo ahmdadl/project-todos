@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -16,15 +16,13 @@ class TodoSeeder extends Seeder
      */
     public function run()
     {
-        $categories = Category::all();
-        $users = User::all();
+        $projects = Project::all();
 
-        $categories->each(function (Category $category) use ($users) {
+        $projects->each(function (Project $project) {
             Todo::factory()
                 ->count(random_int(5, 10))
                 ->create([
-                    "user_id" => $users->random()->id,
-                    "category_id" => $category->id,
+                    "project_id" => $project->id,
                 ]);
         });
     }

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,6 +43,14 @@ class ProjectTest extends TestCase
     public function testProjectBelongsToUser()
     {
         $this->assertNotNull($this->project->owner);
+    }
+    
+    public function testProjectHasTodos()
+    {
+        $this->assertInstanceOf(
+            HasMany::class,
+            $this->project->todos()
+        );
     }
     
 }

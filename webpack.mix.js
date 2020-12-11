@@ -20,4 +20,12 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .webpackConfig(require('./webpack.config'))
     .version()
-    .browserSync('js.test');
+    .browserSync({
+        proxy: 'js.test',
+        ui: false,
+        files: [
+            'public/css/*.css',
+            'public/js/*.js',
+            'resources/views/**/*.blade.php',
+        ]
+    });

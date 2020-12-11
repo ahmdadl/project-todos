@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Category;
+use App\Models\Project;
 use App\Models\Todo;
 use Livewire\Component;
 
@@ -16,14 +16,14 @@ class AddTodo extends Component
         "editTodo" => "setEditMode",
     ];
 
-    public Category $category;
+    public Project $project;
     public string $body = "";
     public bool $editMode = false;
     public Todo $todo;
 
-    public function mount(Category $category): void
+    public function mount(Project $project): void
     {
-        $this->category = $category;
+        $this->project = $project;
     }
 
     public function submit(): void
@@ -61,9 +61,8 @@ class AddTodo extends Component
     {
         $this->validate();
 
-        $todo = $this->category->todos()->create([
+        $todo = $this->project->todos()->create([
             "body" => $this->body,
-            "user_id" => auth()->id(),
         ]);
 
         session()->flash("todo_saved", "Todo Successfully Saved");

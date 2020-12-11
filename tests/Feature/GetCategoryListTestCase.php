@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class GetCategoryListTest extends TestCase
+class GetCategoryListTestCase extends TestCase
 {
     use RefreshDatabase;
 

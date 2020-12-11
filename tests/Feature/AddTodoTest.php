@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Livewire\AddTodo;
-use App\Models\Category;
+use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +15,7 @@ class AddTodoTest extends TestCase
 {
     use RefreshDatabase;
 
-    public Category $category;
+    public Project $project;
     public User $user;
 
     protected function setUp(): void
@@ -23,7 +23,7 @@ class AddTodoTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
-        $this->category = Category::factory()
+        $this->project = Project::factory()
             ->has(Todo::factory())
             ->create();
     }
@@ -31,7 +31,7 @@ class AddTodoTest extends TestCase
     public function testOnlyAuthriedUsersCanAddNewTodo()
     {
         $this->post(
-            "/categories/" . $this->category->slug . "/todos",
+            "/projects/" . $this->project->slug . "/todos",
             []
         )->assertRedirect("/login");
     }
@@ -42,7 +42,7 @@ class AddTodoTest extends TestCase
         $todo = Todo::factory()->make();
 
         Livewire::test(AddTodo::class, [
-            "category" => $this->category,
+            "project" => $this->project,
             "body" => $todo->body,
         ])
             ->assertSet("body", $todo->body)
@@ -50,10 +50,12 @@ class AddTodoTest extends TestCase
             ->assertEmitted("todo:saved");
 
         $this->assertTrue(
-            Todo::whereUserId($this->user->id)
+            Todo::whereProjectId($this->project->id)
                 ->whereBody($todo->body)
                 ->exists()
         );
+
+        $this->assertEquals(2, Todo::count());
     }
 
     public function testUserCanNotAddNewTodoWithInvalidBody()
@@ -61,7 +63,7 @@ class AddTodoTest extends TestCase
         $this->signIn();
 
         Livewire::test(AddTodo::class, [
-            "category" => $this->category,
+            "project" => $this->project,
             "body" => "as23",
         ])
             ->assertSet("body", "as23")
@@ -74,10 +76,10 @@ class AddTodoTest extends TestCase
     {
         $this->signIn();
 
-        $todo = $this->category->todos->first();
+        $todo = $this->project->todos->first();
 
         Livewire::test(AddTodo::class, [
-            "category" => $this->category,
+            "project" => $this->project,
         ])
             ->emit("editTodo", $todo->id)
             ->assertSet("todo", $todo)
@@ -94,6 +96,6 @@ class AddTodoTest extends TestCase
         $this->assertTrue(Todo::whereBody($todo->body . "25")->exists());
 
         // store method was not called
-        $this->assertCount(1, $this->category->todos);
+        $this->assertCount(1, $this->project->todos);
     }
 }
