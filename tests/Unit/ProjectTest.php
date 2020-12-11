@@ -38,4 +38,10 @@ class ProjectTest extends TestCase
     {
         $this->assertIsString($this->project->slug);
     }
+
+    public function testProjectBelongsToUser()
+    {
+        $this->assertNotNull($this->project->owner);
+    }
+    
 }

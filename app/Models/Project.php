@@ -20,10 +20,15 @@ class Project extends Model
     public function sluggable(): array
     {
         return [
-            'slug' => [
-                'source' => 'name',
-            ]
+            "slug" => [
+                "source" => "name",
+            ],
         ];
+    }
+
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "user_id");
     }
 
     public function category(): BelongsTo
