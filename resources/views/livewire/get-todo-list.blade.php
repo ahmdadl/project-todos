@@ -1,6 +1,6 @@
 <div class='h-100 pb-10'>
     <x-slot name='title'>
-        {{ $project->title }}
+        {{ $project->name }}
     </x-slot>
 
     <x-slot name='header'>
@@ -8,7 +8,7 @@
             projects
         </a>
         <span class="px-1">/</span>
-        <span class='text-gray-300'>{{ $project->title }}</span>
+        <span class='text-gray-300'>{{ $project->name }}</span>
     </x-slot>
 
     <div class='p-2 mx-auto w-3/4 bg-gray-900 mb-3' x-data='{users: []}' x-init="window.Echo.join('todos.{{ $project->id }}')
@@ -29,7 +29,7 @@
     <livewire:add-todo :project="$project" />
 
     @forelse($todos as $todo)
-        <livewire:todo-list :project='$project' :todo='$todo' :key='$todo->id' />
+        <livewire:todo-list :project='$project' :todo='$todo' :key='$todo->id . $todo->body' />
     @empty
         <div class="bg-orange-500 text-gray-300 py-2 px-4 w-3/4 mx-auto">
             No Todos Here, Add More
