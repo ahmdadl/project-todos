@@ -53,4 +53,15 @@ class ProjectTest extends TestCase
         );
     }
     
+    public function testProjectBelongsToTeam()
+    {
+        $this->assertNotNull($this->project->team);
+
+        $this->project->team()->sync(User::factory()->create());
+
+        $this->project->refresh();
+
+        $this->assertCount(1, $this->project->team);
+    }
+    
 }
