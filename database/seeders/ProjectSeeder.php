@@ -21,11 +21,10 @@ class ProjectSeeder extends Seeder
         User::all()->each(function (User $user) use ($categories) {
             Project::factory()
                 ->count(random_int(1, 3))
-                ->sequence(
-                    ["category_id" => $categories->random()->id],
-                    ["category_id" => $categories->random()->id],
-                    ["category_id" => $categories->random()->id]
-                )
+                ->sequence([
+                    'category_id' => $categories->random()->id,
+                    'user_id' => $user->id,
+                ])
                 ->create();
         });
     }
