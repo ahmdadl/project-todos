@@ -18,3 +18,15 @@
         text-indent: .5rem;
     }
 }
+
+.alert {
+    @apply py-3 px-4 font-semibold mx-auto rounded shadow; 
+}
+
+.alert-danger {
+    @apply bg-red-300 text-red-800;
+}
+
+.alert-success {
+    @apply bg-green-300 text-green-800;
+}
