@@ -52,7 +52,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ["profile_photo_url"];
+    protected $appends = ["profile_photo_url", 'is_admin'];
 
     protected function defaultProfilePhotoUrl()
     {
@@ -62,5 +62,10 @@ class User extends Authenticatable
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->id === 1;
     }
 }

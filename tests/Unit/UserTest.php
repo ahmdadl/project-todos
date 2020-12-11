@@ -29,4 +29,10 @@ class UserTest extends TestCase
 
         $this->assertCount(5, $this->user->projects);
     }
+
+    public function testUserIsAdmin()
+    {
+        $this->assertTrue($this->user->is_admin);
+    }
+    
 }
