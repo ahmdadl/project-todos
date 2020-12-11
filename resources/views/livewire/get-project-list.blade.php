@@ -8,7 +8,7 @@
         <div class='flex items-center'>
             <x-jet-button
                 class="mx-1 {{ $this->onlyCompleted ? 'bg-red-300 hover:bg-red-700' : 'bg-green-600 hover:bg-green-800' }}"
-                wire:click.prevent='showOnlyCompleted' icon='fas fa-check'>
+                wire:click.prevent='showOnlyCompleted' :icon="$this->onlyCompleted ? 'fas fa-times' : 'fas fa-check'">
                 completed
             </x-jet-button>
             <x-jet-dropdown class='mx-1'>
