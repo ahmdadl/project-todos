@@ -25,11 +25,17 @@ class ProjectTest extends TestCase
         $this->project = Project::factory()->create([
             "user_id" => $this->user->id,
             "category_id" => $this->category->id,
+            "slug" => null,
         ]);
     }
 
     public function testItBelongsToCategory()
     {
         $this->assertNotNull($this->project->category);
+    }
+
+    public function testProjectHasSlug()
+    {
+        $this->assertIsString($this->project->slug);
     }
 }
