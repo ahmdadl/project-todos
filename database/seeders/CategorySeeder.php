@@ -14,6 +14,15 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::factory()->count(5)->create();
+        Category::factory()
+            ->count(5)
+            ->sequence(
+                ["title" => "home"],
+                ["title" => "work"],
+                ["title" => "freelance"],
+                ["title" => "education"],
+                ["title" => "test"]
+            )
+            ->create();
     }
 }
