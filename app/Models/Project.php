@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\RefreshCachedCategoryList;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,13 @@ class Project extends Model
     protected $casts = [
         'completed' => 'boolean',
         'cost' => 'float',
+    ];
+
+    protected $guarded = [];
+
+    protected $dispatchesEvents = [
+        'created' => RefreshCachedCategoryList::class,
+        'deleted' => RefreshCachedCategoryList::class,
     ];
 
     public function sluggable(): array

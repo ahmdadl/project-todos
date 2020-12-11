@@ -27,4 +27,9 @@ class Category extends Model
     {
         return 'slug';
     }
+
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class);
+    }
 }

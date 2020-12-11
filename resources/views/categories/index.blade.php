@@ -12,7 +12,7 @@ All Categories
                 <a href='/categories/{{ $cat->slug }}' class='visited:text-white w-100 bg-transparent hover:border-gray-300 focus:shadow border-b-2 border-gray-700 transition-colors duration-500 cursor-pointer'>
                     {{ $cat->title }}
                     <span class='bg-gray-100 text-gray-600 hover:text-gray-800 rounded-full px-2'>
-                        {{$cat->my_todos_count}}
+                        {{$cat->projects_count}}
                     </span>
                 </a>
             </h4>

@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Events\RefreshCachedCategoryList;
 use App\Models\Category;
-use App\Models\Todo;
+use App\Models\Project;
 use App\Models\User;
 use Cache;
 use Event;
@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class GetCategoryListTestCase extends TestCase
+class GetCategoryListTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -31,14 +31,15 @@ class GetCategoryListTestCase extends TestCase
     {
         $cats = Category::all();
 
-        Todo::factory()
+        Project::factory()
             ->count(4)
             ->raw([
-                "user_id" => $this->user->id,
                 "category_id" => $cats->first->id,
             ]);
 
-        Todo::factory()->create();
+        Project::factory()->create();
+
+        $this->withoutExceptionHandling();
 
         $this->actingAs($this->user)
             ->get("/categories")
@@ -49,16 +50,15 @@ class GetCategoryListTestCase extends TestCase
             ->assertSee(4);
     }
 
-    public function testListWillBeUpdatedAfterAddingNewTodo()
+    public function testListWillBeUpdatedAfterAddingNewProject()
     {
         $this->signIn($this->user);
 
         Event::fakeFor(function () {
-            $this->category->todos()->createMany(
-                Todo::factory()
+            $this->category->projects()->createMany(
+                Project::factory()
                     ->count(15)
                     ->raw([
-                        "user_id" => $this->user->id,
                         "category_id" => $this->category->id,
                     ])
             );
@@ -69,10 +69,9 @@ class GetCategoryListTestCase extends TestCase
             ->assertSeeText("15\r\n")
             ->assertDontSeeText("16\r\n");
 
-        $this->category->todos()->create(
-            Todo::factory()->raw([
+        $this->category->projects()->create(
+            Project::factory()->raw([
                 "category_id" => $this->category->id,
-                "user_id" => auth()->id(),
             ])
         );
 
@@ -87,11 +86,10 @@ class GetCategoryListTestCase extends TestCase
         $this->signIn($this->user);
 
         Event::fakeFor(function () {
-            $this->category->todos()->createMany(
-                Todo::factory()
+            $this->category->projects()->createMany(
+                Project::factory()
                     ->count(15)
                     ->raw([
-                        "user_id" => $this->user->id,
                         "category_id" => $this->category->id,
                     ])
             );
@@ -102,7 +100,7 @@ class GetCategoryListTestCase extends TestCase
             ->assertSeeText("15\r\n")
             ->assertDontSeeText("16\r\n");
 
-        $todo = $this->category->todos->first();
+        $todo = $this->category->projects->first();
         $todo->delete();
 
         $this->get("/categories")

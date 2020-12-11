@@ -18,8 +18,8 @@ class GetCategoryList extends Controller
     {
         return view("categories.index", [
             "categories" => Cache::rememberForever(
-                "categories" . auth()->id(),
-                fn() => Category::withCount("my_todos")->get()
+                "categories",
+                fn() => Category::withCount("projects")->get()
             ),
         ]);
     }

@@ -32,7 +32,10 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::group(
     [
         'prefix' => '/categories',
-        'middleware' => ['auth'],
+        'middleware' => [
+            'auth',
+            'can:is_admin'
+        ],
     ],
     function () {
         Route::get('', GetCategoryList::class);

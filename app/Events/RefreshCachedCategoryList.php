@@ -23,11 +23,11 @@ class RefreshCachedCategoryList
      */
     public function __construct()
     {
-        Cache::forget("categories" . auth()->id());
+        Cache::forget("categories");
 
         Cache::rememberForever(
-            "categories" . auth()->id(),
-            fn() => Category::withCount("my_todos")->get()
+            "categories",
+            fn() => Category::withCount("projects")->get()
         );
     }
 
