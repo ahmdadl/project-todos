@@ -19,6 +19,10 @@
     }
 }
 
+a {
+    @apply cursor-pointer;
+}
+
 .alert {
     @apply py-3 px-4 font-semibold mx-auto rounded shadow; 
 }

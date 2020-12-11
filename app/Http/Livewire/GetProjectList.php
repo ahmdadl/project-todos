@@ -13,15 +13,12 @@ class GetProjectList extends Component
     public Collection $projects;
     public User $user;
     public bool $onlyCompleted = false;
+    public string $sortBy = '';
 
     public function mount()
     {
         $this->user = auth()->user();
-        $this->allProjects = Project::whereUserId($this->user->id)
-            ->with('category')
-            ->latest()
-            ->get();
-        $this->projects = $this->allProjects;
+        $this->getData('asc', false);
     }
 
     public function showOnlyCompleted()
@@ -38,8 +35,42 @@ class GetProjectList extends Component
         $this->projects = $this->allProjects;
     }
 
+    public function sortByHighCost()
+    {
+        $this->getData('desc');
+    }
+
+    public function sortByLowCost()
+    {
+        $this->getData('asc');
+    }
+
+    public function resetSortBy(): void
+    {
+        $this->getData('asc', false);
+    }
+
     public function render()
     {
         return view('livewire.get-project-list');
+    }
+
+    private function getData(string $sortBy = 'asc', bool $sort = true): void
+    {
+        if ($this->sortBy === $sortBy) {
+            return;
+        }
+
+        $query = Project::whereUserId($this->user->id)->with('category');
+
+        if ($sort) {
+            $query->orderBy('cost', $sortBy);
+            $this->sortBy = $sortBy;
+        } else {
+            $this->sortBy = '';
+        }
+
+        $this->allProjects = $query->latest()->get();
+        $this->projects = $this->allProjects;
     }
 }
