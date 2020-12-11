@@ -26,7 +26,7 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased sm:p-1 md:p-2">
     <div class="min-h-screen bg-gray-800 text-gray-100">
         @livewire('navigation-dropdown')
 
@@ -34,7 +34,7 @@
             @isset($header)
                 <header class="bg-indigo-700 text-white font-semibold shadow mb-5">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        <h1>{{ $header }}</h1>
+                        {{ $header }}
                     </div>
                 </header>
             @endisset
