@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Str;
 
 class CategoryFactory extends Factory
 {
@@ -21,8 +22,10 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->unique()->words(2, true);
         return [
-            'title' => $this->faker->words(2, true),
+            'title' => $title,
+            'slug' => Str::slug($title),
         ];
     }
 }

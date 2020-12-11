@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             TodoSeeder::class,
+            ProjectSeeder::class,
         ]);
 
         DB::commit();
