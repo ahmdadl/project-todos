@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
+use Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Str;
 
@@ -25,13 +26,15 @@ class ProjectFactory extends Factory
     public function definition()
     {
         $name = $this->faker->unique()->sentence;
+        $img = random_int(1, 4);
         return [
-            "user_id" => fn() => User::factory()->create()->id,
-            "category_id" => fn() => Category::factory()->create()->id,
-            "name" => $name,
-            "slug" => Str::slug($name),
-            "cost" => $this->faker->randomFloat(2, 1, 10000),
-            "completed" => $this->faker->boolean,
+            'user_id' => fn() => User::factory()->create()->id,
+            'category_id' => fn() => Category::factory()->create()->id,
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'cost' => $this->faker->randomFloat(2, 1, 10000),
+            'image' => 'projects/' . $img . '.jpg',
+            'completed' => $this->faker->boolean,
         ];
     }
 }

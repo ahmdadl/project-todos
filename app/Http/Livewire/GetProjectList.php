@@ -100,7 +100,7 @@ class GetProjectList extends Component
             return;
         }
 
-        $query = Project::whereUserId($this->user->id)->with('category');
+        $query = Project::whereUserId($this->user->id)->with(['category', 'team'])->latest();
 
         if ($sort) {
             $query->orderBy('cost', $sortBy);
@@ -109,7 +109,7 @@ class GetProjectList extends Component
             $this->sortBy = '';
         }
 
-        $this->allProjects = $query->latest()->get();
+        $this->allProjects = $query->get();
         $this->projects = $this->allProjects;
     }
 }

@@ -24,9 +24,9 @@ module.exports = {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
         cursor: ['disabled', 'hover'],
         backgroundColor: ['disabled', 'hover', 'focus', 'active', 'invalid'],
-        borderColor: ['disabled', 'hover', 'focus', 'active', 'invalid'],
+        borderColor: ['disabled', 'hover', 'focus', 'active', 'invalid', 'group-hover'],
         boxShadow: ['disabled', 'hover', 'focus', 'active', 'invalid'],
-        outline: ['invalid', 'hover', 'focus', 'disabled']
+        outline: ['invalid', 'hover', 'focus', 'disabled'],
     },
 
     plugins: [

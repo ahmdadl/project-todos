@@ -19,7 +19,12 @@ class UserSeeder extends Seeder
             ->sequence(
                 ['email' => 'admin@site.test'],
                 ['email' => 'super@site.test'],
-                ['email' => 'user@site.test'],
-            )->create();
+                ['email' => 'user@site.test']
+            )
+            ->create();
+
+        User::factory()
+            ->count(25)
+            ->create();
     }
 }

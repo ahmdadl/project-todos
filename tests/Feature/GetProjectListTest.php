@@ -32,7 +32,7 @@ class GetProjectListTest extends TestCase
         $this->signIn($user);
 
         $query = Project::whereUserId($user->id)
-            ->with('category')
+            ->with(['category', 'team'])
             ->latest();
 
         Livewire::test(GetProjectList::class)

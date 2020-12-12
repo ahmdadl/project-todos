@@ -64,4 +64,12 @@ class ProjectTest extends TestCase
         $this->assertCount(1, $this->project->team);
     }
     
+
+    public function testProjectHasImagePath()
+    {
+        $this->assertSame(
+            env('APP_URL').'/storage/' . $this->project->image,
+            $this->project->img_path
+        );
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -27,6 +28,18 @@ class Project extends Model
         'deleted' => RefreshCachedCategoryList::class,
     ];
 
+    protected $appends = ['img_path'];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function getImgPathAttribute(): string
+    {
+        return Storage::disk('public')->url($this->image);
+    }
+
     public function sluggable(): array
     {
         return [
@@ -34,11 +47,6 @@ class Project extends Model
                 'source' => 'name',
             ],
         ];
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 
     public function owner(): BelongsTo
