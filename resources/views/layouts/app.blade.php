@@ -26,7 +26,7 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased sm:p-1 md:p-2">
+<body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-800 text-gray-100">
         @livewire('navigation-dropdown')
 
@@ -40,7 +40,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class='sm:p-2 md:p-3'>
                 {{ $slot ?? '' }}
                 @yield('content', '')
             </main>

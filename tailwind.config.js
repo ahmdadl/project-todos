@@ -1,5 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('@tailwindcss/ui/colors');
+const { after } = require('lodash');
 
 module.exports = {
     purge: [
@@ -15,15 +16,21 @@ module.exports = {
             },
             colors: {
                 teal: colors.teal,
-            }
+            },
         },
     },
 
     variants: {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
         cursor: ['disabled', 'hover'],
-        backgroundColor: ['disabled', 'hover', 'focus', 'active']
+        backgroundColor: ['disabled', 'hover', 'focus', 'active', 'invalid'],
+        borderColor: ['disabled', 'hover', 'focus', 'active', 'invalid'],
+        boxShadow: ['disabled', 'hover', 'focus', 'active', 'invalid'],
+        outline: ['invalid', 'hover', 'focus', 'disabled']
     },
 
-    plugins: [require('@tailwindcss/ui')],
+    plugins: [
+        require('@tailwindcss/ui'),
+        require('tailwindcss-invalid-variant-plugin'),
+    ],
 };

@@ -34,3 +34,15 @@ a {
 .alert-success {
     @apply bg-green-300 text-green-800;
 }
+
+.form-input {
+    @apply bg-transparent border border-gray-600;
+}
+
+.form-input:focus {
+    @apply bg-gray-700 shadow-outline-green text-black font-semibold border-green-400;
+}
+
+.form-input:invalid {
+    @apply shadow-outline-red border-red-500 text-red-700;
+}

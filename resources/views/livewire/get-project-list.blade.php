@@ -8,58 +8,69 @@
         <div class='flex items-center'>
             <x-jet-button
                 class="mx-1 {{ $this->onlyCompleted ? 'bg-red-300 hover:bg-red-700' : 'bg-green-600 hover:bg-green-800' }}"
-                wire:click.prevent='showOnlyCompleted' :icon="$this->onlyCompleted ? 'fas fa-times' : 'fas fa-check'">
+                wire:click.prevent='showOnlyCompleted' :icon="$this->onlyCompleted ? 'fas fa-times' : 'fas fa-check'"
+                target='showOnlyCompleted, sortByHighCost, sortByLowCost'>
                 completed
             </x-jet-button>
             <x-jet-dropdown class='mx-1'>
                 <x-slot name='trigger'>
-                    <x-jet-button class='bg-teal-500' icon='fas fa-filter'></x-jet-button>
+                    <x-jet-button class='text-teal-600' icon='fas fa-filter'
+                        target='sortByHighCost, sortByLowCost, resetSortBy'></x-jet-button>
                 </x-slot>
                 <x-slot name='content'>
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                        {{ __('Filter Projects') }}
+                    </div>
                     <x-jet-dropdown-link wire:click.prevent="sortByHighCost"
                         class="{{ $sortBy === 'desc' ? 'bg-teal-800 hover:bg-teal-600' : '' }}">
-                        <i class='fas fa-dollar-sign'></i>
-                        <i class='fas fa-arrow-down'></i>
-                        High Cost
+                        <span
+                            class='{{ $sortBy === 'desc' ? 'text-white ' : '' }}'>
+                            <i class='fas fa-dollar-sign'></i>
+                            <i class='fas fa-arrow-down'></i>
+                            High Cost
+                        </span>
                     </x-jet-dropdown-link>
                     <x-jet-dropdown-link wire:click.prevent="sortByLowCost"
                         class="{{ $sortBy === 'asc' ? 'bg-teal-800 hover:bg-teal-600' : '' }}">
-                        <i class='fas fa-dollar-sign'></i>
-                        <i class='fas fa-arrow-up'></i>
-                        Low Cost
+                        <span
+                            class='{{ $sortBy === 'asc' ? 'text-white ' : '' }}'>
+                            <i class='fas fa-dollar-sign'></i>
+                            <i class='fas fa-arrow-up'></i>
+                            Low Cost
+                        </span>
                     </x-jet-dropdown-link>
                     <x-jet-dropdown-link wire:click.prevent="resetSortBy"
                         class="{{ $sortBy === '' ? 'bg-red-800 hover:bg-red-600' : 'text-red-500' }}">
-                        <i class='fas fa-times'></i>
-                        reset
+                        <span
+                            class='{{ $sortBy === '' ? 'text-white' : '' }}'>
+                            <i class='fas fa-times'></i>
+                            reset
+                        </span>
                     </x-jet-dropdown-link>
                 </x-slot>
             </x-jet-dropdown>
         </div>
     </div>
 
-    <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-2 md:gap-4'>
-        @forelse($projects as $project)
-            <div class='relative bg-gray-700 shadow mb-4 rounded'>
-                <img class='border border-white w-100' src='{{ $user->profile_photo_url }}' />
-                @if($project->completed)
-                    <div class='absolute top-0 left-0 bg-green-600 text-white uppercase p-1 rounded opacity-75'>
-                        <i class='fas fa-check'></i>
-                        completed
-                    </div>
-                @endif
-                <div class='p-2 font-bold'>
-                    <h3><a class='text-blue-500 hover:text-blue-600 hover:underline'
-                            href='/projects/{{ $project->slug }}' class='text-lg'>{{ $project->name }}</a></h3>
-                    <p class='text-green-600'>${{ $project->cost }}</p>
-                    <p class='text-gray-700'>
-                        <i class='fas fa-bookmark'></i>
-                        {{ $project->category->title }}
-                    </p>
-                    <hr class='bg-gray-700' />
+    <div class='p-2 mb-2'>
+        <x-jet-button wire:click.prevent="openModal"
+            class='bg-transparent border-2 border-teal-600 text-teal-600 hover:text-white hover:bg-teal-600 transition'
+            icon='fas fa-plus' target='openModal'>add new project</x-jet-button>
+    </div>
 
-                </div>
-            </div>
+    <x-jet-dialog-modal wire:model='showModal' class='bg-gray-700'>
+        <x-slot name='title'>
+            Add New Project
+        </x-slot>
+
+        <x-slot name='content'>
+            <livewire:add-project :user="$user" />
+        </x-slot>
+    </x-jet-dialog-modal>
+
+    <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-3 md:gap-5'>
+        @forelse($projects as $project)
+            <livewire:one-project :project='$project' :user='$user'>
         @empty
             <div class='alert alert-danger w-3/4 hover:bg-red-400'>
                 you hadn`t created any projects yet.

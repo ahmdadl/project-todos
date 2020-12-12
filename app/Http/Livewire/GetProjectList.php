@@ -14,6 +14,12 @@ class GetProjectList extends Component
     public User $user;
     public bool $onlyCompleted = false;
     public string $sortBy = '';
+    public bool $showModal = false;
+
+    protected $listeners = [
+        'modal:closed' => 'closeModal',
+        'project:added' => 'appendProject',
+    ];
 
     public function mount()
     {
@@ -21,9 +27,21 @@ class GetProjectList extends Component
         $this->getData('asc', false);
     }
 
-    public function showOnlyCompleted()
+    public function openModal()
     {
-        $this->onlyCompleted = !$this->onlyCompleted;
+        $this->showModal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->showModal = false;
+    }
+
+    public function showOnlyCompleted(bool $toggle = true)
+    {
+        if ($toggle) {
+            $this->onlyCompleted = !$this->onlyCompleted;
+        }
 
         if ($this->onlyCompleted) {
             $this->projects = $this->allProjects->filter(
@@ -33,6 +51,27 @@ class GetProjectList extends Component
         }
 
         $this->projects = $this->allProjects;
+    }
+
+    public function appendProject(Project $project)
+    {
+        $projects = $this->allProjects;
+
+        $projects->prepend($project);
+
+        if (!empty($this->sortBy)) {
+            $projects = $this->sortBy === 'asc' ? $projects->sortBy('cost') : $projects->sortByDesc('cost');
+        }
+
+        $this->allProjects = $projects;
+
+        if ($this->onlyCompleted) {
+            $this->showOnlyCompleted(false);
+        } else {
+            $this->projects = $this->allProjects;
+        }
+
+        $this->closeModal();
     }
 
     public function sortByHighCost()
