@@ -10,6 +10,8 @@
                     completed
                 </div>
             @endif
+            @php // TODO fix completed not showing
+             @endphp
             <div class='p-2 font-bold cursor-pointer'>
                 <h3><a class='pt-1 text-teal-400 hover:text-teal-600 hover:underline group-hover:text-teal-700'
                         href='/projects/{{ $project->slug }}' class='text-lg'>{{ $project->name }}</a></h3>
