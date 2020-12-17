@@ -27,15 +27,15 @@ class GetProjectList extends Component
         $this->getData('asc', false);
     }
 
-    public function openModal()
-    {
-        $this->showModal = true;
-    }
+    // public function openModal()
+    // {
+    //     $this->showModal = true;
+    // }
 
-    public function closeModal()
-    {
-        $this->showModal = false;
-    }
+    // public function closeModal()
+    // {
+    //     $this->showModal = false;
+    // }
 
     public function showOnlyCompleted(bool $toggle = true)
     {
@@ -60,7 +60,10 @@ class GetProjectList extends Component
         $projects->prepend($project);
 
         if (!empty($this->sortBy)) {
-            $projects = $this->sortBy === 'asc' ? $projects->sortBy('cost') : $projects->sortByDesc('cost');
+            $projects =
+                $this->sortBy === 'asc'
+                    ? $projects->sortBy('cost')
+                    : $projects->sortByDesc('cost');
         }
 
         $this->allProjects = $projects;
@@ -71,7 +74,7 @@ class GetProjectList extends Component
             $this->projects = $this->allProjects;
         }
 
-        $this->closeModal();
+        $this->emit('modal:close');
     }
 
     public function sortByHighCost()
@@ -96,17 +99,20 @@ class GetProjectList extends Component
 
     private function getData(string $sortBy = 'asc', bool $sort = true): void
     {
-        if ($this->sortBy === $sortBy) {
+        if ($this->sortBy === $sortBy && $sort) {
             return;
         }
 
-        $query = Project::whereUserId($this->user->id)->with(['category', 'team'])->latest();
+        $query = Project::whereUserId($this->user->id)
+            ->with(['category', 'team'])
+            ->withCount('todos');
 
         if ($sort) {
             $query->orderBy('cost', $sortBy);
             $this->sortBy = $sortBy;
         } else {
             $this->sortBy = '';
+            $query->latest();
         }
 
         $this->allProjects = $query->get();

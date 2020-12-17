@@ -3,15 +3,17 @@
         class='group hover:bg-gray-300 transition duration-500 ease-linear relative bg-gray-700 shadow mb-4 rounded overflow-hidden'>
         <a class='appearance-none cursor-pointer' href='/projects/{{ $project->slug }}' class='text-lg'>
             <img class='w-full transition-transform duration-500 ease-in-out transform overflow-hidden hover:scale-110'
-                src='{{ $user->profile_photo_url }}' />
+                src='{{ $project->img_path }}' />
             @if($project->completed)
                 <div class='absolute top-0 left-0 bg-green-600 text-white uppercase p-1 rounded opacity-75'>
                     <i class='fas fa-check'></i>
                     completed
                 </div>
             @endif
-            @php // TODO fix completed not showing
-             @endphp
+            <div class='absolute top-0 right-0 bg-red-700 text-white px-2 font-semibold opacity-75'>
+                {{ $project->todos_count ?? 0 }}
+                <i class='fas fa-at'></i>
+            </div>
             <div class='p-2 font-bold cursor-pointer'>
                 <h3><a class='pt-1 text-teal-400 hover:text-teal-600 hover:underline group-hover:text-teal-700'
                         href='/projects/{{ $project->slug }}' class='text-lg'>{{ $project->name }}</a></h3>

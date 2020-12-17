@@ -52,29 +52,15 @@
         </div>
     </div>
 
-    <div class='p-2 mb-2'>
-        <x-jet-button wire:click.prevent="openModal"
-            class='bg-transparent border-2 border-teal-600 text-teal-600 hover:text-white hover:bg-teal-600 transition'
-            icon='fas fa-plus' target='openModal'>add new project</x-jet-button>
-    </div>
-
-    <x-jet-dialog-modal wire:model='showModal' class='bg-gray-700'>
-        <x-slot name='title'>
-            Add New Project
-        </x-slot>
-
-        <x-slot name='content'>
-            <livewire:add-project :user="$user" />
-        </x-slot>
-    </x-jet-dialog-modal>
+    <livewire:add-project :user="$user" />
 
     <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-3 md:gap-5'>
         @forelse($projects as $project)
-            <livewire:one-project :project='$project' :user='$user'>
-        @empty
-            <div class='alert alert-danger w-3/4 hover:bg-red-400'>
-                you hadn`t created any projects yet.
-            </div>
+            <livewire:one-project :project='$project' :user='$user' :key='$project->id . $project->name'>
+            @empty
+                <div class='alert alert-danger w-3/4 hover:bg-red-400'>
+                    you hadn`t created any projects yet.
+                </div>
         @endforelse
     </div>
 </div>
