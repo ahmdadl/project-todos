@@ -16,28 +16,37 @@ class GetProjectListTest extends TestCase
 {
     use RefreshDatabase;
 
+    public User $user;
+    public Category $category;
+    public Collection $projects;
     public Project $project;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->projects = Project::factory()
+            ->count(4)
+            ->for(Category::factory())
+            ->create();
+
+        $this->project = $this->projects->first();
+        $this->category = $this->project->category;
+        $this->user = $this->project->owner;
+    }
 
     public function testItWillPrependProjectAndApplyFilters()
     {
-        $user = User::factory()->create();
-
-        $projects = Project::factory()
-            ->count(4)
-            ->for(Category::factory())
-            ->sequence(['user_id' => $user->id])
-            ->create();
-
         $project = Project::factory([
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'cost' => 556.32,
             'completed' => 1,
-            'category_id' => $projects->first()->category_id,
+            'category_id' => $this->projects->first()->category_id,
         ])->raw();
 
-        $this->signIn($user);
+        $this->signIn($this->user);
 
-        $query = Project::whereUserId($user->id)
+        $query = Project::whereUserId($this->user->id)
             ->with(['category', 'team'])
             ->withCount('todos');
 
@@ -65,6 +74,15 @@ class GetProjectListTest extends TestCase
             ->assertSee('completed');
     }
 
+    public function testProjectWillRemovedFromListAfterDeleting()
+    {
+        $this->signIn($this->user);
+        Livewire::test(GetProjectList::class)
+            ->assertSee($this->project->name)
+            ->emit('project:deleted', 1)
+            ->assertDontSee($this->project->name);
+    }
+
     private function createProject(array $attrs): Project
     {
         $this->project = Project::create($attrs);
@@ -73,11 +91,5 @@ class GetProjectListTest extends TestCase
         $this->project->refresh();
 
         return $this->project;
-    }
-
-    private function projectCreated(Collection $collection)
-    {
-        dump($collection->pluck('cost', 'id'));
-        return $collection;
     }
 }

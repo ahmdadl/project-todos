@@ -27,6 +27,7 @@ module.exports = {
         borderColor: ['disabled', 'hover', 'focus', 'active', 'invalid', 'group-hover'],
         boxShadow: ['disabled', 'hover', 'focus', 'active', 'invalid'],
         outline: ['invalid', 'hover', 'focus', 'disabled'],
+        textColor: ['invalid', 'hover', 'disabled', 'group-hover']
     },
 
     plugins: [

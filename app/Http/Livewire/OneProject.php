@@ -10,6 +10,14 @@ class OneProject extends Component
 {
     public User $user;
     public Project $project;
+    public int $index;
+    
+    public function destroy(int $index)
+    {
+        $this->project->delete();
+
+        $this->emit('project:deleted', $index);
+    }
 
     public function render()
     {

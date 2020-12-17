@@ -19,6 +19,7 @@ class GetProjectList extends Component
     protected $listeners = [
         'modal:closed' => 'closeModal',
         'project:added' => 'appendProject',
+        'project:deleted' => 'removeProject',
     ];
 
     public function mount()
@@ -26,16 +27,6 @@ class GetProjectList extends Component
         $this->user = auth()->user();
         $this->getData('asc', false);
     }
-
-    // public function openModal()
-    // {
-    //     $this->showModal = true;
-    // }
-
-    // public function closeModal()
-    // {
-    //     $this->showModal = false;
-    // }
 
     public function showOnlyCompleted(bool $toggle = true)
     {
@@ -75,6 +66,12 @@ class GetProjectList extends Component
         }
 
         $this->emit('modal:close');
+    }
+
+    public function removeProject(int $index)
+    {
+        $this->allProjects->splice($index, 1);
+        $this->projects->splice($index, 1);
     }
 
     public function sortByHighCost()
