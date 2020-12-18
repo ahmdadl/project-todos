@@ -60,6 +60,8 @@ class OneProject extends Component
 
     public function toggleCompleted()
     {
+        $this->authorize('update', $this->project);
+
         $this->project->completed = !$this->project->completed;
         $this->project->update();
     }

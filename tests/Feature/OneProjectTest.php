@@ -177,4 +177,22 @@ class OneProjectTest extends TestCase
 
         $this->assertTrue(Project::whereCost(222)->exists());
     }
+
+    public function testOnlyProjectOwnerOrTeamMemberCanMakeAsComplete()
+    {
+        $this->signIn($this->anyOne);
+        $this->test->call('toggleCompleted');
+        $this->assertDatabaseMissing('projects', [
+            'name' => $this->project->name,
+            'completed' => !$this->project->completed,
+        ]);
+
+        $this->signIn($this->teamUser);
+        $this->test->call('toggleCompleted');
+        $this->assertTrue(
+            Project::whereSlug($this->project->slug)
+                ->whereCompleted(true)
+                ->exists()
+        );
+    }
 }
