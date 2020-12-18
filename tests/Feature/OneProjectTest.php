@@ -104,8 +104,35 @@ class OneProjectTest extends TestCase
             ->call('destroy')
             ->assertNotEmitted('project:deleted', $this->project->slug);
 
-        $this->assertTrue(
-            Project::whereSlug($this->project->slug)->exists()
-        );
+        $this->assertTrue(Project::whereSlug($this->project->slug)->exists());
+    }
+
+    public function testOnlyProjectOwnerCanAddTeamMembers()
+    {
+        $anotherUser = User::factory()->create();
+        $this->project->team()->syncWithoutDetaching($anotherUser);
+
+        $this->project->refresh();
+        $this->assertCount(1, $this->project->team);
+
+        // team member can not add new member
+        $this->actingAs($anotherUser);
+        $this->test
+            ->set('teamUserMail', User::latest()->first()->email)
+            ->call('addUserToTeam')
+            ->assertHasNoErrors();
+
+        $this->project->refresh();
+        $this->assertCount(1, $this->project->team);
+
+        // owner can add new members
+        $this->actingAs($this->user);
+        $this->test
+            ->set('teamUserMail', User::latest()->first()->email)
+            ->call('addUserToTeam')
+            ->assertHasNoErrors();
+
+        $this->project->refresh();
+        $this->assertCount(2, $this->project->team);
     }
 }

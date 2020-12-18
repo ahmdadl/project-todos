@@ -64,6 +64,8 @@ class OneProject extends Component
 
     public function addUserToTeam()
     {
+        $this->authorize('delete', $this->project);
+
         $this->validate();
 
         $user = User::whereEmail($this->teamUserMail)->first('id');
