@@ -11,7 +11,16 @@ class OneProject extends Component
     public User $user;
     public Project $project;
     public int $index;
-    
+
+    public function edit()
+    {
+        $this->emit(
+            'project:edit',
+            $this->project->slug,
+            $this->project->category->slug
+        );
+    }
+
     public function destroy(int $index)
     {
         $this->project->delete();

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
+use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
 class OneProjectTest extends TestCase
@@ -16,6 +17,7 @@ class OneProjectTest extends TestCase
 
     public User $user;
     public Project $project;
+    public TestableLivewire $test;
 
     protected function setUp(): void
     {
@@ -23,18 +25,25 @@ class OneProjectTest extends TestCase
 
         $this->project = Project::factory()->create();
         $this->user = $this->project->owner;
+
+        $this->test = Livewire::test(OneProject::class, [
+            'project' => $this->project,
+            'user' => $this->user,
+        ]);
+    }
+
+    public function testProjectCanBeEdited()
+    {
+        $this->test
+            ->call('edit')
+            ->assertEmitted('project:edit', $this->project->slug);
     }
 
     public function testUserCanDeleteProject()
     {
         $this->signIn($this->user);
 
-        Livewire::test(OneProject::class, [
-            'user' => $this->user,
-            'project' => $this->project,
-        ])
-            ->call('destroy', 1)
-            ->assertEmitted('project:deleted');
+        $this->test->call('destroy', 1)->assertEmitted('project:deleted');
 
         $this->assertFalse(Project::whereSlug($this->project->slug)->exists());
     }

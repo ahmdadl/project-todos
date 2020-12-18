@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
+use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
 class GetProjectListTest extends TestCase
@@ -20,6 +21,7 @@ class GetProjectListTest extends TestCase
     public Category $category;
     public Collection $projects;
     public Project $project;
+    public TestableLivewire $test;
 
     protected function setUp(): void
     {
@@ -33,6 +35,10 @@ class GetProjectListTest extends TestCase
         $this->project = $this->projects->first();
         $this->category = $this->project->category;
         $this->user = $this->project->owner;
+
+        $this->signIn($this->user);
+
+        $this->test = Livewire::test(GetProjectList::class);
     }
 
     public function testItWillPrependProjectAndApplyFilters()
@@ -43,8 +49,6 @@ class GetProjectListTest extends TestCase
             'completed' => 1,
             'category_id' => $this->projects->first()->category_id,
         ])->raw();
-
-        $this->signIn($this->user);
 
         $query = Project::whereUserId($this->user->id)
             ->with(['category', 'team'])
@@ -76,11 +80,17 @@ class GetProjectListTest extends TestCase
 
     public function testProjectWillRemovedFromListAfterDeleting()
     {
-        $this->signIn($this->user);
         Livewire::test(GetProjectList::class)
             ->assertSee($this->project->name)
             ->emit('project:deleted', 1)
             ->assertDontSee($this->project->name);
+    }
+
+    public function testProjectWillBeUpdated()
+    {
+        $this->test
+            ->emit('project:updated', $this->project->slug)
+            ->assertEmitted('modal:close');
     }
 
     private function createProject(array $attrs): Project

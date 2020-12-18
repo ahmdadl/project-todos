@@ -31,9 +31,10 @@
                 @endforeach
                 <hr class='border border-gray-400 group-hover:border-gray-700 my-3' />
                 <div class='grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-0'>
-                    <x-jet-button class='rounded-r-none' bg='blue' clear='1' icon='fas fa-edit'>Edit</x-jet-button>
+                    <x-jet-button class='rounded-r-none' bg='blue' clear='1' icon='fas fa-edit'
+                        wire:click.prevent='edit'>Edit</x-jet-button>
                     <x-jet-button bg='red' :clear='1' rounded='0' icon='fas fa-trash-alt'
-                        wire:click.prevent='destroy({{$index}})'>delete
+                        wire:click.prevent='destroy({{ $index }})'>delete
                     </x-jet-button>
                     <x-jet-button class='rounded-l-none' bg='teal' clear='1' icon='fas fa-plus'>
                         user

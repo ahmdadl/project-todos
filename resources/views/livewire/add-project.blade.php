@@ -25,19 +25,21 @@
                     <div class='grid grid-rows-1 gap-6 mt-3'>
                         <div class=''>
                             <select wire:model.defer='categorySlug'
-                                class='bg-transparent border-2 border-gray-600 p-2 font-semibold focus:bg-gray-800 focus:border-green-500 transition invalid:border-red-500 @error('
-                                categorySlug')border-red-500 @enderror' required>
+                                class='transition bg-transparent border-2 border-gray-600 p-2 font-semibold focus:bg-gray-800 focus:border-green-500
+                                disabled:opacity-50 invalid:border-red-500 @error('
+                                categorySlug')border-red-500 @enderror' required @if($editMode) disabled='disabled'
+                                @endif>
                                 <option>Select Category</option>
                                 @foreach($categories as $category)
-                                    <option value='{{ $category->slug }}'>{{ $category->title }}</option>
+                                    <option value='{{ $category->slug }}' @if($category->slug === $categorySlug) selected @endif>{{ $category->title }}</option>
                                 @endforeach
                             </select>
                             <x-jet-input-error for='categorySlug'></x-jet-input-error>
                         </div>
                         <div>
-                            <x-jet-input type='text' name='title' wire:model.defer='title' class='w-full'
-                                placeholder='Title' autofocus required />
-                            <x-jet-input-error for='title'></x-jet-input-error>
+                            <x-jet-input type='text' name='name' wire:model.defer='name' class='w-full'
+                                placeholder='Name' autofocus required />
+                            <x-jet-input-error for='name'></x-jet-input-error>
                         </div>
 
                         <div>

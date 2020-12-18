@@ -19,6 +19,7 @@ class GetProjectList extends Component
     protected $listeners = [
         'modal:closed' => 'closeModal',
         'project:added' => 'appendProject',
+        'project:updated' => 'updateProject',
         'project:deleted' => 'removeProject',
     ];
 
@@ -28,42 +29,49 @@ class GetProjectList extends Component
         $this->getData('asc', false);
     }
 
-    public function showOnlyCompleted(bool $toggle = true)
-    {
+    public function showOnlyCompleted(
+        bool $toggle = true,
+        ?Collection $collection = null
+    ) {
         if ($toggle) {
             $this->onlyCompleted = !$this->onlyCompleted;
         }
 
+        $collection = $collection ?? $this->allProjects;
+
         if ($this->onlyCompleted) {
-            $this->projects = $this->allProjects->filter(
+            $projects = $this->allProjects->filter(
                 fn(Project $p) => $p->completed === $this->onlyCompleted
             );
+
+            $this->projects = $this->applySort($projects);
+
             return;
         }
 
-        $this->projects = $this->allProjects;
+        $this->projects = $this->applySort($this->allProjects);
     }
 
     public function appendProject(Project $project)
     {
-        $projects = $this->allProjects;
+        $this->allProjects->prepend($project);
 
-        $projects->prepend($project);
+        $this->applyFilters();
 
-        if (!empty($this->sortBy)) {
-            $projects =
-                $this->sortBy === 'asc'
-                    ? $projects->sortBy('cost')
-                    : $projects->sortByDesc('cost');
-        }
+        $this->emit('modal:close');
+    }
 
-        $this->allProjects = $projects;
+    public function updateProject(Project $project)
+    {
+        $this->allProjects->each(function (Project $p) use ($project) {
+            if ($project->slug === $p->slug) {
+                $p->name = $project->name;
+                $p->cost = $project->cost;
+                $p->completed = $project->completed;
+            }
+        });
 
-        if ($this->onlyCompleted) {
-            $this->showOnlyCompleted(false);
-        } else {
-            $this->projects = $this->allProjects;
-        }
+        $this->applyFilters();
 
         $this->emit('modal:close');
     }
@@ -112,7 +120,33 @@ class GetProjectList extends Component
             $query->latest();
         }
 
+        // check for completed filter
+        if ($this->onlyCompleted) {
+            $query->whereCompleted(true);
+        }
+
         $this->allProjects = $query->get();
         $this->projects = $this->allProjects;
+    }
+
+    private function applySort(Collection $collection): Collection
+    {
+        $projects = $collection;
+
+        if (!empty($this->sortBy)) {
+            $projects =
+                $this->sortBy === 'asc'
+                    ? $projects->sortBy('cost')
+                    : $projects->sortByDesc('cost');
+        }
+
+        return $projects;
+    }
+
+    private function applyFilters(): void
+    {
+        $projects = $this->applySort($this->allProjects);
+
+        $this->showOnlyCompleted(false, $projects);
     }
 }
