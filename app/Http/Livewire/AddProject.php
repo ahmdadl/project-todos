@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
@@ -14,6 +15,7 @@ use Str;
 class AddProject extends Component
 {
     use WithFileUploads;
+    use AuthorizesRequests;
 
     public User $user;
     public Project $project;
@@ -108,6 +110,8 @@ class AddProject extends Component
 
     private function update()
     {
+        $this->authorize('update', $this->project);
+
         if (isset($this->image)) {
             // upload new image first
             $img = $this->saveImage();

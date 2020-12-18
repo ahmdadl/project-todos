@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\AddProject;
 use App\Http\Livewire\OneProject;
 use App\Models\Project;
 use App\Models\User;
@@ -18,6 +19,8 @@ class OneProjectTest extends TestCase
     use WithFaker;
 
     public User $user;
+    public User $teamUser;
+    public User $anyOne;
     public Project $project;
     public TestableLivewire $test;
 
@@ -27,6 +30,11 @@ class OneProjectTest extends TestCase
 
         $this->project = Project::factory()->create();
         $this->user = $this->project->owner;
+        $this->teamUser = User::factory()->create();
+        $this->project->team()->syncWithoutDetaching($this->teamUser);
+        $this->project->refresh();
+
+        $this->anyOne = User::factory()->create();
 
         $this->test = Livewire::test(OneProject::class, [
             'project' => $this->project,
@@ -97,9 +105,7 @@ class OneProjectTest extends TestCase
 
     public function testOnlyProjectOwnerCanDeleteIt()
     {
-        $anotherUser = User::factory()->create();
-        $this->project->team()->syncWithoutDetaching($anotherUser);
-
+        $this->signIn($this->teamUser);
         $this->test
             ->call('destroy')
             ->assertNotEmitted('project:deleted', $this->project->slug);
@@ -109,21 +115,14 @@ class OneProjectTest extends TestCase
 
     public function testOnlyProjectOwnerCanAddTeamMembers()
     {
-        $anotherUser = User::factory()->create();
-        $this->project->team()->syncWithoutDetaching($anotherUser);
-
-        $this->project->refresh();
         $this->assertCount(1, $this->project->team);
 
         // team member can not add new member
-        $this->actingAs($anotherUser);
+        $this->actingAs($this->teamUser);
         $this->test
             ->set('teamUserMail', User::latest()->first()->email)
             ->call('addUserToTeam')
             ->assertHasNoErrors();
-
-        $this->project->refresh();
-        $this->assertCount(1, $this->project->team);
 
         // owner can add new members
         $this->actingAs($this->user);
@@ -131,8 +130,51 @@ class OneProjectTest extends TestCase
             ->set('teamUserMail', User::latest()->first()->email)
             ->call('addUserToTeam')
             ->assertHasNoErrors();
+    }
 
-        $this->project->refresh();
-        $this->assertCount(2, $this->project->team);
+    public function testAnyOneCanNotUpdateProject()
+    {
+        $this->signIn($this->anyOne);
+        $this->test
+            ->call('edit')
+            ->assertNotEmitted(
+                'project:edit',
+                $this->project->slug,
+                $this->project->category->slug
+            );
+
+        Livewire::test(AddProject::class)
+            ->set('editMode', true)
+            ->call('save')
+            ->assertNotEmitted('project:updated', $this->project->slug);
+
+        $this->assertTrue(
+            Project::whereUpdatedAt($this->project->updated_at)->exists()
+        );
+    }
+
+    public function testProjectOwnerOrTeamMebmersCanUpdateProject()
+    {
+        $this->signIn($this->teamUser);
+
+        $this->test
+            ->call('edit')
+            ->assertEmitted(
+                'project:edit',
+                $this->project->slug,
+                $this->project->category->slug
+            );
+
+        Livewire::test(AddProject::class)
+            ->emit(
+                'project:edit',
+                $this->project->slug,
+                $this->project->category->slug
+            )
+            ->set('cost', 222)
+            ->call('save')
+            ->assertEmitted('project:updated', $this->project->slug);
+
+        $this->assertTrue(Project::whereCost(222)->exists());
     }
 }

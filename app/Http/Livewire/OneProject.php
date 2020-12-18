@@ -40,6 +40,8 @@ class OneProject extends Component
 
     public function edit()
     {
+        $this->authorize('update', $this->project);
+
         $this->emit(
             'project:edit',
             $this->project->slug,

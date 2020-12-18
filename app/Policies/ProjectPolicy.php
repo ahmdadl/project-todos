@@ -54,7 +54,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-        //
+        return $this->view($user, $project);
     }
 
     /**
