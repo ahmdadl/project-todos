@@ -54,7 +54,8 @@
                         wire:click.prevent='toggleModal'>
                         <span class='hidden overflow-clip overflow-hidden md:block'>delete</span>
                     </x-jet-button>
-                    <x-jet-button class='rounded-l-none' bg='teal' clear='1' icon='fas fa-plus'>
+                    <x-jet-button class='rounded-l-none' bg='teal' clear='1' icon='fas fa-plus'
+                        wire:click.prevent='toggleTeamModal'>
                         <span class='hidden overflow-clip overflow-hidden md:block'>user</span>
                     </x-jet-button>
                 </div>
@@ -84,4 +85,36 @@
             </x-jet-button>
         </x-slot>
     </x-jet-confirmation-modal>
+    <x-jet-dialog-modal wire:model.defer='teamModal'>
+        <x-slot name='title'>
+            Add User
+        </x-slot>
+
+        <x-slot name='content'>
+            <x-jet-form-section submit='addUserToTeam'>
+                <x-slot name='title'>
+                    {{-- add new project to list --}}
+                </x-slot>
+                <x-slot name='description'>
+                    add new user to this project team
+                </x-slot>
+
+                <x-slot name='form'>
+                    <div>
+                        <x-jet-input type='email' name='teamUserMail' wire:model.defer='teamUserMail' class='w-full'
+                            placeholder='User Mail' autofocus required />
+                        <x-jet-input-error for='teamUserMail' class='pt-1'></x-jet-input-error>
+                    </div>
+
+                    <x-slot name='actions'>
+                        <x-jet-button type='submit' bg='green' icon='fas fa-plus' class='mx-1'>add
+                        </x-jet-button>
+                        <x-jet-button type='reset' wire:click.prevent='toggleTeamModal' bg='orange' clear='1'
+                            icon='fas fa-times'>
+                            reset</x-jet-button>
+                    </x-slot>
+                </x-slot>
+            </x-jet-form-section>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>

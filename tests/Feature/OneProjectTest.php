@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Http\Livewire\OneProject;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
@@ -14,6 +15,7 @@ use Tests\TestCase;
 class OneProjectTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     public User $user;
     public Project $project;
@@ -58,7 +60,52 @@ class OneProjectTest extends TestCase
 
     public function testUserCanToggleCompletedState()
     {
-        $this->test->call('toggleCompleted');            // ->assertEmitted()
+        $this->test->call('toggleCompleted'); // ->assertEmitted()
     }
-    
+
+    public function testUserCanAddNewMembersToProjectTeam()
+    {
+        $user = User::factory()->create();
+
+        $this->project->setTable('projects');
+        $this->project->wasRecentlyCreated = false;
+        $this->project->update();
+        $this->project->refresh();
+
+        // it will show error if email is not valid
+        $this->test
+            ->set('teamUserMail', 'sadasdasd')
+            ->call('addUserToTeam')
+            ->assertHasErrors();
+
+        // it will show error if email not registered
+        $this->test
+            ->set('teamUserMail', $this->faker->email)
+            ->call('addUserToTeam')
+            ->assertHasErrors();
+
+        // it will add user to team
+        $comp = $this->test
+            ->call('toggleTeamModal')
+            ->assertSet('teamModal', true)
+            ->set('teamUserMail', $user->email)
+            ->call('addUserToTeam')
+            ->assertHasNoErrors()
+            ->tap(fn() => $this->project->load('team'))
+            ->assertSet('project', $this->project);
+    }
+
+    public function testOnlyProjectOwnerCanDeleteIt()
+    {
+        $anotherUser = User::factory()->create();
+        $this->project->team()->syncWithoutDetaching($anotherUser);
+
+        $this->test
+            ->call('destroy')
+            ->assertNotEmitted('project:deleted', $this->project->slug);
+
+        $this->assertTrue(
+            Project::whereSlug($this->project->slug)->exists()
+        );
+    }
 }
