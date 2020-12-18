@@ -76,10 +76,15 @@ class GetProjectList extends Component
         $this->emit('modal:close');
     }
 
-    public function removeProject(int $index)
+    public function removeProject(string $slug)
     {
-        $this->allProjects->splice($index, 1);
-        $this->projects->splice($index, 1);
+        $this->allProjects
+            ->each(fn($p) => $p->slug === $slug ? null : $p)
+            ->values();
+
+        $this->projects
+            ->each(fn($p) => $p->slug === $slug ? null : $p)
+            ->values();
     }
 
     public function sortByHighCost()

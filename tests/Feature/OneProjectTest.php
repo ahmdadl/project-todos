@@ -36,15 +36,29 @@ class OneProjectTest extends TestCase
     {
         $this->test
             ->call('edit')
-            ->assertEmitted('project:edit', $this->project->slug);
+            ->assertEmitted(
+                'project:edit',
+                $this->project->slug,
+                $this->project->category->slug
+            );
     }
 
     public function testUserCanDeleteProject()
     {
         $this->signIn($this->user);
 
-        $this->test->call('destroy', 1)->assertEmitted('project:deleted');
+        $this->test
+            ->call('toggleModal')
+            ->assertSet('openModal', true)
+            ->call('destroy', $this->project->slug)
+            ->assertEmitted('project:deleted');
 
         $this->assertFalse(Project::whereSlug($this->project->slug)->exists());
     }
+
+    public function testUserCanToggleCompletedState()
+    {
+        $this->test->call('toggleCompleted');            // ->assertEmitted()
+    }
+    
 }

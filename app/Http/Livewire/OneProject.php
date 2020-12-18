@@ -11,6 +11,12 @@ class OneProject extends Component
     public User $user;
     public Project $project;
     public int $index;
+    public bool $openModal = false;
+
+    public function toggleModal()
+    {
+        $this->openModal = !$this->openModal;
+    }
 
     public function edit()
     {
@@ -21,11 +27,17 @@ class OneProject extends Component
         );
     }
 
-    public function destroy(int $index)
+    public function destroy()
     {
         $this->project->delete();
 
-        $this->emit('project:deleted', $index);
+        $this->emit('project:deleted', $this->project->slug);
+    }
+
+    public function toggleCompleted()
+    {
+        $this->project->completed = !$this->project->completed;
+        $this->project->update();
     }
 
     public function render()

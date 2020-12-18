@@ -29,7 +29,7 @@
                                 disabled:opacity-50 invalid:border-red-500 @error('
                                 categorySlug')border-red-500 @enderror' required @if($editMode) disabled='disabled'
                                 @endif>
-                                <option>Select Category</option>
+                                <option value=''>Select Category</option>
                                 @foreach($categories as $category)
                                     <option value='{{ $category->slug }}' @if($category->slug === $categorySlug) selected @endif>{{ $category->title }}</option>
                                 @endforeach

@@ -71,7 +71,11 @@ class AddProjectTest extends TestCase
         $this->project->save();
 
         $this->test
-            ->emit('project:edit', $this->project->slug)
+            ->emit(
+                'project:edit',
+                $this->project->slug,
+                $this->project->category->slug
+            )
             ->assertSet('showModal', true)
             ->assertSet('editMode', true)
             ->assertSet('name', $this->project->name)
@@ -107,7 +111,11 @@ class AddProjectTest extends TestCase
         sleep(1);
 
         $this->test
-            ->emit('project:edit', $this->project->slug)
+            ->emit(
+                'project:edit',
+                $this->project->slug,
+                $this->project->category->slug
+            )
             ->set('image', $imgNew)
             ->call('save')
             ->assertHasNoErrors()
