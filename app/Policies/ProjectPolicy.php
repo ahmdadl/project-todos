@@ -30,7 +30,8 @@ class ProjectPolicy
      */
     public function view(User $user, Project $project)
     {
-        //
+        return $user->id === $project->user_id ||
+            $project->team()->find($user->id, ['id']) !== null;
     }
 
     /**

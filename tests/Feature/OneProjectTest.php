@@ -52,7 +52,7 @@ class OneProjectTest extends TestCase
         $this->test
             ->call('toggleModal')
             ->assertSet('openModal', true)
-            ->call('destroy', $this->project->slug)
+            ->call('destroy')
             ->assertEmitted('project:deleted');
 
         $this->assertFalse(Project::whereSlug($this->project->slug)->exists());

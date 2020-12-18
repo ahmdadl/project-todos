@@ -19,6 +19,7 @@ class Project extends Model
     protected $casts = [
         'completed' => 'boolean',
         'cost' => 'float',
+        'user_id' => 'int',
     ];
 
     protected $guarded = [];

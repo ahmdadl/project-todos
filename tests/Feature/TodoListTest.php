@@ -28,7 +28,7 @@ class TodoListTest extends TestCase
             ->has(Todo::factory())
             ->create();
         $this->todo = $this->project->todos->first();
-        $this->user = User::factory()->create();
+        $this->user = $this->project->owner;
     }
 
     public function testItWillShowTodoList()

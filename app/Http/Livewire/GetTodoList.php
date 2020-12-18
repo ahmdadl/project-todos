@@ -5,15 +5,20 @@ namespace App\Http\Livewire;
 use App\Models\Project;
 use App\Models\Todo;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class GetTodoList extends Component
 {
+    use AuthorizesRequests;
+
     public Collection $todos;
     public Project $project;
 
     public function mount(Project $project)
     {
+        $this->authorize('view', $project);
+
         $this->project = $project;
         $this->todos = Todo::whereProjectId($project->id)
             ->latest()

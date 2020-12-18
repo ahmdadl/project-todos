@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
+use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
 class GetTodoListTest extends TestCase
@@ -18,6 +19,7 @@ class GetTodoListTest extends TestCase
     public User $user;
     public Project $project;
     public Todo $todo;
+    public TestableLivewire $test;
 
     protected function setUp(): void
     {
@@ -30,6 +32,8 @@ class GetTodoListTest extends TestCase
                 'user_id' => $this->user->id,
             ]);
         $this->todo = $this->project->todos->first();
+
+        $this->test = Livewire::test(GetTodoList::class);
     }
 
     public function testItWillShowTodoList()
@@ -42,5 +46,27 @@ class GetTodoListTest extends TestCase
             ->assertSee($this->todo->body);
         $res->assertSeeLivewire('add-todo');
         $res->assertSeeLivewire('todo-list');
+    }
+
+    public function testOnlyProjectOwnerOrTeamMemberCanViewTodos()
+    {
+        $anotherUser = User::factory()->create();
+        $this->actingAs($anotherUser)
+            ->get('/projects/' . $this->project->slug)
+            ->assertStatus(403);
+
+        // owner can view project todos
+        $this->actingAs($this->user)
+            ->get('/projects/' . $this->project->slug)
+            ->assertOk()
+            ->assertSee($this->todo->body);
+
+        // add user as team member
+        $this->project->team()->syncWithoutDetaching($anotherUser);
+        // team member can view project todos
+        $this->actingAs($anotherUser)
+            ->get('/projects/' . $this->project->slug)
+            ->assertOk()
+            ->assertSee($this->todo->body);
     }
 }
