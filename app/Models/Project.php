@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\ProjectUpdated;
+use App\Events\ProjectEvent;
 use App\Events\RefreshCachedCategoryList;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +29,7 @@ class Project extends Model
 
     protected $dispatchesEvents = [
         'created' => RefreshCachedCategoryList::class,
+        'updated' => ProjectUpdated::class,
         'deleted' => RefreshCachedCategoryList::class,
     ];
 

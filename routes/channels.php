@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
@@ -15,14 +16,16 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
+Broadcast::channel('projects.{project}', function (
+    User $user,
+    Project $project
+) {
+    return $user->can('teamMember', $project);
+});
 
-// Broadcast::channel("App.Models.User.{id}", function ($user, $id) {
-//     return (int) $user->id === (int) $id;
-// });
-
-Broadcast::channel("todos.{categoryId}", function (
+Broadcast::channel('todos.{categoryId}', function (
     User $user,
     int $categoryId
 ) {
-    return $user->only("id", "name");
+    return $user->only('id', 'name');
 });
