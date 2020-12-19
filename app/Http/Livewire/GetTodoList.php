@@ -17,7 +17,7 @@ class GetTodoList extends Component
 
     public function mount(Project $project)
     {
-        $this->authorize('view', $project);
+        $this->authorize('teamMember', $project);
 
         $this->project = $project;
         $this->todos = Todo::whereProjectId($project->id)

@@ -40,7 +40,7 @@ class OneProject extends Component
 
     public function edit()
     {
-        $this->authorize('update', $this->project);
+        $this->authorize('teamMember', $this->project);
 
         $this->emit(
             'project:edit',
@@ -51,7 +51,7 @@ class OneProject extends Component
 
     public function destroy()
     {
-        $this->authorize('delete', $this->project);
+        $this->authorize('owner', $this->project);
 
         $this->project->delete();
 
@@ -60,7 +60,7 @@ class OneProject extends Component
 
     public function toggleCompleted()
     {
-        $this->authorize('update', $this->project);
+        $this->authorize('teamMember', $this->project);
 
         $this->project->completed = !$this->project->completed;
         $this->project->update();
@@ -68,7 +68,7 @@ class OneProject extends Component
 
     public function addUserToTeam()
     {
-        $this->authorize('delete', $this->project);
+        $this->authorize('owner', $this->project);
 
         $this->validate();
 

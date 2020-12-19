@@ -110,7 +110,7 @@ class AddProject extends Component
 
     private function update()
     {
-        $this->authorize('update', $this->project);
+        $this->authorize('teamMember', $this->project);
 
         if (isset($this->image)) {
             // upload new image first
