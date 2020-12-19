@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
@@ -68,5 +69,13 @@ class Project extends Model
     public function todos(): HasMany
     {
         return $this->hasMany(Todo::class);
+    }
+
+    public function isTeamMember(int $id): bool
+    {
+        return DB::table('project_user')
+            ->where('project_id', $this->id)
+            ->where('user_id', $id)
+            ->exists();
     }
 }

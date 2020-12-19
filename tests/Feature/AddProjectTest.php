@@ -108,7 +108,7 @@ class AddProjectTest extends TestCase
         $this->project->image = $imgOld;
         $this->project->save();
 
-        sleep(1);
+        sleep(0.5);
 
         $this->test
             ->emit(

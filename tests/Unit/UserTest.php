@@ -34,5 +34,14 @@ class UserTest extends TestCase
     {
         $this->assertTrue($this->user->is_admin);
     }
+
+    public function testUserHasManyTeamProjects()
+    {
+        $project = Project::factory()->create();
+        $project->team()->sync($this->user);
+
+        $this->assertCount(1, $this->user->team_projects);
+    }
+    
     
 }

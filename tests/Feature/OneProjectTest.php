@@ -44,6 +44,7 @@ class OneProjectTest extends TestCase
 
     public function testProjectCanBeEdited()
     {
+        $this->signIn($this->user);
         $this->test
             ->call('edit')
             ->assertEmitted(
@@ -73,6 +74,8 @@ class OneProjectTest extends TestCase
 
     public function testUserCanAddNewMembersToProjectTeam()
     {
+        $this->signIn($this->user);
+
         $user = User::factory()->create();
 
         $this->project->setTable('projects');
@@ -191,7 +194,7 @@ class OneProjectTest extends TestCase
         $this->test->call('toggleCompleted');
         $this->assertTrue(
             Project::whereSlug($this->project->slug)
-                ->whereCompleted(true)
+                ->whereCompleted(!$this->project->completed)
                 ->exists()
         );
     }

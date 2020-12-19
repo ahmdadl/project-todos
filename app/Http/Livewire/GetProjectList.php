@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Project;
 use App\Models\User;
+use DB;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
@@ -131,6 +132,12 @@ class GetProjectList extends Component
         }
 
         $this->allProjects = $query->get();
+
+        $teamProjects = $this->user->load('team_projects')
+            ->team_projects;
+
+        $this->allProjects = $this->allProjects->merge($teamProjects);
+
         $this->projects = $this->allProjects;
     }
 

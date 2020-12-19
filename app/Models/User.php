@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,14 +55,21 @@ class User extends Authenticatable
      */
     protected $appends = ['profile_photo_url', 'is_admin'];
 
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->id === 1;
+    }
+
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
 
-    public function getIsAdminAttribute(): bool
+    public function team_projects(): BelongsToMany
     {
-        return $this->id === 1;
+        return $this->belongsToMany(Project::class)
+            ->with(['category', 'team'])
+            ->withCount('todos');
     }
 
     protected function defaultProfilePhotoUrl()

@@ -6,6 +6,7 @@ use App\Http\Livewire\GetProjectList;
 use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
+use DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -27,14 +28,15 @@ class GetProjectListTest extends TestCase
     {
         parent::setUp();
 
+        $this->user = User::factory()->create();
         $this->projects = Project::factory()
             ->count(4)
             ->for(Category::factory())
+            ->sequence(['user_id' => $this->user->id])
             ->create();
 
         $this->project = $this->projects->first();
         $this->category = $this->project->category;
-        $this->user = $this->project->owner;
 
         $this->signIn($this->user);
 
@@ -91,6 +93,20 @@ class GetProjectListTest extends TestCase
         $this->test
             ->emit('project:updated', $this->project->slug)
             ->assertEmitted('modal:close');
+    }
+
+    public function testUserCanSeeOwnedProjectsWithProjectThatHeIsTeamMember()
+    {
+        $project = Project::factory()->create();
+        $project->team()->sync($this->user);
+
+        $this->test = Livewire::test(GetProjectList::class);
+
+        $this->assertSame(5, $this->test->get('projects')->count());
+
+        $this->get('/projects')
+            ->assertOk()
+            ->assertSee($project->name);
     }
 
     private function createProject(array $attrs): Project
