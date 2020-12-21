@@ -17,9 +17,8 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('todos.{categoryId}', function (
-    User $user,
-    int $categoryId
-) {
-    return $user->only('id', 'name');
+Broadcast::channel('todos.{projectId}', function (User $user, int $projectId) {
+    return $user->can('teamMember', Project::find($projectId))
+        ? $user->only('name')
+        : null;
 });

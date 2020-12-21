@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Events\RefreshCachedCategoryList;
 use App\Events\TodoAdded;
+use App\Events\TodoCreated;
+use App\Events\TodoUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,10 +15,8 @@ class Todo extends Model
 
     protected $guarded = [];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        self::created(fn(Todo $todo) => TodoAdded::dispatch($todo));
-    }
+    protected $dispatchesEvents = [
+        'created' => TodoCreated::class,
+        'updated' => TodoUpdated::class,
+    ];
 }

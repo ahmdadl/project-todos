@@ -9,15 +9,15 @@ use Livewire\Component;
 class AddTodo extends Component
 {
     protected $rules = [
-        "body" => "required|string|min:5|max:255",
+        'body' => 'required|string|min:5|max:255',
     ];
 
     protected $listeners = [
-        "editTodo" => "setEditMode",
+        'editTodo' => 'setEditMode',
     ];
 
     public Project $project;
-    public string $body = "";
+    public string $body = '';
     public bool $editMode = false;
     public Todo $todo;
 
@@ -47,14 +47,14 @@ class AddTodo extends Component
     public function disableEditMode(): void
     {
         $this->editMode = false;
-        $this->reset(["body"]);
+        $this->reset(['body']);
 
         $this->dispatchBrowserEvent('edit-mode-off');
     }
 
     public function render()
     {
-        return view("livewire.add-todo");
+        return view('livewire.add-todo');
     }
 
     public function store(): void
@@ -62,15 +62,15 @@ class AddTodo extends Component
         $this->validate();
 
         $todo = $this->project->todos()->create([
-            "body" => $this->body,
+            'body' => $this->body,
         ]);
 
-        session()->flash("todo_saved", "Todo Successfully Saved");
+        session()->flash('todo_saved', 'Todo Successfully Saved');
 
-        $this->emitUp("todo:saved", $todo->id);
+        $this->emitUp('todo:saved', $todo->id);
 
         $this->clearValidation();
-        $this->body = "";
+        $this->body = '';
     }
 
     private function update(): void
@@ -80,10 +80,15 @@ class AddTodo extends Component
         $this->todo->body = $this->body;
 
         if ($this->todo->update()) {
-            session()->flash("todo_saved", "todo updated");
+            session()->flash('todo_saved', 'todo updated');
         }
 
-        $this->emit("todo:updated", $this->todo->id, $this->body);
+        $this->emit(
+            'todo:updated',
+            $this->todo->id,
+            $this->body,
+            $this->todo->completed
+        );
 
         $this->disableEditMode();
         $this->clearValidation();

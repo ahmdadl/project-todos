@@ -8,11 +8,10 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TodoAdded implements ShouldBroadcast
+class TodoEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -37,6 +36,6 @@ class TodoAdded implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("todos.{$this->todo->category_id}");
+        return new PrivateChannel('todos.' . $this->todo->project_id);
     }
 }

@@ -31,7 +31,8 @@ class GetTodoList extends Component
             'todo:saved' => 'appendTodo',
             'todo:updated' => 'updateTodoList',
             'todo:deleted' => 'removeFromTodoList',
-            "echo-private:todos.{$this->project->id},TodoAdded" => 'appendTodo',
+            "echo-private:todos.{$this->project->id},TodoCreated" => 'appendTodo',
+            "echo-private:todos.{$this->project->id},TodoUpdated" => 'echoUpdateTodo',
         ];
     }
 
@@ -40,11 +41,12 @@ class GetTodoList extends Component
         $this->todos->prepend($todo);
     }
 
-    public function updateTodoList(int $id, string $body)
+    public function updateTodoList(int $todoId, string $body, bool $completed)
     {
-        $this->todos->each(function (Todo $todo) use ($id, $body) {
-            if ($todo->id === $id) {
-                $todo->body = $body;
+        $this->todos->each(function (Todo $t) use ($todoId, $body, $completed) {
+            if ($t->id === $todoId) {
+                $t->body = $body;
+                $t->completed = $completed;
             }
         });
     }
@@ -54,6 +56,11 @@ class GetTodoList extends Component
         $this->todos = $this->todos->filter(
             fn(Todo $todo) => $todo->id !== $id
         );
+    }
+
+    public function echoUpdateTodo(Todo $todo)
+    {
+        $this->updateTodoList($todo->id, $todo->body, $todo->completed);
     }
 
     public function render()
