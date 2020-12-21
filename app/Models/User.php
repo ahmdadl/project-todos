@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -58,6 +59,14 @@ class User extends Authenticatable
     public function getIsAdminAttribute(): bool
     {
         return $this->id === 1;
+    }
+
+    public function isTeamMember(int $projectId): bool
+    {
+        return DB::table('project_user')
+            ->where('project_id', $this->id)
+            ->where('user_id', $projectId)
+            ->exists();
     }
 
     public function projects(): HasMany

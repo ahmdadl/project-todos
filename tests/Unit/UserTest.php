@@ -43,5 +43,15 @@ class UserTest extends TestCase
         $this->assertCount(1, $this->user->team_projects);
     }
     
+    public function testUserCanCheckIfHeIsTeamMember()
+    {
+        $project = Project::factory()->create();
+
+        $this->assertFalse($this->user->isTeamMember($project->id));
+
+        $project->team()->sync($this->user);
+
+        $this->assertTrue($this->user->isTeamMember($project->id));
+    }
     
 }
