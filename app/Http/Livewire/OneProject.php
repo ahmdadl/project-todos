@@ -26,18 +26,6 @@ class OneProject extends Component
         'teamUserMail' => 'User Email Address',
     ];
 
-    public function getListeners()
-    {
-        return [
-            "echo-private:projects.{$this->project->slug},ProjectUpdated" => 'projectUpdated',
-        ];
-    }
-
-    public function projectUpdated()
-    {
-        $this->emit('project:updated', $this->project->slug);
-    }
-
     public function toggleModal()
     {
         $this->openModal = !$this->openModal;

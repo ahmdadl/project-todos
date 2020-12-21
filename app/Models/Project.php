@@ -27,13 +27,13 @@ class Project extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['img_path'];
+
     protected $dispatchesEvents = [
         'created' => RefreshCachedCategoryList::class,
         'updated' => ProjectUpdated::class,
         'deleted' => RefreshCachedCategoryList::class,
     ];
-
-    protected $appends = ['img_path'];
 
     public function getRouteKeyName()
     {

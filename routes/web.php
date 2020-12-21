@@ -6,6 +6,8 @@ use App\Http\Livewire\Counter;
 use App\Http\Livewire\GetProjectList;
 use App\Http\Livewire\GetTodoList;
 use App\Http\Livewire\TodoList;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// $p = Project::factory()
+//     ->count(5)
+//     ->sequence(['user_id' => 1])
+//     ->create();
+// $user = User::whereEmail('user@site.test')->first();
+// $p->each(fn(Project $project) => $project->team()->sync($user));
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,10 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::group(
     [
         'prefix' => '/categories',
-        'middleware' => [
-            'auth',
-            'can:is_admin'
-        ],
+        'middleware' => ['auth', 'can:is_admin'],
     ],
     function () {
         Route::get('', GetCategoryList::class);

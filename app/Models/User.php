@@ -64,8 +64,8 @@ class User extends Authenticatable
     public function isTeamMember(int $projectId): bool
     {
         return DB::table('project_user')
-            ->where('project_id', $this->id)
-            ->where('user_id', $projectId)
+            ->where('project_id', $projectId)
+            ->where('user_id', $this->id)
             ->exists();
     }
 

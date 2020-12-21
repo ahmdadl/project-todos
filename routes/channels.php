@@ -16,12 +16,6 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
-Broadcast::channel('projects.{project}', function (
-    User $user,
-    Project $project
-) {
-    return $user->can('teamMember', $project);
-});
 
 Broadcast::channel('todos.{categoryId}', function (
     User $user,

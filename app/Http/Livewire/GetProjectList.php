@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Project;
 use App\Models\User;
-use DB;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
@@ -22,6 +21,7 @@ class GetProjectList extends Component
         'project:added' => 'appendProject',
         'project:updated' => 'updateProject',
         'project:deleted' => 'removeProject',
+        'echo:projects,ProjectUpdated' => 'echoUpdateProject',
     ];
 
     public function mount()
@@ -86,6 +86,15 @@ class GetProjectList extends Component
         $this->projects
             ->each(fn($p) => $p->slug === $slug ? null : $p)
             ->values();
+    }
+
+    public function echoUpdateProject($project)
+    {
+        if (!$this->user->can('teamMember', (object)$project)) {
+            return;
+        }
+
+        $this->updateProject($project);
     }
 
     public function sortByHighCost()

@@ -35,6 +35,6 @@ abstract class ProjectEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('projects.' . $this->project->slug);
+        return new Channel('projects');
     }
 }

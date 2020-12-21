@@ -17,10 +17,10 @@ class ProjectPolicy
      * @param  \App\Models\Project  $project
      * @return mixed
      */
-    public function teamMember(User $user, Project $project)
+    public function teamMember(User $user, $project)
     {
         return $user->id === $project->user_id ||
-            $project->isTeamMember($user->id);
+            $user->isTeamMember($project->id);
     }
 
     /**
@@ -30,7 +30,7 @@ class ProjectPolicy
      * @param  \App\Models\Project  $project
      * @return mixed
      */
-    public function owner(User $user, Project $project)
+    public function owner(User $user, $project)
     {
         return $project->user_id === $user->id;
     }
