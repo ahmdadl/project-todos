@@ -33,6 +33,7 @@ class GetTodoList extends Component
             'todo:deleted' => 'removeFromTodoList',
             "echo-private:todos.{$this->project->id},TodoCreated" => 'appendTodo',
             "echo-private:todos.{$this->project->id},TodoUpdated" => 'echoUpdateTodo',
+            "echo-private:todos.{$this->project->id},TodoDeleted" => 'echoRemoveTodo',
         ];
     }
 
@@ -61,6 +62,11 @@ class GetTodoList extends Component
     public function echoUpdateTodo(Todo $todo)
     {
         $this->updateTodoList($todo->id, $todo->body, $todo->completed);
+    }
+
+    public function echoRemoveTodo(array $todo)
+    {
+        $this->removeFromTodoList($todo['id']);
     }
 
     public function render()

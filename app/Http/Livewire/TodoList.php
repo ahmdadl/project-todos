@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\TodoDeleted;
 use App\Models\Project;
 use App\Models\Todo;
 use Livewire\Component;
@@ -17,12 +18,13 @@ class TodoList extends Component
             return;
         }
 
-        $this->emit("todo:deleted", $this->todo->id);
+        $this->emit('todo:deleted', $this->todo->id);
+        TodoDeleted::dispatch($this->todo->id, $this->todo->project_id);
     }
 
     public function edit(): void
     {
-        $this->emit("editTodo", $this->todo);
+        $this->emit('editTodo', $this->todo);
     }
 
     public function check(): void
@@ -34,6 +36,6 @@ class TodoList extends Component
 
     public function render()
     {
-        return view("livewire.todo-list");
+        return view('livewire.todo-list');
     }
 }

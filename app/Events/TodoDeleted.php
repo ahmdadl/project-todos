@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Todo;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,20 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-abstract class TodoEvent implements ShouldBroadcast
+class TodoDeleted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Todo $todo;
+    public int $id;
+    public int $projectId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Todo $todo)
+    public function __construct(int $id, int $projectId)
     {
-        $this->todo = $todo;
+        $this->id = $id;
+        $this->projectId = $projectId;
 
         $this->dontBroadcastToCurrentUser();
     }
@@ -36,6 +37,6 @@ abstract class TodoEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('todos.' . $this->todo->project_id);
+        return new PrivateChannel('todos.' . $this->projectId);
     }
 }
