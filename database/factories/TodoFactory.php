@@ -23,6 +23,7 @@ class TodoFactory extends Factory
      */
     public function definition()
     {
+        Todo::unsetEventDispatcher();
         return [
             'project_id' => fn() => Project::factory()->create()->id,
             'body' => $this->faker->sentence,

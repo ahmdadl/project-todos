@@ -7,6 +7,7 @@ use App\Http\Livewire\GetTodoList;
 use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
@@ -24,9 +25,12 @@ class TodoListTest extends TestCase
     {
         parent::setUp();
 
+        Todo::unsetEventDispatcher();
+
         $this->project = Project::factory()
             ->has(Todo::factory())
             ->create();
+
         $this->todo = $this->project->todos->first();
         $this->user = $this->project->owner;
     }

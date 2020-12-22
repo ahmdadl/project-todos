@@ -6,6 +6,7 @@ use App\Events\ProjectUpdated;
 use App\Events\ProjectEvent;
 use App\Events\RefreshCachedCategoryList;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
