@@ -60,7 +60,7 @@ class AddProjectTest extends TestCase
             ->set('completed', $this->project->completed)
             ->call('save')
             ->tap(fn() => Storage::exists('public/' . $image->hashName()))
-            ->assertEmitted('project:added', $this->project->slug)
+            ->assertEmitted('project:added', Str::slug($this->project->name))
             ->assertDispatchedBrowserEvent('reset-img');
 
         $this->assertTrue(Project::whereSlug($this->project->slug)->exists());

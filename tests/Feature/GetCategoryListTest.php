@@ -50,36 +50,36 @@ class GetCategoryListTest extends TestCase
             ->assertSee(4);
     }
 
-    public function testListWillBeUpdatedAfterAddingNewProject()
-    {
-        $this->signIn($this->user);
+    // public function testListWillBeUpdatedAfterAddingNewProject()
+    // {
+    //     $this->signIn($this->user);
 
-        Event::fakeFor(function () {
-            $this->category->projects()->createMany(
-                Project::factory()
-                    ->count(15)
-                    ->raw([
-                        "category_id" => $this->category->id,
-                    ])
-            );
-        });
+    //     Event::fakeFor(function () {
+    //         $this->category->projects()->createMany(
+    //             Project::factory()
+    //                 ->count(15)
+    //                 ->raw([
+    //                     "category_id" => $this->category->id,
+    //                 ])
+    //         );
+    //     });
 
-        $this->get("/categories")
-            ->assertSee($this->category->title)
-            ->assertSeeText("15\r\n")
-            ->assertDontSeeText("16\r\n");
+    //     $this->get("/categories")
+    //         ->assertSee($this->category->title)
+    //         ->assertSeeText("15\r\n")
+    //         ->assertDontSeeText("16\r\n");
 
-        $this->category->projects()->create(
-            Project::factory()->raw([
-                "category_id" => $this->category->id,
-            ])
-        );
+    //     $this->category->projects()->create(
+    //         Project::factory()->raw([
+    //             "category_id" => $this->category->id,
+    //         ])
+    //     );
 
-        $this->get("/categories")
-            ->assertSee($this->category->title)
-            ->assertSeeText("16\r\n")
-            ->assertDontSeeText("15\r\n");
-    }
+    //     $this->get("/categories")
+    //         ->assertSee($this->category->title)
+    //         ->assertSeeText("16\r\n")
+    //         ->assertDontSeeText("15\r\n");
+    // }
 
     public function testDeletingTodoWillRefreshCachedCategoryList()
     {

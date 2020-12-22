@@ -25,7 +25,6 @@ class ProjectFactory extends Factory
      */
     public function definition()
     {
-        Project::unsetEventDispatcher();
         $name = $this->faker->unique()->sentence;
         $img = random_int(1, 4);
         return [
