@@ -5,10 +5,13 @@ namespace App\Http\Livewire;
 use App\Events\TodoDeleted;
 use App\Models\Project;
 use App\Models\Todo;
+use App\Traits\HasToastNotify;
 use Livewire\Component;
 
 class TodoList extends Component
 {
+    use HasToastNotify;
+
     public Project $project;
     public Todo $todo;
 
@@ -19,6 +22,7 @@ class TodoList extends Component
         }
 
         $this->emit('todo:deleted', $this->todo->id);
+        $this->success('Dealeted Successfully');
         TodoDeleted::dispatch(
             $this->todo->id,
             $this->todo->project_id,

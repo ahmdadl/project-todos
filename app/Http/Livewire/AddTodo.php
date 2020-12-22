@@ -4,10 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Project;
 use App\Models\Todo;
+use App\Traits\HasToastNotify;
 use Livewire\Component;
 
 class AddTodo extends Component
 {
+    use HasToastNotify;
+
     protected $rules = [
         'body' => 'required|string|min:5|max:255',
     ];
@@ -65,7 +68,7 @@ class AddTodo extends Component
             'body' => $this->body,
         ]);
 
-        session()->flash('todo_saved', 'Todo Successfully Saved');
+        $this->success('Todo Saved Successfully');
 
         $this->emitUp('todo:saved', $todo->id);
 
@@ -79,9 +82,11 @@ class AddTodo extends Component
 
         $this->todo->body = $this->body;
 
-        if ($this->todo->update()) {
-            session()->flash('todo_saved', 'todo updated');
+        if (!$this->todo->update()) {
+            return;
         }
+
+        $this->success("Todo Updated Successfully");
 
         $this->emit(
             'todo:updated',
