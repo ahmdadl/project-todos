@@ -36,6 +36,8 @@ class AddTodo extends Component
             return;
         }
         $this->store();
+
+        $this->resetProps();
     }
 
     public function setEditMode(Todo $todo): void
@@ -71,9 +73,6 @@ class AddTodo extends Component
         $this->success('Todo Saved Successfully');
 
         $this->emitUp('todo:saved', $todo->id);
-
-        $this->clearValidation();
-        $this->body = '';
     }
 
     private function update(): void
@@ -86,7 +85,7 @@ class AddTodo extends Component
             return;
         }
 
-        $this->success("Todo Updated Successfully");
+        $this->success('Todo Updated Successfully');
 
         $this->emit(
             'todo:updated',
@@ -97,5 +96,14 @@ class AddTodo extends Component
 
         $this->disableEditMode();
         $this->clearValidation();
+        $this->reset(['body']);
+    }
+
+    private function resetProps()
+    {
+        $this->resetErrorBag();
+        $this->resetValidation();
+        $this->reset(['body']);
+        $this->dispatchBrowserEvent('edit-mode-off');
     }
 }

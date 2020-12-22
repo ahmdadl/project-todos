@@ -1,14 +1,9 @@
 <div>
     <div class="mx-auto mb-4 w-3/4">
-        @if(session()->has('todo_saved'))
-            <x-alert type='success'>
-                {{ session('todo_saved') }}
-            </x-alert>
-        @endif
         <form wire:submit.prevent='submit' x-data="{body: ''}">
             <div class="inline w-3/4">
                 <x-jet-input type='text' class='bg-transparent border-gray-600 focus:bg-gray-700 indent-1 w-3/4'
-                    placeholder='Add New Task' wire:model.lazy='body' x-model='body'
+                    placeholder='Add New Task' wire:model.defer='body' x-model='body'
                     x-on:edit-mode.window="body = $event.detail" x-on:edit-mode-off.window="body = ''" />
                 <x-jet-input-error for='body' class='w-3/4 pt-1'></x-jet-input-error>
             </div>
