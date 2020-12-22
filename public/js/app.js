@@ -8164,9 +8164,9 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/js/app.js":
+/***/ "./resources/js/app.ts":
 /*!*****************************!*\
-  !*** ./resources/js/app.js ***!
+  !*** ./resources/js/app.ts ***!
   \*****************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -8176,13 +8176,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ryangjchandler_spruce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ryangjchandler/spruce */ "./node_modules/@ryangjchandler/spruce/dist/spruce.module.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-
-
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
-
-window.Spruce.store('modal', {
-  open: true
+// @ts-ignore
+window.Spruce.store('toast', {
+    arr: [],
+    add: function (message, type) {
+        var _this = this;
+        if (type === void 0) { type = 'default'; }
+        this.arr.push({ show: true, message: message, type: type });
+        setTimeout(function (_) {
+            _this.remove(message);
+        }, 5000);
+    },
+    info: function (message) {
+        this.add(message);
+    },
+    warn: function (message) {
+        this.add(message, 'warn');
+    },
+    error: function (message) {
+        this.add(message, 'danger');
+    },
+    success: function (message) {
+        this.add(message, 'success');
+    },
+    remove: function (message) {
+        var inx = this.arr.findIndex(function (x) { return x.message === message; });
+        this.arr[inx].show = false;
+        this.arr.splice(inx, 1);
+    },
 });
+
 
 /***/ }),
 
@@ -8227,12 +8251,12 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 /***/ 0:
 /*!***********************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/css/app.css ***!
+  !*** multi ./resources/js/app.ts ./resources/css/app.css ***!
   \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\laragon\www\js\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\laragon\www\js\resources\js\app.ts */"./resources/js/app.ts");
 module.exports = __webpack_require__(/*! D:\laragon\www\js\resources\css\app.css */"./resources/css/app.css");
 
 

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Todo;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,6 +17,7 @@ abstract class TodoEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Todo $todo;
+    public string $userName;
 
     /**
      * Create a new event instance.
@@ -25,6 +27,7 @@ abstract class TodoEvent implements ShouldBroadcast
     public function __construct(Todo $todo)
     {
         $this->todo = $todo;
+        $this->userName = auth()->user()->name;
 
         $this->dontBroadcastToCurrentUser();
     }

@@ -25,6 +25,7 @@
         "postcss-mixins": "^7.0.2",
         "resolve-url-loader": "^3.1.0",
         "tailwindcss": "^1.8.0",
+        "ts-loader": "^8.0.12",
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {

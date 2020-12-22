@@ -11,7 +11,7 @@ const tailwind = require('tailwindcss')
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.ts('resources/js/app.ts', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         // require('autoprefixer'),
@@ -20,12 +20,12 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .webpackConfig(require('./webpack.config'))
     .version()
-    .browserSync({
-        proxy: 'js.test',
-        ui: false,
-        files: [
-            'public/css/*.css',
-            'public/js/*.js',
-            'resources/views/**/*.blade.php',
-        ]
-    });
+    // .browserSync({
+    //     proxy: 'js.test',
+    //     ui: false,
+    //     files: [
+    //         'public/css/*.css',
+    //         'public/js/*.js',
+    //         'resources/views/**/*.blade.php',
+    //     ]
+    // });

@@ -16,16 +16,24 @@ class TodoDeleted implements ShouldBroadcast
 
     public int $id;
     public int $projectId;
+    public string $body;
+    public string $userName;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(int $id, int $projectId)
-    {
+    public function __construct(
+        int $id,
+        int $projectId,
+        string $body,
+        string $userName
+    ) {
         $this->id = $id;
         $this->projectId = $projectId;
+        $this->body = $body;
+        $this->userName = $userName;
 
         $this->dontBroadcastToCurrentUser();
     }

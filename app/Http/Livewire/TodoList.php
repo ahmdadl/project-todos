@@ -19,7 +19,12 @@ class TodoList extends Component
         }
 
         $this->emit('todo:deleted', $this->todo->id);
-        TodoDeleted::dispatch($this->todo->id, $this->todo->project_id);
+        TodoDeleted::dispatch(
+            $this->todo->id,
+            $this->todo->project_id,
+            $this->todo->body,
+            auth()->user()->name
+        );
     }
 
     public function edit(): void

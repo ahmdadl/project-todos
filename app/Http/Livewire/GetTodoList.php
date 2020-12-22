@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Project;
 use App\Models\Todo;
+use App\Traits\HasToastNotify;
+use Arr;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
@@ -11,6 +13,7 @@ use Livewire\Component;
 class GetTodoList extends Component
 {
     use AuthorizesRequests;
+    use HasToastNotify;
 
     public Collection $todos;
     public Project $project;
@@ -31,14 +34,18 @@ class GetTodoList extends Component
             'todo:saved' => 'appendTodo',
             'todo:updated' => 'updateTodoList',
             'todo:deleted' => 'removeFromTodoList',
-            "echo-private:todos.{$this->project->id},TodoCreated" => 'appendTodo',
+            "echo-private:todos.{$this->project->id},TodoCreated" => 'echoAppendTodo',
             "echo-private:todos.{$this->project->id},TodoUpdated" => 'echoUpdateTodo',
             "echo-private:todos.{$this->project->id},TodoDeleted" => 'echoRemoveTodo',
         ];
     }
 
-    public function appendTodo(Todo $todo)
+    public function appendTodo($todo)
     {
+        if (is_int($todo)) {
+            $todo = Todo::find($todo);
+        }
+
         $this->todos->prepend($todo);
     }
 
@@ -59,14 +66,31 @@ class GetTodoList extends Component
         );
     }
 
-    public function echoUpdateTodo(Todo $todo)
+    public function echoAppendTodo(array $ev)
     {
+        $this->appendTodo($ev['todo']['id']);
+        $this->success('New Tosat Added by (' . $ev['userName'] . ')');
+    }
+
+    public function echoUpdateTodo(array $ev)
+    {
+        $todo = (object) $ev['todo'];
         $this->updateTodoList($todo->id, $todo->body, $todo->completed);
+        $this->success(
+            'Toast (' . $todo->body . ') Updated by (' . $ev['userName'] . ')'
+        );
     }
 
     public function echoRemoveTodo(array $todo)
     {
         $this->removeFromTodoList($todo['id']);
+        $this->success(
+            'Toast (' .
+                $todo['body'] .
+                ') Deleted by (' .
+                $todo['userName'] .
+                ')'
+        );
     }
 
     public function render()

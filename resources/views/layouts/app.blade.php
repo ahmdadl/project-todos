@@ -8,9 +8,9 @@
 
     <title>
         @isset($title)
-            {{$title}}
+            {{ $title }}
         @else
-            @yield('title', config('app.name', ''))
+            @yield('title', '')
         @endisset
     </title>
 
@@ -43,6 +43,8 @@
             <main class='sm:p-2 md:p-3'>
                 {{ $slot ?? '' }}
                 @yield('content', '')
+
+                <x-toast></x-toast>
             </main>
     </div>
 
