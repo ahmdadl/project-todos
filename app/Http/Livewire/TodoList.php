@@ -22,7 +22,7 @@ class TodoList extends Component
         }
 
         $this->emit('todo:deleted', $this->todo->id);
-        $this->success('Dealeted Successfully');
+        $this->success('Deleted Successfully');
         TodoDeleted::dispatch(
             $this->todo->id,
             $this->todo->project_id,

@@ -9,6 +9,7 @@ use Arr;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use Str;
 
 class GetTodoList extends Component
 {
@@ -77,7 +78,7 @@ class GetTodoList extends Component
         $todo = (object) $ev['todo'];
         $this->updateTodoList($todo->id, $todo->body, $todo->completed);
         $this->success(
-            'Toast (' . $todo->body . ') Updated by (' . $ev['userName'] . ')'
+            'Toast (' . Str::limit($todo->body, 35) . ') Updated by (' . $ev['userName'] . ')'
         );
     }
 
@@ -86,7 +87,7 @@ class GetTodoList extends Component
         $this->removeFromTodoList($todo['id']);
         $this->success(
             'Toast (' .
-                $todo['body'] .
+                Str::limit($todo['body'], 35) .
                 ') Deleted by (' .
                 $todo['userName'] .
                 ')'
