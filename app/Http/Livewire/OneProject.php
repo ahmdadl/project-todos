@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\ProjectDeleted;
 use App\Models\Project;
 use App\Models\User;
 use App\Traits\HasToastNotify;
@@ -57,6 +58,10 @@ class OneProject extends Component
         $this->authorize('owner', $this->project);
 
         $this->project->delete();
+
+        $this->success('Project Deleted Successfully');
+
+        ProjectDeleted::dispatch($this->project->name, $this->project->slug);
 
         $this->emit('project:deleted', $this->project->slug);
     }

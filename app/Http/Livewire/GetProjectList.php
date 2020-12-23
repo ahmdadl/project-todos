@@ -29,6 +29,7 @@ class GetProjectList extends Component
         'project:updated' => 'updateProject',
         'project:deleted' => 'removeProject',
         'echo:projects,ProjectUpdated' => 'echoUpdateProject',
+        'echo:projects,ProjectDeleted' => 'echoRemoveProject',
     ];
 
     public function mount()
@@ -112,6 +113,11 @@ class GetProjectList extends Component
         );
 
         $this->updateProject($project);
+    }
+
+    public function echoRemoveProject($ev)
+    {
+        // 
     }
 
     public function sortByHighCost()
