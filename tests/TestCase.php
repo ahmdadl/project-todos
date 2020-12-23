@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use Config;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -14,6 +15,8 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         // $this->signIn();
+
+        Config::set('broadcasting', null);
     }
 
     public function signIn(?User $user = null, array $attr = []): User
