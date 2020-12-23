@@ -109,6 +109,26 @@ class GetProjectListTest extends TestCase
             ->assertSee($project->name);
     }
 
+    public function testProjectEventWillBeEchoed()
+    {
+        $project = Project::factory()->create();
+        $project->team()->sync($this->user);
+
+        $this->test = Livewire::test(GetProjectList::class);
+
+        $this->assertTrue(
+            $this->user->can('teamMember', new Project($project->toArray()))
+        );
+
+        $this->test
+            ->call('echoUpdateProject', [
+                'project' => $project->toArray(),
+                'userName' => $this->user->name,
+            ])
+            ->assertEmitted('modal:close')
+            ->assertDispatchedBrowserEvent('notify-success');
+    }
+
     private function createProject(array $attrs): Project
     {
         $this->project = Project::create($attrs);

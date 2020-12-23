@@ -8187,6 +8187,7 @@ window.Spruce.store('toast', {
         setTimeout(function (_) {
             _this.remove(message);
         }, 5000);
+        // console.log(message, type);
     },
     info: function (message) {
         this.add(message);

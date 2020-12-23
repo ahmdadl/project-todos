@@ -12,6 +12,7 @@ window.Spruce.store('toast', {
         setTimeout((_) => {
             this.remove(message);
         }, 5000);
+        // console.log(message, type);
     },
     info(message: string) {
         this.add(message);

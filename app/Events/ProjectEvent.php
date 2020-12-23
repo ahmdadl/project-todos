@@ -16,6 +16,7 @@ abstract class ProjectEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Project $project;
+    public string $userName;
 
     /**
      * Create a new event instance.
@@ -25,6 +26,8 @@ abstract class ProjectEvent implements ShouldBroadcast
     public function __construct(Project $project)
     {
         $this->project = $project;
+        $this->userName = auth()->user()->name;
+
         $this->dontBroadcastToCurrentUser();
     }
 

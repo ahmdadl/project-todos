@@ -4,12 +4,15 @@ namespace App\Http\Livewire;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Traits\HasToastNotify;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use Str;
 
 class OneProject extends Component
 {
     use AuthorizesRequests;
+    use HasToastNotify;
 
     public User $user;
     public Project $project;
@@ -64,6 +67,8 @@ class OneProject extends Component
 
         $this->project->completed = !$this->project->completed;
         $this->project->update();
+
+        $this->success('Project Updated Successfully');
     }
 
     public function addUserToTeam()
@@ -76,6 +81,12 @@ class OneProject extends Component
 
         $this->project->team()->syncWithoutDetaching($user->id);
         $this->project->load('team');
+
+        $this->success(
+            'User (' .
+                Str::limit($this->teamUserMail, 10) .
+                ') Added To Team Successfully'
+        );
 
         $this->toggleTeamModal();
     }

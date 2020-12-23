@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
+use App\Traits\HasToastNotify;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
@@ -16,6 +17,7 @@ class AddProject extends Component
 {
     use WithFileUploads;
     use AuthorizesRequests;
+    use HasToastNotify;
 
     public User $user;
     public Project $project;
@@ -105,6 +107,10 @@ class AddProject extends Component
             'completed' => (bool) $this->completed,
         ]);
 
+        $this->success(
+            'Project' . Str::limit($this->name, 20) . ' Created Successfully'
+        );
+
         $this->emit('project:added', $project->slug);
     }
 
@@ -128,6 +134,8 @@ class AddProject extends Component
         $this->project->completed = $this->completed;
 
         $this->project->update();
+
+        $this->success('Project Updated Successfully');
 
         $this->emit('project:updated', $this->project->slug);
     }

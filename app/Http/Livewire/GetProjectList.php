@@ -4,11 +4,18 @@ namespace App\Http\Livewire;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Traits\HasToastNotify;
+use DB;
+use Gate;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use Str;
 
 class GetProjectList extends Component
 {
+    use HasToastNotify;
+
     public Collection $allProjects;
     public Collection $projects;
     public User $user;
@@ -88,11 +95,21 @@ class GetProjectList extends Component
             ->values();
     }
 
-    public function echoUpdateProject($project)
+    public function echoUpdateProject($ev)
     {
-        if (!$this->user->can('teamMember', (object)$project)) {
+        $project = new Project($ev['project']);
+
+        if ($this->user->cannot('teamMember', $project)) {
             return;
         }
+
+        $this->success(
+            'Project (' .
+                Str::limit($project->name, 20) .
+                ') Was Updated by (' .
+                $ev['userName'] .
+                ')'
+        );
 
         $this->updateProject($project);
     }
@@ -142,8 +159,7 @@ class GetProjectList extends Component
 
         $this->allProjects = $query->get();
 
-        $teamProjects = $this->user->load('team_projects')
-            ->team_projects;
+        $teamProjects = $this->user->load('team_projects')->team_projects;
 
         $this->allProjects = $this->allProjects->merge($teamProjects);
 
