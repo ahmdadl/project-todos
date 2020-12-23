@@ -5,7 +5,7 @@
     <span x-on:notify-info.window="$store.toast.info($event.detail.message)" x-cloak></span>
 </div>
 
-<div x-data class='absolute bottom-0 right-0' wire:ignore>
+<div x-data class='fixed bottom-0 right-0' wire:ignore>
     <template x-for='(t, inx) in $store.toast.arr'>
         <div class='toast cursor-pointer text-white opacity-100' :class="'toast-' + t.type"
             x-on:click='$store.toast.remove(inx)' x-show="t.show" x-transition:enter="transition ease-out duration-300"
