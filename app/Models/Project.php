@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Events\ProjectUpdated;
 use App\Events\ProjectEvent;
+use App\Events\ProjectIsDeleteing;
 use App\Events\RefreshCachedCategoryList;
+use App\Notifications\OwnerDeletdProject;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +37,15 @@ class Project extends Model
         'updated' => ProjectUpdated::class,
         'deleted' => RefreshCachedCategoryList::class,
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function (Project $project) {
+            ProjectIsDeleteing::dispatch($project, auth()->user());
+        });
+    }
 
     public function getRouteKeyName()
     {
