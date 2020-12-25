@@ -5,16 +5,21 @@ namespace App\Http\Livewire;
 use App\Models\Project;
 use App\Models\User;
 use App\Traits\HasToastNotify;
+use App\Traits\ProjectListFilters;
 use DB;
 use Gate;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Str;
 
 class GetProjectList extends Component
 {
     use HasToastNotify;
+    use WithPagination;
+    use ProjectListFilters;
 
     public Collection $allProjects;
     public Collection $projects;
@@ -22,6 +27,11 @@ class GetProjectList extends Component
     public bool $onlyCompleted = false;
     public string $sortBy = '';
     public bool $showModal = false;
+
+    private int $projectsCount = 0;
+    private int $teamProjectsCount = 0;
+
+    protected int $perPage = 15;
 
     protected $listeners = [
         'modal:closed' => 'closeModal',
@@ -35,30 +45,22 @@ class GetProjectList extends Component
     public function mount()
     {
         $this->user = auth()->user();
+
         $this->getData('asc', false);
+
     }
 
-    public function showOnlyCompleted(
-        bool $toggle = true,
-        ?Collection $collection = null
-    ) {
-        if ($toggle) {
-            $this->onlyCompleted = !$this->onlyCompleted;
-        }
+    public function hydrate()
+    {
+        $this->getData('asc', false);
 
-        $collection = $collection ?? $this->allProjects;
+        $this->projectsCount = Project::whereUserId($this->user->id)->count(
+            'id'
+        );
 
-        if ($this->onlyCompleted) {
-            $projects = $this->allProjects->filter(
-                fn(Project $p) => $p->completed === $this->onlyCompleted
-            );
-
-            $this->projects = $this->applySort($projects);
-
-            return;
-        }
-
-        $this->projects = $this->applySort($this->allProjects);
+        $this->teamProjectsCount = DB::table('project_user')
+            ->whereUserId($this->user->id)
+            ->count('user_id');
     }
 
     public function appendProject(Project $project)
@@ -117,38 +119,51 @@ class GetProjectList extends Component
 
     public function echoRemoveProject($ev)
     {
-        // 
-    }
-
-    public function sortByHighCost()
-    {
-        $this->getData('desc');
-    }
-
-    public function sortByLowCost()
-    {
-        $this->getData('asc');
-    }
-
-    public function resetSortBy(): void
-    {
-        $this->getData('asc', false);
+        //
     }
 
     public function render()
     {
-        return view('livewire.get-project-list');
+        $projects = new LengthAwarePaginator(
+            $this->projects,
+            $this->total_count,
+            $this->perPage,
+            $this->page
+        );
+
+        return view('livewire.get-project-list', [
+            'data' => $projects,
+        ]);
     }
 
-    private function getData(string $sortBy = 'asc', bool $sort = true): void
+    public function getTotalCountProperty(): int
     {
-        if ($this->sortBy === $sortBy && $sort) {
-            return;
+        return $this->page === 1
+            ? $this->projectsCount + $this->teamProjectsCount
+            : $this->projectsCount;
+    }
+
+    public function getOffsetProperty(): int
+    {
+        return ($this->page - 1) * $this->perPage;
+    }
+
+    private function getData(
+        string $sortBy = 'asc',
+        bool $sort = true,
+        bool $force = false
+    ): void {
+        if (!$force) {
+            if ($this->sortBy === $sortBy && $sort) {
+                return;
+            }
         }
 
         $query = Project::whereUserId($this->user->id)
             ->with(['category', 'team'])
-            ->withCount('todos');
+            ->withCount('todos')
+            ->limit($this->perPage)
+            ->offset($this->offset);
 
         if ($sort) {
             $query->orderBy('cost', $sortBy);
@@ -165,31 +180,12 @@ class GetProjectList extends Component
 
         $this->allProjects = $query->get();
 
-        $teamProjects = $this->user->load('team_projects')->team_projects;
+        if ($this->page === 1) {
+            $teamProjects = $this->user->load('team_projects')->team_projects;
 
-        $this->allProjects = $this->allProjects->merge($teamProjects);
-
-        $this->projects = $this->allProjects;
-    }
-
-    private function applySort(Collection $collection): Collection
-    {
-        $projects = $collection;
-
-        if (!empty($this->sortBy)) {
-            $projects =
-                $this->sortBy === 'asc'
-                    ? $projects->sortBy('cost')
-                    : $projects->sortByDesc('cost');
+            $this->allProjects = $this->allProjects->merge($teamProjects);
         }
 
-        return $projects;
-    }
-
-    private function applyFilters(): void
-    {
-        $projects = $this->applySort($this->allProjects);
-
-        $this->showOnlyCompleted(false, $projects);
+        $this->projects = $this->allProjects;
     }
 }
