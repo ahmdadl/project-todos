@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Str;
@@ -16,6 +17,7 @@ class OwnerDeletdProject extends Notification implements ShouldQueue
     public string $projectName;
     public string $ownerName;
     public string $ownerMail;
+    public Collection $team;
 
     /**
      * Create a new notification instance.
@@ -25,11 +27,13 @@ class OwnerDeletdProject extends Notification implements ShouldQueue
     public function __construct(
         string $projectName,
         string $ownerName,
-        string $ownerMail
+        string $ownerMail,
+        Collection $team
     ) {
         $this->projectName = $projectName;
         $this->ownerName = $ownerName;
         $this->ownerMail = $ownerMail;
+        $this->team = $team;
     }
 
     /**
@@ -52,8 +56,9 @@ class OwnerDeletdProject extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->greeting('Hello! '. $notifiable->name)
+            ->greeting('Hello! ' . $notifiable->name)
             ->from($this->ownerMail, $this->ownerName)
+            ->cc($this->team->pluck('email', 'name')->toArray())
             ->subject(
                 'Project (' .
                     Str::limit($this->projectName, 25) .

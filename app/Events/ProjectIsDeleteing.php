@@ -25,16 +25,13 @@ class ProjectIsDeleteing implements ShouldQueue
      */
     public function __construct(Project $project, User $owner)
     {
-        $project
-            ->team()
-            ->each(
-                fn(User $user) => $user->notify(
-                    new OwnerDeletdProject(
-                        $project->name,
-                        $owner->name,
-                        $owner->email
-                    )
-                )
-            );
+        $project->load('team');
+
+        $owner->notify(new OwnerDeletdProject(
+            $project->name,
+            $owner->name,
+            $owner->email,
+            $project->team
+        ));
     }
 }
