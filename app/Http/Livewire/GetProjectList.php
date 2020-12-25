@@ -48,6 +48,13 @@ class GetProjectList extends Component
 
         $this->getData('asc', false);
 
+        $this->projectsCount = Project::whereUserId($this->user->id)->count(
+            'id'
+        );
+
+        $this->teamProjectsCount = DB::table('project_user')
+            ->whereUserId($this->user->id)
+            ->count('user_id');
     }
 
     public function hydrate()
@@ -57,10 +64,6 @@ class GetProjectList extends Component
         $this->projectsCount = Project::whereUserId($this->user->id)->count(
             'id'
         );
-
-        $this->teamProjectsCount = DB::table('project_user')
-            ->whereUserId($this->user->id)
-            ->count('user_id');
     }
 
     public function appendProject(Project $project)
