@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Events\ProjectDeleted;
 use App\Models\Project;
 use App\Models\User;
+use App\Notifications\AddedToProjectTeam;
 use App\Traits\HasToastNotify;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
@@ -82,6 +83,7 @@ class OneProject extends Component
 
         $this->validate();
 
+        /** @var \App\Models\User $user */
         $user = User::whereEmail($this->teamUserMail)->first('id');
 
         $this->project->team()->syncWithoutDetaching($user->id);
@@ -91,6 +93,13 @@ class OneProject extends Component
             'User (' .
                 Str::limit($this->teamUserMail, 10) .
                 ') Added To Team Successfully'
+        );
+
+        $user->notify(
+            new AddedToProjectTeam(
+                auth()->user(),
+                $this->project->name
+            )
         );
 
         $this->toggleTeamModal();
