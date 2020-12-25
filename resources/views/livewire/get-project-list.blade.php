@@ -19,6 +19,7 @@
                 </div>
         @endforelse
     </div>
+    <hr class="my-1 bg-gray-300" />
     <div class='py-3'>
         {{ $data->links() }}
     </div>
