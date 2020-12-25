@@ -7,6 +7,7 @@
 
     <livewire:add-project :user="$user" />
 
+    @include('project.index.list-loader')
 
     <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-3 md:gap-5' wire:loading.class='hidden'>
         @forelse($data as $project)
