@@ -86,7 +86,7 @@ class OneProject extends Component
         /** @var \App\Models\User $user */
         $user = User::whereEmail($this->teamUserMail)->first('id');
 
-        $this->project->team()->syncWithoutDetaching($user->id);
+        $this->project->team()->syncWithoutDetaching($user);
         $this->project->load('team');
 
         $this->success(

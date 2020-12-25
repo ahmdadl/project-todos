@@ -70,7 +70,7 @@ class AddProject extends Component
 
         $this->categorySlug = $categorySlug;
         $this->name = $project->name;
-        $this->cost = $project->cost;
+        $this->cost = (string)$project->cost;
         $this->image = null;
         $this->completed = $project->completed;
     }
@@ -130,7 +130,7 @@ class AddProject extends Component
         }
 
         $this->project->name = $this->name;
-        $this->project->cost = $this->cost;
+        $this->project->cost = (float) $this->cost;
         $this->project->completed = $this->completed;
 
         $this->project->update();
