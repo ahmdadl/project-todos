@@ -52,8 +52,6 @@ class AddedToProjectTeam extends ProjectNotification
         $notifiable
     ): SlackMessage {
         return $slackMessage
-            ->from('Admin', ':lightning:')
-            ->to('#project-todos')
             ->content("user ({$notifiable->name}) was added as project team member.\nProject Name: {$this->projectName}\nOwner Name: {$this->owner->name}");
     }
 }

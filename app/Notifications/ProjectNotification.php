@@ -52,20 +52,19 @@ abstract class ProjectNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $mail = new MailMessage();
-        return $this->mailMessage($mail, $notifiable);
+        return $this->mailMessage(new MailMessage(), $notifiable);
     }
 
     public function toTelegram($notifiable)
     {
-        $telegram = TelegramMessage::create();
-
-        return $this->telegramMessage($telegram, $notifiable);
+        return $this->telegramMessage(TelegramMessage::create(), $notifiable);
     }
 
     public function toSlack($notifiable)
     {
-        $slack = new SlackMessage();
+        $slack = (new SlackMessage())
+            ->from('Admin', ':lightning:')
+            ->to('#project-todos');
 
         return $this->slackMessage($slack, $notifiable);
     }

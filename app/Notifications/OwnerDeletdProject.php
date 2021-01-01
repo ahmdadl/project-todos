@@ -46,9 +46,10 @@ class OwnerDeletdProject extends ProjectNotification
         SlackMessage $slackMessage,
         $notifiable
     ): SlackMessage {
-        return $slackMessage
-            ->from('Ghost', ':ghost')
-            ->to('#project-todos')
-            ->content('send message to slack');
+        return $slackMessage->content(
+            "Project ({$this->projectName}) was Deleted by it`s owner ({$this->owner->name})\nTeam Members: @" .
+                join(", @", $this->team->pluck('name')->toArray()) .
+                ''
+        );
     }
 }
