@@ -56,6 +56,16 @@ class User extends Authenticatable
      */
     protected $appends = ['profile_photo_url', 'is_admin'];
 
+    /**
+     * Route notifications for the Telegram channel.
+     *
+     * @return int
+     */
+    public function routeNotificationForTelegram()
+    {
+        return '1181269134'; // my telegram id
+    }
+
     public function getIsAdminAttribute(): bool
     {
         return $this->id === 1;

@@ -2,51 +2,17 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use NotificationChannels\Telegram\TelegramMessage;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 use Str;
 
-class AddedToProjectTeam extends Notification implements ShouldQueue
+class AddedToProjectTeam extends ProjectNotification
 {
-    use Queueable;
-
-    public User $owner;
-    public string $projectName;
-
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct(User $owner, string $projectName)
-    {
-        $this->owner = $owner;
-        $this->projectName = $projectName;
-    }
-
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return ['mail'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  \App\Models\User  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage())
+    protected function mailMessage(
+        MailMessage $mailMessage,
+        $notifiable
+    ): MailMessage {
+        return $mailMessage
             ->greeting('Hello! ' . $notifiable->name)
             ->from(env('MAIL_FROM_ADDRESS'))
             ->subject('Project Team New Member')
@@ -64,16 +30,19 @@ class AddedToProjectTeam extends Notification implements ShouldQueue
             ->line('Thank you for using our application!');
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-                //
-            ];
+    protected function telegramMessage(
+        TelegramMessage $telegramMessage,
+        $notifiable
+    ): TelegramMessage {
+        return $telegramMessage
+            // ->to('1181269134')
+            ->content(
+                "Hello there\n*{$notifiable->name}* was added to project team.\n*Project Name*: {$this->projectName}\n*Owner Name*: {$this->owner->name}"
+            )
+            ->button(
+                'Visit Project',
+                url('/projects/' . Str::slug($this->projectName))
+            )
+            ->button('Your Projects', url('/projects'));
     }
 }

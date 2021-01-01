@@ -2,60 +2,17 @@
 
 namespace App\Notifications;
 
-use App\Models\Project;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Collection;
+use NotificationChannels\Telegram\TelegramMessage;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 use Str;
 
-class OwnerDeletdProject extends Notification implements ShouldQueue
+class OwnerDeletdProject extends ProjectNotification
 {
-    use Queueable;
-
-    public string $projectName;
-    public string $ownerName;
-    public string $ownerMail;
-    public Collection $team;
-
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct(
-        string $projectName,
-        string $ownerName,
-        string $ownerMail,
-        Collection $team
-    ) {
-        $this->projectName = $projectName;
-        $this->ownerName = $ownerName;
-        $this->ownerMail = $ownerMail;
-        $this->team = $team;
-    }
-
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return ['mail'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage())
+    protected function mailMessage(
+        MailMessage $mailMessage,
+        $notifiable
+    ): MailMessage {
+        return $mailMessage
             ->greeting('Hello! ' . $notifiable->name)
             ->from(env('MAIL_FROM_ADDRESS'))
             ->cc($this->team->pluck('email', 'name')->toArray())
@@ -68,21 +25,20 @@ class OwnerDeletdProject extends Notification implements ShouldQueue
                 'We Would Like to inform you that a project which you are participation to was deleted by it`s owner'
             )
             ->line('Project Name: ' . $this->projectName)
-            ->line('Owner Name: ' . $this->ownerName)
+            ->line('Owner Name: ' . $this->owner->name)
             ->action('Visit your Projects page', url('/projects/'))
             ->line('Thank you for using our application!');
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-                //
-            ];
+    protected function telegramMessage(
+        TelegramMessage $telegramMessage,
+        $notifiable
+    ): TelegramMessage {
+        return $telegramMessage
+            // ->to('1181269134')
+            ->content(
+                "Hello there\nWe would like to notify that project was deleted\n*Project Name*: {$this->projectName}\n*Owner Name*: {$this->owner->name}"
+            )
+            ->button('Your Projects', url('/projects'));
     }
 }
