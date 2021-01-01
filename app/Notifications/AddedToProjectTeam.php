@@ -48,7 +48,7 @@ class AddedToProjectTeam extends Notification implements ShouldQueue
     {
         return (new MailMessage())
             ->greeting('Hello! ' . $notifiable->name)
-            ->from($this->owner->email, $this->owner->name)
+            ->from(env('MAIL_FROM_ADDRESS'))
             ->subject('Project Team New Member')
             ->line(
                 'We would like to inform you that you was added as team member for project (' .

@@ -57,7 +57,7 @@ class OwnerDeletdProject extends Notification implements ShouldQueue
     {
         return (new MailMessage())
             ->greeting('Hello! ' . $notifiable->name)
-            ->from($this->ownerMail, $this->ownerName)
+            ->from(env('MAIL_FROM_ADDRESS'))
             ->cc($this->team->pluck('email', 'name')->toArray())
             ->subject(
                 'Project (' .
