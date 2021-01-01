@@ -66,6 +66,17 @@ class User extends Authenticatable
         return '1181269134'; // my telegram id
     }
 
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForSlack($notification)
+    {
+        return 'https://hooks.slack.com/services/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';
+    }
+
     public function getIsAdminAttribute(): bool
     {
         return $this->id === 1;

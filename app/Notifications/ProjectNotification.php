@@ -3,14 +3,12 @@
 namespace App\Notifications;
 
 use App\Models\User;
-use NotificationChannels\Telegram\TelegramChannel;
-use NotificationChannels\Telegram\TelegramMessage;
+use NotificationChannels\Telegram\{TelegramChannel, TelegramMessage};
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\{MailMessage, SlackMessage};
 use Illuminate\Notifications\Notification;
-use Str;
 
 abstract class ProjectNotification extends Notification implements ShouldQueue
 {
@@ -43,7 +41,7 @@ abstract class ProjectNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return [TelegramChannel::class, 'mail'];
+        return [TelegramChannel::class, 'mail', 'slack'];
     }
 
     /**
@@ -65,6 +63,13 @@ abstract class ProjectNotification extends Notification implements ShouldQueue
         return $this->telegramMessage($telegram, $notifiable);
     }
 
+    public function toSlack($notifiable)
+    {
+        $slack = new SlackMessage();
+
+        return $this->slackMessage($slack, $notifiable);
+    }
+
     abstract protected function mailMessage(
         MailMessage $mailMessage,
         $notifiable
@@ -74,4 +79,9 @@ abstract class ProjectNotification extends Notification implements ShouldQueue
         TelegramMessage $telegramMessage,
         $notifiable
     ): TelegramMessage;
+
+    abstract protected function slackMessage(
+        SlackMessage $slackMessage,
+        $notifiable
+    ): SlackMessage;
 }

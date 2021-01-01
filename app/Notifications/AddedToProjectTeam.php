@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use NotificationChannels\Telegram\TelegramMessage;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Str;
 
 class AddedToProjectTeam extends ProjectNotification
@@ -44,5 +45,15 @@ class AddedToProjectTeam extends ProjectNotification
                 url('/projects/' . Str::slug($this->projectName))
             )
             ->button('Your Projects', url('/projects'));
+    }
+
+    protected function slackMessage(
+        SlackMessage $slackMessage,
+        $notifiable
+    ): SlackMessage {
+        return $slackMessage
+            ->from('Admin', ':lightning:')
+            ->to('#project-todos')
+            ->content("user ({$notifiable->name}) was added as project team member.\nProject Name: {$this->projectName}\nOwner Name: {$this->owner->name}");
     }
 }

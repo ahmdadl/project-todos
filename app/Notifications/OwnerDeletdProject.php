@@ -3,7 +3,7 @@
 namespace App\Notifications;
 
 use NotificationChannels\Telegram\TelegramMessage;
-use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\{MailMessage, SlackMessage};
 use Str;
 
 class OwnerDeletdProject extends ProjectNotification
@@ -40,5 +40,15 @@ class OwnerDeletdProject extends ProjectNotification
                 "Hello there\nWe would like to notify that project was deleted\n*Project Name*: {$this->projectName}\n*Owner Name*: {$this->owner->name}"
             )
             ->button('Your Projects', url('/projects'));
+    }
+
+    protected function slackMessage(
+        SlackMessage $slackMessage,
+        $notifiable
+    ): SlackMessage {
+        return $slackMessage
+            ->from('Ghost', ':ghost')
+            ->to('#project-todos')
+            ->content('send message to slack');
     }
 }
