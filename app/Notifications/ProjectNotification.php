@@ -41,7 +41,8 @@ abstract class ProjectNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return [TelegramChannel::class, 'mail', 'slack'];
+        // return [TelegramChannel::class, 'mail', 'slack'];
+        return ['mail'];
     }
 
     /**
