@@ -25,13 +25,15 @@
             @endisset
 
             <!-- Page Content -->
-            <main class='sm:p-2 md:p-3'>
-                {{ $slot ?? '' }}
-                @yield('content', '')
+            <div class='flex flex-col justify-between min-h-screen'>
+                <main class='sm:p-2 md:p-3'>
+                    {{ $slot ?? '' }}
+                    @yield('content', '')
 
-                <x-toast></x-toast>
-            </main>
-            @include('footer')
+                    <x-toast></x-toast>
+                </main>
+                @include('footer')
+            </div>
     </div>
 
     @stack('modals')
