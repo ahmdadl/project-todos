@@ -8207,6 +8207,13 @@ window.Spruce.store('toast', {
         this.arr.splice(inx, 1);
     },
 });
+// @ts-ignore
+window.Spruce.store('common', {
+    dark: !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+    toggleDark: function () {
+        this.dark = !this.dark;
+    },
+});
 
 
 /***/ }),

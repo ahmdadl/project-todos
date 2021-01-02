@@ -37,7 +37,7 @@
      style="display:inline">
     <path
        id="path116"
-       style="opacity:1;fill:#252f3f;fill-opacity:1;stroke:#666666;stroke-width:0.111323"
+       style="opacity:1;fill:transparent;fill-opacity:1;stroke:transparent;stroke-width:0.111323"
        d="M 29.793626,6.683296 A 27.775273,30.007961 0 0 0 2.0241175,36.691515 27.775273,30.007961 0 0 0 29.79939,66.699292 27.775273,30.007961 0 0 0 57.574661,36.691515 27.775273,30.007961 0 0 0 29.79939,6.683296 a 27.775273,30.007961 0 0 0 -0.0057,0 z" />
     <path
        style="fill:#f9f9f9;stroke-width:0.264583"

@@ -1,6 +1,6 @@
-<nav x-data="{ open: false }" class="bg-gray-900 border-b border-gray-900">
+<nav x-data="{ open: false }" class="dark:bg-gray-900 border-b dark:border-gray-900">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-blue-900 dark:bg-gray-900 text-white">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -16,6 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
 
+                    
                     <x-jet-nav-link href="/projects" :active="request()->is('projects')">
                         {{ __('projects') }}
                     </x-jet-nav-link>
@@ -29,6 +30,7 @@
             </div>
 
             <!-- Settings Dropdown -->
+            <x-theme-toggler></x-theme-toggler>
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-jet-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -130,6 +132,17 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+
+            <x-jet-responsive-nav-link href="/projects" :active="request()->is('projects')">
+                {{ __('projects') }}
+            </x-jet-responsive-nav-link>
+
+            @if(auth()->user()->is_admin)
+            <x-jet-responsive-nav-link href="/categories" :active="request()->is('categories')">
+                {{ __('Categories') }}
+            </x-jet-responsive-nav-link>
+            @endif
+            
         </div>
 
         <!-- Responsive Settings Options -->

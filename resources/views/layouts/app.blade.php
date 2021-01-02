@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data :class="{'theme-dark': $store.common.dark}">
 
 <head>
     @include('layouts.head')
@@ -10,12 +10,12 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-800 text-gray-100">
+    <div class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-900 dark:text-gray-100">
         @livewire('navigation-dropdown')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-indigo-700 text-white font-semibold shadow mb-5">
+                <header class="bg-indigo-600 dark:bg-indigo-800 text-white font-semibold shadow mb-5">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>

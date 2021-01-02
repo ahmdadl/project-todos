@@ -1,5 +1,5 @@
 <div>
-    <div class='group hover:bg-gray-300 transition duration-500 ease-linear relative bg-gray-700 shadow mb-4 rounded overflow-hidden'>
+    <div class='transition duration-500 ease-linear relative bg-gray-300 dark:bg-gray-700 shadow-lg mb-4 rounded overflow-hidden'>
         <a class='appearance-none cursor-pointer' href='/projects/{{ $project->slug }}' class='text-lg'>
             <img class='w-full transition-transform duration-500 ease-in-out transform overflow-hidden hover:scale-110'
                 src='{{ $project->img_path }}' />
@@ -14,23 +14,23 @@
                 <i class='fas fa-at'></i>
             </div>
             <div class='p-2 font-bold cursor-pointer'>
-                <h3><a class='pt-1 text-teal-400 hover:text-teal-600 hover:underline group-hover:text-teal-700'
+                <h3><a class='pt-1 text-teal-600 dark:text-teal-400 hover:text-teal-800 hover:underline'
                         href='/projects/{{ $project->slug }}' class='text-lg'>{{ $project->name }}</a></h3>
                 <p class='text-green-500'>${{ $project->cost }}</p>
-                <p class='text-gray-300 group-hover:text-gray-800'>
+                <p class='text-gray-700 dark:text-gray-300'>
                     <i class='fas fa-bookmark'></i>
                     {{ $project->category->title }}
                 </p>
-                <hr class='border border-gray-400 group-hover:border-gray-700 my-3' wire:ignore />
+                <hr class='border border-gray-600 dark:border-gray-300 my-3' wire:ignore />
                 <div class='px-2'>
                     @foreach(
                         $project->team as $team_user)
                         <img src="{{ $team_user->profile_photo_url }}"
-                            class='h-10 w-10 rounded-full object-cover border-2 border-gray-300 inline group-hover:border-gray-800 -m-2'
+                            class='h-10 w-10 rounded-full object-cover border-2 border-gray-300 inline -m-2'
                             alt='{{ $team_user->name }} profile photo' title='{{ $team_user->name }}' />
                     @endforeach
                 </div>
-                <hr class='border border-gray-400 group-hover:border-gray-700 my-3' wire:ignore />
+                <hr class='border border-gray-600 dark:border-gray-300 my-3' wire:ignore />
                 <div class='grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-0 text-center'>
                     <x-jet-button class='rounded-r-none' bg='blue' clear='1' icon='fas fa-edit'
                         wire:click.prevent='edit'>

@@ -10,6 +10,7 @@ module.exports = {
     ],
 
     theme: {
+        themeVariants: ['dark', 'neon'],
         extend: {
             fontFamily: {
                 sans: ['Cairo', ...defaultTheme.fontFamily.sans],
@@ -23,15 +24,18 @@ module.exports = {
     variants: {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
         cursor: ['disabled', 'hover'],
-        backgroundColor: ['disabled', 'hover', 'focus', 'active', 'invalid'],
-        borderColor: ['disabled', 'hover', 'focus', 'active', 'invalid', 'group-hover'],
-        boxShadow: ['disabled', 'hover', 'focus', 'active', 'invalid'],
+        backgroundColor: ['disabled', 'hover', 'focus', 'active', 'invalid', 'dark'],
+        backgroundImage: ['disabled', 'dark', 'responsive'],
+        borderColor: ['disabled', 'hover', 'focus', 'active', 'invalid', 'group-hover', 'dark'],
+        boxShadow: ['disabled', 'hover', 'focus', 'active', 'invalid', 'dark'],
         outline: ['invalid', 'hover', 'focus', 'disabled'],
-        textColor: ['invalid', 'hover', 'disabled', 'group-hover']
+        textColor: ['invalid', 'hover', 'disabled', 'group-hover', 'dark'],
+        gradientColorStops: ['responsive', 'dark', 'hover', 'focus'],
     },
 
     plugins: [
         require('@tailwindcss/ui'),
         require('tailwindcss-invalid-variant-plugin'),
+        require('tailwindcss-multi-theme'),
     ],
 };

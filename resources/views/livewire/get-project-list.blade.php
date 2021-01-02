@@ -19,7 +19,7 @@
                 </div>
         @endforelse
     </div>
-    <hr class="my-1 bg-gray-300" />
+    <hr class="my-1 border border-gray-800 dark:border-gray-300" />
     <div class='py-3'>
         {{ $data->links() }}
     </div>

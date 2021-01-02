@@ -40,7 +40,11 @@ a {
 }
 
 .form-input:focus {
-    @apply bg-gray-700 shadow-outline-green text-black font-semibold border-green-400;
+    @apply bg-gray-200 shadow-outline-green text-black font-semibold border-green-400;
+}
+
+.theme-dark .form-input:focus {
+     @apply bg-gray-700 text-white;
 }
 
 .form-input:invalid {

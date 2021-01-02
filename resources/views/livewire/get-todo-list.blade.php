@@ -11,13 +11,13 @@
         <span class='text-gray-300'>{{ $project->name }}</span>
     </x-slot>
 
-    <div class='mx-auto w-3/4 bg-gray-900 mb-3' x-data='{users: []}' x-init="() => {window.Echo.join('todos.{{ $project->id }}')
+    <div class='mx-auto w-3/4 bg-gray-300 dark:bg-gray-800 mb-3 shadow' x-data='{users: []}' x-init="() => {window.Echo.join('todos.{{ $project->id }}')
         .here(allUsers => users = allUsers)
         .joining(user => users.push(user))
         .leaving(user => users.splice(
             users.findIndex(x => x.id === user.id), 1)
         )}" wire:ignore>
-        <h2 class='bg-indigo-900 p-2 font-bold'>Active Users</h2>
+        <h2 class='bg-blue-600 dark:bg-blue-900 text-white p-2 font-bold'>Active Users</h2>
         <div class='list-none py-2 px-4'>
             <template x-for='(u, inx) in users' :key='u.id'>
                 <div x-show="u.id !== '{{ \Hashids::encode(auth()->id()) }}'"

@@ -20,7 +20,7 @@
             });
         }">
             <div class="inline">
-                <x-jet-input type='text' class='bg-transparent border-gray-600 focus:bg-gray-700 indent-1 mb-2 w-3/4'
+                <x-jet-input type='text' class='bg-transparent border-gray-600 dark:bg-gray-700 indent-1 mb-2 w-3/4'
                     placeholder='Add New Task' wire:model.defer='body' x-model='body'
                     x-on:edit-mode.window="body = $event.detail" x-on:edit-mode-off.window="body = ''"
                     x-on:keydown='listen()' />
