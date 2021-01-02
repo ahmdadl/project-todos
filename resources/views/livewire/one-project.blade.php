@@ -1,6 +1,5 @@
 <div>
-    <div
-        class='group hover:bg-gray-300 transition duration-500 ease-linear relative bg-gray-700 shadow mb-4 rounded overflow-hidden'>
+    <div class='group hover:bg-gray-300 transition duration-500 ease-linear relative bg-gray-700 shadow mb-4 rounded overflow-hidden'>
         <a class='appearance-none cursor-pointer' href='/projects/{{ $project->slug }}' class='text-lg'>
             <img class='w-full transition-transform duration-500 ease-in-out transform overflow-hidden hover:scale-110'
                 src='{{ $project->img_path }}' />
@@ -102,7 +101,7 @@
                 <x-slot name='form'>
                     <div>
                         <x-jet-input type='email' name='teamUserMail' wire:model.defer='teamUserMail' class='w-full'
-                            placeholder='User Mail' autofocus required />
+                            placeholder='User Mail' required />
                         <x-jet-input-error for='teamUserMail' class='pt-1'></x-jet-input-error>
                     </div>
 
