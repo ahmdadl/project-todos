@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data :class="{'theme-dark': $store.common.dark}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data
+    :class="{'theme-dark': $store.common.dark}">
 
 <head>
     @include('layouts.head')
 
     @livewireStyles
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-900 dark:text-gray-100">
+    <div
+        class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-900 dark:text-gray-100">
         @livewire('navigation-dropdown')
 
             <!-- Page Heading -->
@@ -29,13 +31,14 @@
 
                 <x-toast></x-toast>
             </main>
+            @include('footer')
     </div>
 
     @stack('modals')
 
     @livewireScripts
 
-    @stack('scripts')
+        @stack('scripts')
 </body>
 
 </html>

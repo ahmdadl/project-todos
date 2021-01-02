@@ -13,7 +13,14 @@ module.exports = {
         themeVariants: ['dark', 'neon'],
         extend: {
             fontFamily: {
-                sans: ['Cairo', ...defaultTheme.fontFamily.sans],
+                sans: [
+                    'Roboto',
+                    'Cairo',
+                    '-apple-system',
+                    'BlinkMacSystemFont',
+                    'Segoe UI',
+                    ...defaultTheme.fontFamily.sans,
+                ],
             },
             colors: {
                 teal: colors.teal,
@@ -24,9 +31,24 @@ module.exports = {
     variants: {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
         cursor: ['disabled', 'hover'],
-        backgroundColor: ['disabled', 'hover', 'focus', 'active', 'invalid', 'dark'],
+        backgroundColor: [
+            'disabled',
+            'hover',
+            'focus',
+            'active',
+            'invalid',
+            'dark',
+        ],
         backgroundImage: ['disabled', 'dark', 'responsive'],
-        borderColor: ['disabled', 'hover', 'focus', 'active', 'invalid', 'group-hover', 'dark'],
+        borderColor: [
+            'disabled',
+            'hover',
+            'focus',
+            'active',
+            'invalid',
+            'group-hover',
+            'dark',
+        ],
         boxShadow: ['disabled', 'hover', 'focus', 'active', 'invalid', 'dark'],
         outline: ['invalid', 'hover', 'focus', 'disabled'],
         textColor: ['invalid', 'hover', 'disabled', 'group-hover', 'dark'],
