@@ -35,7 +35,7 @@ window.Spruce.store('toast', {
 
 // @ts-ignore
 window.Spruce.store('common', {
-    dark: localStorage.getItem('dark-theme') || (!!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
+    dark: JSON.parse(localStorage.getItem('dark-theme') as string) || (!!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
     toggleDark(): void {
         this.dark = !this.dark;
         localStorage.setItem('dark-theme', this.dark);
