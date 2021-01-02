@@ -70,7 +70,7 @@ class GetTodoList extends Component
     public function echoAppendTodo(array $ev)
     {
         $this->appendTodo($ev['todo']['id']);
-        $this->success('New Tosat Added by (' . $ev['userName'] . ')');
+        $this->success('New Todo Added by (' . $ev['userName'] . ')');
     }
 
     public function echoUpdateTodo(array $ev)
