@@ -70,3 +70,7 @@ a {
 .toast-danger {
     @apply bg-red-700 border-red-500;
 }
+
+.list-item:nth-child(2) {
+    @apply border border-t-0 border-l-0 border-r-0;
+}

@@ -5,6 +5,7 @@ use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
+use Vinkla\Hashids\Facades\Hashids;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,10 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('todos.{projectId}', function (User $user, int $projectId) {
     return $user->can('teamMember', Project::find($projectId))
-        ? $user->only('name')
+        ? [
+            'name' => $user->name,
+            'id' => Hashids::encode($user->id),
+            'image' => $user->profile_photo_url,
+        ]
         : null;
 });

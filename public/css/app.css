@@ -49723,6 +49723,13 @@ a {
   border-color: rgba(240, 82, 82, var(--border-opacity));
 }
 
+.list-item:nth-child(2) {
+  border-width: 1px;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

@@ -11,28 +11,31 @@
         <span class='text-gray-300'>{{ $project->name }}</span>
     </x-slot>
 
-    {{-- <div class='p-2 mx-auto w-3/4 bg-gray-900 mb-3' x-data='{users: []}' x-init="() => {window.Echo.join('todos.{{ $project->id }}')
-    .here(allUsers => users = allUsers)
-    .joining(user => users.push(user))
-    .leaving(user => users.splice(
-    users.findIndex(x => x.id === user.id), 1)
-    )}" wire:ignore>
-    <h2 class='bg-indigo-900 p-2 font-bold'>Active Users</h2>
-    <ul class='list-none p-2'>
-        <template x-for='(u, inx) in users' :key='u.id'>
-            <li :class='{"text-green-300": users[inx].id === {{ auth()->id() }}}'
-                x-text='u.id === {{ auth()->id() }} ? `${u.name} (My Self)` : u.name'></li>
-        </template>
-    </ul>
-</div> --}}
-
-<livewire:add-todo :project="$project" />
-
-@forelse($todos as $todo)
-    <livewire:todo-list :project='$project' :todo='$todo' :key='$todo->id . $todo->updated_at' />
-@empty
-    <div class="bg-orange-500 text-gray-300 py-2 px-4 w-3/4 mx-auto">
-        No Todos Here, Add More
+    <div class='mx-auto w-3/4 bg-gray-900 mb-3' x-data='{users: []}' x-init="() => {window.Echo.join('todos.{{ $project->id }}')
+        .here(allUsers => users = allUsers)
+        .joining(user => users.push(user))
+        .leaving(user => users.splice(
+            users.findIndex(x => x.id === user.id), 1)
+        )}" wire:ignore>
+        <h2 class='bg-indigo-900 p-2 font-bold'>Active Users</h2>
+        <div class='list-none py-2 px-4'>
+            <template x-for='(u, inx) in users' :key='u.id'>
+                <div x-show="u.id !== '{{ \Hashids::encode(auth()->id()) }}'"
+                    class='py-1 list-item border-gray-500 font-semibold'>
+                    <img :src="u.image" class='w-10 h-10 rounded-full inline object-cover' />
+                    <span x-text='u.name'></span>
+                </div>
+            </template>
+        </div>
     </div>
-@endforelse
+
+    <livewire:add-todo :project="$project" />
+
+    @forelse($todos as $todo)
+        <livewire:todo-list :project='$project' :todo='$todo' :key='$todo->id . $todo->updated_at' />
+    @empty
+        <div class="bg-orange-500 text-gray-300 py-2 px-4 w-3/4 mx-auto">
+            No Todos Here, Add More
+        </div>
+    @endforelse
 </div>
