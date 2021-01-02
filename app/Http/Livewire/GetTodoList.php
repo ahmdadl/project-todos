@@ -78,7 +78,7 @@ class GetTodoList extends Component
         $todo = (object) $ev['todo'];
         $this->updateTodoList($todo->id, $todo->body, $todo->completed);
         $this->success(
-            'Toast (' . Str::limit($todo->body, 35) . ') Updated by (' . $ev['userName'] . ')'
+            'Todo (' . Str::limit($todo->body, 35) . ') Updated by (' . $ev['userName'] . ')'
         );
     }
 
@@ -86,7 +86,7 @@ class GetTodoList extends Component
     {
         $this->removeFromTodoList($todo['id']);
         $this->success(
-            'Toast (' .
+            'Todo (' .
                 Str::limit($todo['body'], 35) .
                 ') Deleted by (' .
                 $todo['userName'] .
