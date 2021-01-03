@@ -15,24 +15,27 @@
         class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-blue-900 dark:to-gray-900 dark:text-gray-100">
         @livewire('navigation-dropdown')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-indigo-600 dark:bg-indigo-800 text-white font-semibold shadow mb-5">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+            <div class='mt-16'>
 
-            <!-- Page Content -->
-            <div class='flex flex-col justify-between min-h-screen'>
-                <main class='sm:p-2 md:p-3'>
-                    {{ $slot ?? '' }}
-                    @yield('content', '')
+                <!-- Page Heading -->
+                @isset($header)
+                    <header class="bg-indigo-600 dark:bg-indigo-800 text-white font-semibold shadow mb-5">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
 
-                    <x-toast></x-toast>
-                </main>
-                @include('footer')
+                <!-- Page Content -->
+                <div class='flex flex-col justify-between min-h-screen'>
+                    <main class='sm:p-2 md:p-3'>
+                        {{ $slot ?? '' }}
+                        @yield('content', '')
+
+                        <x-toast></x-toast>
+                    </main>
+                    @include('footer')
+                </div>
             </div>
     </div>
 
