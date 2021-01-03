@@ -62,8 +62,11 @@ a {
     }
 }
 
-.list-item:nth-child(2) {
-    @apply border border-t-0 border-l-0 border-r-0;
+.list-item {
+    @apply border-t;
+    &:nth-child(1) {
+        @apply border-t-0;
+    }
 }
 
 .social {

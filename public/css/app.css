@@ -53526,11 +53526,12 @@ a {
   border-color: rgba(240, 82, 82, var(--border-opacity));
 }
 
-.list-item:nth-child(2) {
-  border-width: 1px;
+.list-item {
+  border-top-width: 1px
+}
+
+.list-item:nth-child(1) {
   border-top-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
 }
 
 .social {
