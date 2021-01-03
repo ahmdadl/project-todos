@@ -4,7 +4,7 @@
             <h1 class="text-6xl font-semibold leading-none">
                 Bring all your team together
             </h1>
-            <h5 class="mt-6 text-xl font-light antialiased">
+            <h5 class="mt-6 text-xl font-light antialiased text-gray-300">
                 Never forget a project feature again and do not stress your team
             </h5>
             <div class='mt-10'>

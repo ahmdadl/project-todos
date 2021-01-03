@@ -12,6 +12,10 @@
     }
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 a {
     @apply cursor-pointer;
 }

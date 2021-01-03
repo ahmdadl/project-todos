@@ -12,9 +12,9 @@
     <div
         class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-blue-900 dark:to-gray-900 dark:text-gray-100">
 
-        <nav class="border-b border-blue-900 dark:border-gray-900 bg-blue-900 dark:bg-gray-900 text-white">
+        <nav class="fixed top-0 left-0 border-b border-blue-900 dark:border-gray-900 bg-blue-900 dark:bg-gray-900 text-white">
             <!-- Primary Navigation Menu -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="px-4 sm:px-6 lg:px-8 relative w-screen">
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <!-- Logo -->
