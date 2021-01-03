@@ -29,8 +29,7 @@ module.exports = {
     },
 
     variants: {
-        opacity: ['responsive', 'hover', 'focus', 'disabled'],
-        cursor: ['disabled', 'hover'],
+        animation: ['responsive', 'hover'],
         backgroundColor: [
             'disabled',
             'hover',
@@ -50,9 +49,11 @@ module.exports = {
             'dark',
         ],
         boxShadow: ['disabled', 'hover', 'focus', 'active', 'invalid', 'dark'],
+        cursor: ['disabled', 'hover'],
+        gradientColorStops: ['responsive', 'dark', 'hover', 'focus'],
+        opacity: ['responsive', 'hover', 'focus', 'disabled'],
         outline: ['invalid', 'hover', 'focus', 'disabled'],
         textColor: ['invalid', 'hover', 'disabled', 'group-hover', 'dark'],
-        gradientColorStops: ['responsive', 'dark', 'hover', 'focus'],
     },
 
     plugins: [
