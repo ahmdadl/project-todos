@@ -53410,7 +53410,16 @@ a {
   font-weight: 600;
   --border-opacity: 1;
   border-color: #31c48d;
-  border-color: rgba(49, 196, 141, var(--border-opacity));
+  border-color: rgba(49, 196, 141, var(--border-opacity))
+}
+
+.form-input:focus.auth {
+  --bg-opacity: 1;
+  background-color: #233876;
+  background-color: rgba(35, 56, 118, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #ffffff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 .form-input:invalid {

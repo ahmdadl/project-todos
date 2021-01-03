@@ -30,6 +30,9 @@ a {
     @apply bg-transparent border border-gray-600;
     &:focus {
         @apply bg-gray-200 shadow-outline-green text-black font-semibold border-green-400;
+        &.auth {
+            @apply bg-blue-900 text-white;
+        }
     }
     &:invalid {
         @apply shadow-outline-red border-red-500 text-red-700;
