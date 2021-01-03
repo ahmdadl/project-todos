@@ -6,13 +6,6 @@
 @import '../../node_modules/@fortawesome/fontawesome-free/css/solid.min.css';
 @import '../../node_modules/@fortawesome/fontawesome-free/css/brands.min.css';
 
-/* *:not(.fas, .fab) {
-    font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif,
-        sans-serif, Arial;
-    font-size: 0.96rem;
-} */
-
 @layer utilities {
     .indent-1 {
         text-indent: 0.5rem;
@@ -25,54 +18,45 @@ a {
 
 .alert {
     @apply py-3 px-4 font-semibold mx-auto rounded shadow;
-}
-
-.alert-danger {
-    @apply bg-red-300 text-red-800;
-}
-
-.alert-success {
-    @apply bg-green-300 text-green-800;
+    &.alert-danger {
+        @apply bg-red-300 text-red-800;
+    }
+    &.alert-success {
+        @apply bg-green-300 text-green-800;
+    }
 }
 
 .form-input {
     @apply bg-transparent border border-gray-600;
-}
-
-.form-input:focus {
-    @apply bg-gray-200 shadow-outline-green text-black font-semibold border-green-400;
+    &:focus {
+        @apply bg-gray-200 shadow-outline-green text-black font-semibold border-green-400;
+    }
+    &:invalid {
+        @apply shadow-outline-red border-red-500 text-red-700;
+    }
 }
 
 .theme-dark .form-input:focus {
-     @apply bg-gray-700 text-white;
-}
-
-.form-input:invalid {
-    @apply shadow-outline-red border-red-500 text-red-700;
+    @apply bg-gray-700 text-white;
 }
 
 .toast {
     @apply transition duration-500 ease-in-out flex items-center  border-l-4 py-2 px-3 shadow-md mt-2;
-}
-
-.toast-default {
-    @apply bg-teal-700 border-teal-500;
-}
-
-.toast-success {
-    @apply bg-green-700 border-green-500;
-}
-
-.toast-info {
-    @apply bg-blue-700 border-blue-500;
-}
-
-.toast-warn {
-    @apply bg-orange-700 border-orange-500;
-}
-
-.toast-danger {
-    @apply bg-red-700 border-red-500;
+    &.toast-default {
+        @apply bg-teal-700 border-teal-500;
+    }
+    &.toast-success {
+        @apply bg-green-700 border-green-500;
+    }
+    &.toast-info {
+        @apply bg-blue-700 border-blue-500;
+    }
+    &.toast-warn {
+        @apply bg-orange-700 border-orange-500;
+    }
+    &.toast-danger {
+        @apply bg-red-700 border-red-500;
+    }
 }
 
 .list-item:nth-child(2) {

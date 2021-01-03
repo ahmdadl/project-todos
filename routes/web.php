@@ -32,23 +32,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/dashboard', function () {
-        return view('dashboard');
-    })
-    ->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])
+//     ->get('/dashboard', function () {
+//         return view('dashboard');
+//     })
+//     ->name('dashboard');
 
 Route::group(
     [
         'prefix' => '/categories',
-        'middleware' => ['auth', 'can:is_admin'],
+        'middleware' => ['auth:sanctum', 'can:is_admin'],
     ],
     function () {
         Route::get('', GetCategoryList::class);
     }
 );
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/projects')->group(function () {
         Route::get('', GetProjectList::class);
         Route::prefix('/{project}/{todos?}')

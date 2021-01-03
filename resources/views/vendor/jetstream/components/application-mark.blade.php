@@ -1,1 +1,1 @@
-<x-jet-application-logo w="55" h="55"></x-jet-application-logo>
+<x-jet-application-logo w="70" h="70"></x-jet-application-logo>

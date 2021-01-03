@@ -1,5 +1,8 @@
 const mix = require('laravel-mix');
-const tailwind = require('tailwindcss')
+const tailwind = require('tailwindcss');
+const precss = require('precss');
+const purgecss = require('@fullhuman/postcss-purgecss');
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,18 +17,29 @@ const tailwind = require('tailwindcss')
 mix.ts('resources/js/app.ts', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
+        precss(),
+        // purgecss({
+        //     content: [
+        //         './vendor/laravel/jetstream/**/*.blade.php',
+        //         './storage/framework/views/*.php',
+        //         './resources/views/**/*.blade.php',
+        //     ],
+        // }),
+        tailwind('./tailwind.config.js'),
+        // require('postcss-purgefonts')({
+        //     purge_only_fonts: ['Font Awesome 5 Free', 'Font Awesome 5 Brands'],
+        // }),
         // require('autoprefixer'),
         // require('postcss-mixins'),
-        tailwind('./tailwind.config.js'),
     ])
     .webpackConfig(require('./webpack.config'))
-    .version()
-    // .browserSync({
-    //     proxy: 'js.test',
-    //     ui: false,
-    //     files: [
-    //         'public/css/*.css',
-    //         'public/js/*.js',
-    //         'resources/views/**/*.blade.php',
-    //     ]
-    // });
+    .version();
+// .browserSync({
+//     proxy: 'js.test',
+//     ui: false,
+//     files: [
+//         'public/css/*.css',
+//         'public/js/*.js',
+//         'resources/views/**/*.blade.php',
+//     ]
+// });
