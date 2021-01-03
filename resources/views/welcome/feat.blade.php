@@ -1,4 +1,4 @@
-<div id='second' class='min-h-screen bg-gray-200'>
+<div id='second' class='min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-blue-900 dark:to-gray-900 dark:text-gray-100'>
     <h1 class='text-6xl mx-auto text-center border-b border-gray-800 dark:border-gray-200 w-3/4'>
         Features
     </h1>

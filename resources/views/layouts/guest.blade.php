@@ -56,6 +56,7 @@
             {{ $slot }}
         </div>
     </div>
+    @include('footer')
     <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/spruce@2.x.x/dist/spruce.umd.js"></script>
 </body>
 <script>
