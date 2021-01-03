@@ -1,4 +1,4 @@
-<div class="min-h-screen text-left bg-blue-900 dark:bg-gray-900 pt-16 px-2 text-white">
+<div class="min-h-screen text-left bg-blue-900 dark:bg-gray-900 px-2 text-white pt-16 sm:pt-40">
     <div class='sm:px-2 md:px-4 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3'>
         <div>
             <h1 class="text-6xl font-semibold leading-none">

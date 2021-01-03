@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased overflow-x-hidden">
     <div
         class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-blue-900 dark:to-gray-900 dark:text-gray-100">
 
