@@ -47,10 +47,10 @@
                         <i :class="'fas fa-' + i.icon"></i>
                         <span x-data="{from: 0, num: 400}" x-init="() => {
                             num = parseInt($el.parentElement.getAttribute('data-count'));
-                            {{-- const ival = setInterval(() => {
+                            const ival = setInterval(() => {
                                 if (from >= num-1) clearInterval(ival);
                                 from++;
-                            }, 15); --}}
+                            }, 15);
                         }" x-text='from + "+"'>
                         </span>
                         <span x-text='i.txt'></span>
