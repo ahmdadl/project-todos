@@ -56,26 +56,28 @@ class CreateTest extends TestCase
             ->set('title', $this->category->title)
             ->call('submit')
             ->assertSet('title', '')
-            ->assertEmitted(
-                'add-category',
-                $this->category->slug
-            );
+            ->assertEmitted('add-category', $this->category->slug);
 
         $this->assertTrue(
             Category::whereTitle($this->category->title)->exists()
         );
     }
 
-    // public function testAdminCanEditCategory()
-    // {
-    //     $this->testAdminCanAddCategoriesWithValidData();
-        
-    //     $this->test->set('editMode', true)
-    //         ->set('title', 'nameof')
-    //         ->call('submit')
-    //         ->assertEmitted('category-updated', $this->category->slug);
-    // }
-    
+    public function testAdminCanEditCategory()
+    {
+        $this->testAdminCanAddCategoriesWithValidData();
+
+        $this->test
+            ->call('edit', $this->category->slug)
+            ->set('title', 'nameof')
+            ->call('submit')
+            ->assertEmitted('update-category', $this->category->slug);
+
+        $this->assertDatabaseHas('categories', [
+            'slug' => $this->category->slug,
+            'title' => 'nameof',
+        ]);
+    }
 
     private function setTest()
     {

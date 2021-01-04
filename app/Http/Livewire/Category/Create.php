@@ -45,6 +45,7 @@ class Create extends Component
 
         if ($this->editMode) {
             $this->update();
+            $this->resetProps();
             return;
         }
 
@@ -69,7 +70,13 @@ class Create extends Component
 
     private function update()
     {
+        $this->category->title = $this->title;
+        
+        if (!$this->category->update()) return;
 
+        $this->success('Category Updated Successfully');
+
+        $this->emit('update-category', $this->category->slug);
     }
 
     public function resetProps()
@@ -77,6 +84,7 @@ class Create extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         $this->reset('title', 'category');
+        $this->editMode = false;
     }
 
     public function render()

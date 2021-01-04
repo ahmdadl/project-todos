@@ -13,18 +13,37 @@ class Index extends Component
     public User $user;
 
     protected $listeners = [
-        'add-category' => 'appendCategory',
+        'add' => 'append',
+        'update' => 'edit',
+        'delete' => 'remove',
     ];
 
     public function mount()
     {
         $this->user = auth()->user();
-        $this->categories = Category::withCount("projects")->get();
+        $this->categories = Category::withCount('projects')->get();
     }
 
-    public function appendCategory(Category $category): void
+    public function append(Category $category): void
     {
         $this->categories->push($category);
+    }
+
+    public function edit(Category $category): void
+    {
+        $this->categories->each(function (Category $cat) use ($category) {
+            if ($cat->id === $category->id) {
+                $cat = $category;
+            }
+            return $cat;
+        });
+    }
+
+    public function remove(string $slug)
+    {
+        $this->categories = $this->categories->filter(
+            fn(Category $category) => $category->slug !== $slug
+        );
     }
 
     public function render()

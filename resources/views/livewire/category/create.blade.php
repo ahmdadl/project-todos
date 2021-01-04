@@ -8,7 +8,10 @@
             </div>
         </div>
         <div class='mt-1'>
-            <x-jet-button bg='green' type='submit' icon='fas fa-save'>Save</x-jet-button>
+            <x-jet-button :bg="$editMode ? 'indigo' : 'green'"
+                type='submit' icon='fas fa-save'>
+                {{ $editMode ? 'update' : 'save' }}
+            </x-jet-button>
             <x-jet-button bg='orange' wire:click.prevent='resetProps' icon='fas fa-times'>Reset</x-jet-button>
         </div>
     </form>
