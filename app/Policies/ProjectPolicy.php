@@ -20,7 +20,8 @@ class ProjectPolicy
     public function teamMember(User $user, $project)
     {
         return $user->id === $project->user_id ||
-            $user->isTeamMember($project->id);
+            $user->isTeamMember($project->id) ||
+            $user->can('is_admin');
     }
 
     /**
@@ -32,6 +33,6 @@ class ProjectPolicy
      */
     public function owner(User $user, $project)
     {
-        return $project->user_id === $user->id;
+        return $project->user_id === $user->id || $user->can('is_admin');
     }
 }
