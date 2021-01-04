@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GetCategoryList;
 use App\Http\Livewire\AddTodo;
+use App\Http\Livewire\Category\Index;
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\GetProjectList;
 use App\Http\Livewire\GetTodoList;
@@ -44,7 +45,7 @@ Route::group(
         'middleware' => ['auth:sanctum', 'can:is_admin'],
     ],
     function () {
-        Route::get('', GetCategoryList::class);
+        Route::get('', Index::class);
     }
 );
 
