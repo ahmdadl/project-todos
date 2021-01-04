@@ -56,7 +56,7 @@ class CreateTest extends TestCase
             ->set('title', $this->category->title)
             ->call('submit')
             ->assertSet('title', '')
-            ->assertEmitted('add-category', $this->category->slug);
+            ->assertEmitted('add', $this->category->slug);
 
         $this->assertTrue(
             Category::whereTitle($this->category->title)->exists()
@@ -71,7 +71,7 @@ class CreateTest extends TestCase
             ->call('edit', $this->category->slug)
             ->set('title', 'nameof')
             ->call('submit')
-            ->assertEmitted('update-category', $this->category->slug);
+            ->assertEmitted('update', $this->category->slug);
 
         $this->assertDatabaseHas('categories', [
             'slug' => $this->category->slug,

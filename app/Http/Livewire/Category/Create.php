@@ -63,7 +63,7 @@ class Create extends Component
         $this->success('Category Created Successfully');
 
         $this->emit(
-            'add-category',
+            'add',
             $category->slug
         );
     }
@@ -76,7 +76,7 @@ class Create extends Component
 
         $this->success('Category Updated Successfully');
 
-        $this->emit('update-category', $this->category->slug);
+        $this->emit('update', $this->category->slug);
     }
 
     public function resetProps()
