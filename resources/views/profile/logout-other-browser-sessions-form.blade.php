@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="max-w-xl text-sm text-gray-600">
+        <div class="max-w-xl text-sm text-gray-600 dark:text-white">
             {{ __('If necessary, you may logout of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.') }}
         </div>
 
@@ -52,7 +52,7 @@
         @endif
 
         <div class="flex items-center mt-5">
-            <x-jet-button wire:click="confirmLogout" wire:loading.attr="disabled">
+            <x-jet-button type='submit' bg='orange' clear='1' wire:click="confirmLogout" wire:loading.attr="disabled">
                 {{ __('Logout Other Browser Sessions') }}
             </x-jet-button>
 
@@ -81,11 +81,11 @@
             </x-slot>
 
             <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled">
+                <x-jet-button type='submit' bg='gray' wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled">
                     {{ __('Nevermind') }}
-                </x-jet-secondary-button>
+                </x-jet-button>
 
-                <x-jet-button class="ml-2" wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled">
+                <x-jet-button type='submit' class="ml-2" bg='blue' clear='1' wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled">
                     {{ __('Logout Other Browser Sessions') }}
                 </x-jet-button>
             </x-slot>
