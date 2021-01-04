@@ -74,7 +74,7 @@ class User extends Authenticatable
      */
     public function routeNotificationForSlack($notification)
     {
-        return 'https://hooks.slack.com/services/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';
+        return 'https://hooks.slack.com/services/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';
     }
 
     public function getIsAdminAttribute(): bool
