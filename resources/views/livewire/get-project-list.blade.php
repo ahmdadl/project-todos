@@ -1,11 +1,13 @@
 <div>
     <x-slot name='title'>
-        {{ $user->name }} Projects
+        {{ is_null($slug) ? $user->name : $slug }} Projects
     </x-slot>
 
     @include('project.index.header')
 
-    <livewire:add-project :user="$user" />
+    @if(null === $slug)
+        <livewire:add-project :user="$user" />
+    @endif
 
     @include('project.index.list-loader')
 

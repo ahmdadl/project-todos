@@ -2,14 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
 use App\Traits\HasToastNotify;
 use App\Traits\ProjectListFilters;
 use DB;
-use Gate;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -27,6 +26,7 @@ class GetProjectList extends Component
     public bool $onlyCompleted = false;
     public string $sortBy = '';
     public bool $showModal = false;
+    public ?string $slug = null;
 
     private int $projectsCount = 0;
     private int $teamProjectsCount = 0;
@@ -141,6 +141,10 @@ class GetProjectList extends Component
 
     public function getTotalCountProperty(): int
     {
+        if (null !== $this->slug) {
+            return $this->projectsCount;
+        }
+
         return $this->page === 1
             ? $this->projectsCount + $this->teamProjectsCount
             : $this->projectsCount;
@@ -162,11 +166,20 @@ class GetProjectList extends Component
             }
         }
 
-        $query = Project::whereUserId($this->user->id)
-            ->with(['category', 'team'])
+        $query = Project::with(['category', 'team'])
             ->withCount('todos')
             ->limit($this->perPage)
             ->offset($this->offset);
+        
+        if (null !== $this->slug) {
+            $query->where(
+                'category_id',
+                '=',
+                Category::whereSlug($this->slug)->first('id')->id
+            );
+        } else {
+            $query->whereUserId($this->user->id);
+        }
 
         if ($sort) {
             $query->orderBy('cost', $sortBy);
@@ -183,10 +196,13 @@ class GetProjectList extends Component
 
         $this->allProjects = $query->get();
 
-        if ($this->page === 1) {
-            $teamProjects = $this->user->load('team_projects')->team_projects;
+        if (is_null($this->slug)) {
+            if ($this->page === 1) {
+                $teamProjects = $this->user->load('team_projects')
+                    ->team_projects;
 
-            $this->allProjects = $this->allProjects->merge($teamProjects);
+                $this->allProjects = $this->allProjects->merge($teamProjects);
+            }
         }
 
         $this->projects = $this->allProjects;

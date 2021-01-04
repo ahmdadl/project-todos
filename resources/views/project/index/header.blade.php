@@ -1,5 +1,5 @@
 <div class='flex items-center justify-between py-2 px-4 w-100 bg-indigo-400 dark:bg-blue-900 text-white mb-5'>
-    <h1 class='pt-2'>{{ $user->name }} Projects</h1>
+    <h1 class='pt-2'>{{ is_null($slug) ? $user->name : $slug }} Projects</h1>
     <div class='flex items-center'>
         <x-jet-button
             class="mx-1 {{ $this->onlyCompleted ? 'bg-red-300 hover:bg-red-700' : 'bg-green-600 hover:bg-green-800' }}"

@@ -3,6 +3,7 @@
 use App\Http\Controllers\GetCategoryList;
 use App\Http\Livewire\AddTodo;
 use App\Http\Livewire\Category\Index;
+use App\Http\Livewire\Category\Show;
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\GetProjectList;
 use App\Http\Livewire\GetTodoList;
@@ -46,6 +47,7 @@ Route::group(
     ],
     function () {
         Route::get('', Index::class);
+        Route::get('/{category}', Show::class);
     }
 );
 
