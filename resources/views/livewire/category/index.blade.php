@@ -9,7 +9,7 @@
 
     <div class='my-4'>
         <div class='bg-gray-200 dark:bg-gray-700 mt-5 shadow'>
-            <h5 class='text-2xl bg-blue-900 dark:bg-gray-900 text-white px-2 py-1'>
+            <h5 class='text-2xl bg-blue-800 dark:bg-gray-800 text-white px-2 py-1'>
                 Create New Category
             </h5>
             <div class='py-2 px-2 sm:px-4'>
