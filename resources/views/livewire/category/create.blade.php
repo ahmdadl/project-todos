@@ -5,7 +5,9 @@
                 placeholder='Category Title' />
             <div class='mt-1 font-semibold'>
                 <template x-if='!title.length'>
-                    <x-jet-input-error for='title'></x-jet-input-error>
+                    <span>
+                        <x-jet-input-error for='title'></x-jet-input-error>
+                    </span>
                 </template>
                 <i></i>
                 <template x-if='title.length > 1 && title.length < 5'>
