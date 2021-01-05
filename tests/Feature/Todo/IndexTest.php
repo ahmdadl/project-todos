@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Todo;
 
-use App\Http\Livewire\GetTodoList;
+use App\Http\Livewire\Todo\Index as TodoIndex;
 use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
@@ -12,7 +12,7 @@ use Livewire;
 use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
-class GetTodoListTest extends TestCase
+class IndexTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -33,7 +33,7 @@ class GetTodoListTest extends TestCase
             ]);
         $this->todo = $this->project->todos->first();
 
-        $this->test = Livewire::test(GetTodoList::class);
+        $this->test = Livewire::test(TodoIndex::class);
     }
 
     public function testItWillShowTodoList()
@@ -44,8 +44,8 @@ class GetTodoListTest extends TestCase
             ->assertSee($this->project->name)
             ->assertSee('Add New Task')
             ->assertSee($this->todo->body);
-        $res->assertSeeLivewire('add-todo');
-        $res->assertSeeLivewire('todo-list');
+        $res->assertSeeLivewire('todo.create');
+        $res->assertSeeLivewire('todo.one');
     }
 
     public function testOnlyProjectOwnerOrTeamMemberCanViewTodos()

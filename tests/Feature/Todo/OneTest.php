@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Todo;
 
-use App\Http\Livewire\TodoList;
-use App\Http\Livewire\GetTodoList;
+use App\Http\Livewire\Todo\Index;
+use App\Http\Livewire\Todo\One;
 use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
 use Tests\TestCase;
 
-class TodoListTest extends TestCase
+class OneTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -43,16 +43,16 @@ class TodoListTest extends TestCase
 
         $this->actingAs($this->user);
 
-        Livewire::test(GetTodoList::class, [
+        Livewire::test(Index::class, [
             'project' => $this->project,
         ])
             ->assertSee($this->project->todos->first()->body)
-            ->assertSeeLivewire('todo-list');
+            ->assertSeeLivewire('todo.one');
     }
     // TODO remove event listeners from factory method 
     // public function testUserCanDeleteTodo()
     // {
-    //     Livewire::test(TodoList::class, [
+    //     Livewire::test(One::class, [
     //         'project' => $this->project,
     //         'todo' => $this->todo,
     //     ])
@@ -67,7 +67,7 @@ class TodoListTest extends TestCase
 
     public function testItCanBeCompleted()
     {
-        Livewire::test(TodoList::class, [
+        Livewire::test(One::class, [
             'project' => $this->project,
             'todo' => $this->todo,
         ])

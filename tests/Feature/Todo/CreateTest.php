@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Todo;
 
-use App\Http\Livewire\AddTodo;
+use App\Http\Livewire\Todo\Create;
 use App\Models\Project;
 use App\Models\Todo;
 use App\Models\User;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
 use Tests\TestCase;
 
-class AddTodoTest extends TestCase
+class CreateTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -41,7 +41,7 @@ class AddTodoTest extends TestCase
         $this->signIn($this->user);
         $todo = Todo::factory()->make();
 
-        Livewire::test(AddTodo::class, [
+        Livewire::test(Create::class, [
             "project" => $this->project,
             "body" => $todo->body,
         ])
@@ -62,7 +62,7 @@ class AddTodoTest extends TestCase
     {
         $this->signIn();
 
-        Livewire::test(AddTodo::class, [
+        Livewire::test(Create::class, [
             "project" => $this->project,
             "body" => "as23",
         ])
@@ -78,7 +78,7 @@ class AddTodoTest extends TestCase
 
         $todo = $this->project->todos->first();
 
-        Livewire::test(AddTodo::class, [
+        Livewire::test(Create::class, [
             "project" => $this->project,
         ])
             ->emit("editTodo", $todo->id)
