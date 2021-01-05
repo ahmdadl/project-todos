@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Project;
 
 use App\Models\Category;
 use App\Models\Project;
@@ -13,7 +13,7 @@ use Livewire\WithFileUploads;
 use Storage;
 use Str;
 
-class AddProject extends Component
+class Create extends Component
 {
     use WithFileUploads;
     use AuthorizesRequests;
@@ -152,7 +152,7 @@ class AddProject extends Component
 
     public function render()
     {
-        return view('livewire.add-project');
+        return view('livewire.project.create');
     }
 
     private function saveImage(): string

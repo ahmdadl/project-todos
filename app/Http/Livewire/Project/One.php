@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Project;
 
 use App\Events\ProjectDeleted;
 use App\Models\Project;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Str;
 
-class OneProject extends Component
+class One extends Component
 {
     use AuthorizesRequests;
     use HasToastNotify;
@@ -114,6 +114,6 @@ class OneProject extends Component
 
     public function render()
     {
-        return view('livewire.one-project');
+        return view('livewire.project.one');
     }
 }

@@ -6,14 +6,14 @@
     @include('project.index.header')
 
     @if(null === $slug)
-        <livewire:add-project :user="$user" />
+        <livewire:project.create :user="$user" />
     @endif
 
     @include('project.index.list-loader')
 
     <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-3 md:gap-5' wire:loading.class='hidden'>
         @forelse($data as $project)
-            <livewire:one-project :project='$project' :user='$user' :key='$project->id . $project->updated_at'
+            <livewire:project.one :project='$project' :user='$user' :key='$project->id . $project->updated_at'
                 :index='$loop->index'>
             @empty
                 <div class='alert alert-danger w-3/4 hover:bg-red-400'>
