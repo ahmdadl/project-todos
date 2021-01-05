@@ -64,7 +64,12 @@ class IndexTest extends TestCase
 
         $test = Livewire::test(Index::class)
             ->assertSee('add new project')
-            ->assertSet('allProjects', $query->get())
+            ->tap(function ($test) use ($query) {
+                $this->assertSame(
+                    $test->get('allProjects')->toArray(),
+                    $query->get()->toArray()
+                );
+            })
             ->call('sortByHighCost')
             ->assertSet('sortBy', 'desc')
             ->assertSet('allProjects', $query->orderByDesc('cost')->get())
@@ -76,13 +81,12 @@ class IndexTest extends TestCase
             ->assertSet('onlyCompleted', true)
             // only projects collection should contain only
             // completed projects
-            ->assertNotSet(
-                'allProjects',
-                $query
-                    ->whereCompleted(true)
-                    ->orderByDesc('cost')
-                    ->get()
-            )
+            ->tap(function ($test) use ($query) {
+                $this->assertSame(
+                    $test->get('allProjects')->count(),
+                    $query->whereCompleted(true)->count()
+                );
+            })
             ->assertSee('completed');
     }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Project;
 
-use App\Http\Livewire\AddProject;
-use App\Http\Livewire\OneProject;
+use App\Http\Livewire\Project\Create;
+use App\Http\Livewire\Project\One;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -13,7 +13,7 @@ use Livewire;
 use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
-class OneProjectTest extends TestCase
+class OneTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
@@ -36,7 +36,7 @@ class OneProjectTest extends TestCase
 
         $this->anyOne = User::factory()->create();
 
-        $this->test = Livewire::test(OneProject::class, [
+        $this->test = Livewire::test(One::class, [
             'project' => $this->project,
             'user' => $this->user,
         ]);
@@ -146,7 +146,7 @@ class OneProjectTest extends TestCase
                 $this->project->category->slug
             );
 
-        Livewire::test(AddProject::class)
+        Livewire::test(Create::class)
             ->set('editMode', true)
             ->call('save')
             ->assertNotEmitted('project:updated', $this->project->slug);
@@ -168,7 +168,7 @@ class OneProjectTest extends TestCase
                 $this->project->category->slug
             );
 
-        Livewire::test(AddProject::class)
+        Livewire::test(Create::class)
             ->emit(
                 'project:edit',
                 $this->project->slug,

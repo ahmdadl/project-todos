@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Project;
 
-use App\Http\Livewire\AddProject;
+use App\Http\Livewire\Project\Create;
 use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
@@ -15,7 +15,7 @@ use Livewire\Testing\TestableLivewire;
 use Str;
 use Tests\TestCase;
 
-class AddProjectTest extends TestCase
+class CreateTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -35,7 +35,7 @@ class AddProjectTest extends TestCase
             'category_id' => $this->category->id,
         ]);
 
-        $this->test = Livewire::test(AddProject::class, [
+        $this->test = Livewire::test(Create::class, [
             'user' => $this->user,
         ]);
 
