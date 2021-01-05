@@ -15,7 +15,7 @@
     </a>
     <a href='https://fb.com/a7md200' target="_blank"
         class="social hover:border-blue-500 hover:text-blue-500">
-        <i class='fab fa-facebook-f'></i>
+        <i class='fab fa-facebook'></i>
     </a>
     <a href='https://wa.me/201143647417' target="_blank"
         class="social hover:border-green-400 hover:text-green-400">

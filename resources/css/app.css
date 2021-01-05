@@ -3,8 +3,45 @@
 @import 'tailwindcss/utilities';
 
 @import '../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css';
-@import '../../node_modules/@fortawesome/fontawesome-free/css/solid.min.css';
-@import '../../node_modules/@fortawesome/fontawesome-free/css/brands.min.css';
+/* @import '../../node_modules/@fortawesome/fontawesome-free/css/solid.min.css'; */
+/* @import '../../node_modules/@fortawesome/fontawesome-free/css/brands.min.css'; */
+@font-face {
+    font-family: 'Font Awesome 5 Free';
+    src: url('./fonts/fa-solid-900.eot?j3ja9h');
+    src: url('./fonts/fa-solid-900.eot?j3ja9h#iefix')
+            format('embedded-opentype'),
+        url('./fonts/fa-solid-900.ttf?j3ja9h') format('truetype'),
+        url('./fonts/fa-solid-900.woff?j3ja9h') format('woff'),
+        url('./fonts/fa-solid-900.svg?j3ja9h#fa-solid-900') format('svg');
+}
+.fa,
+.fas {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+@font-face {
+    font-family: 'Font Awesome 5 Brands';
+    src: url('./fonts/fa-brands-400.eot?yvb6gh');
+    src: url('./fonts/fa-brands-400.eot?yvb6gh#iefix')
+            format('embedded-opentype'),
+        url('./fonts/fa-brands-400.ttf?yvb6gh') format('truetype'),
+        url('./fonts/fa-brands-400.woff?yvb6gh') format('woff'),
+        url('./fonts/fa-brands-400.svg?yvb6gh#fa-brands-400') format('svg');
+}
+.fab {
+    font-family: 'Font Awesome 5 Brands';
+    font-weight: 400;
+}
+
+.fa-trash-alt:before {
+    content: '\f014';
+}
+.fa-refresh:before {
+    content: '\f021';
+}
+.fa-spinner:before {
+    content: '\f110';
+}
 
 @layer utilities {
     .indent-1 {

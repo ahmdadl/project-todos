@@ -13,7 +13,7 @@
     'wire:loading.attr' => 'disabled',
     ]) }} @isset($target)wire:target='{{$target}}'@endisset>
         @isset($icon)
-            <i class='{{ $icon }} px-1' @isset($target)wire:target='{{$target}}'@endisset wire:loading.class.remove='{{ $icon }}' wire:loading.class='fas fa-spin fa-cog'></i>
+            <i class='{{ $icon }} px-1' @isset($target)wire:target='{{$target}}'@endisset wire:loading.class.remove='{{ $icon }}' wire:loading.class='fas fa-spin fa-spinner'></i>
         @endisset
         {{ $slot }}
     </button>
