@@ -33,7 +33,7 @@ class TodoList extends Component
 
     public function edit(): void
     {
-        $this->emit('editTodo', $this->todo);
+        $this->emit('editTodo', $this->todo->id);
     }
 
     public function check(): void
