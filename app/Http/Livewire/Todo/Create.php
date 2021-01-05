@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Todo;
 
 use App\Models\Project;
 use App\Models\Todo;
 use App\Traits\HasToastNotify;
 use Livewire\Component;
 
-class AddTodo extends Component
+class Create extends Component
 {
     use HasToastNotify;
 
@@ -59,7 +59,7 @@ class AddTodo extends Component
 
     public function render()
     {
-        return view('livewire.add-todo');
+        return view('livewire.todo.create');
     }
 
     public function store(): void

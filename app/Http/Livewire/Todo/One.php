@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Todo;
 
 use App\Events\TodoDeleted;
 use App\Models\Project;
@@ -8,7 +8,7 @@ use App\Models\Todo;
 use App\Traits\HasToastNotify;
 use Livewire\Component;
 
-class TodoList extends Component
+class One extends Component
 {
     use HasToastNotify;
 
@@ -45,6 +45,6 @@ class TodoList extends Component
 
     public function render()
     {
-        return view('livewire.todo-list');
+        return view('livewire.todo.one');
     }
 }

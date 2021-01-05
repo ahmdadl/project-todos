@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Todo;
 
 use App\Models\Project;
 use App\Models\Todo;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Str;
 
-class GetTodoList extends Component
+class Index extends Component
 {
     use AuthorizesRequests;
     use HasToastNotify;
@@ -96,6 +96,6 @@ class GetTodoList extends Component
 
     public function render()
     {
-        return view('livewire.get-todo-list');
+        return view('livewire.todo.index');
     }
 }

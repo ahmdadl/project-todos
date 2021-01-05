@@ -29,10 +29,10 @@
         </div>
     </div>
 
-    <livewire:add-todo :project="$project" />
+    <livewire:todo.create :project="$project" />
 
     @forelse($todos as $todo)
-        <livewire:todo-list :project='$project' :todo='$todo' :key='$todo->id . $todo->updated_at' />
+        <livewire:todo.one :project='$project' :todo='$todo' :key='$todo->id . $todo->updated_at' />
     @empty
         <div class="bg-orange-500 text-gray-300 py-2 px-4 w-3/4 mx-auto">
             No Todos Here, Add More

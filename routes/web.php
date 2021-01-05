@@ -1,16 +1,10 @@
 <?php
 
-use App\Http\Controllers\GetCategoryList;
-use App\Http\Livewire\AddTodo;
 use App\Http\Livewire\Category\Index;
 use App\Http\Livewire\Category\Show;
-use App\Http\Livewire\Counter;
-use App\Http\Livewire\GetProjectList;
-use App\Http\Livewire\GetTodoList;
 use App\Http\Livewire\Project\Index as ProjectIndex;
-use App\Http\Livewire\TodoList;
-use App\Models\Project;
-use App\Models\User;
+use App\Http\Livewire\Todo\Create;
+use App\Http\Livewire\Todo\Index as TodoIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,8 +54,8 @@ Route::middleware('auth:sanctum')->group(function () {
                 'project' => '[a-z0-9]+(?:-[a-z0-9]+)*',
             ])
             ->group(function () {
-                Route::get('', GetTodoList::class);
-                Route::post('', AddTodo::class);
+                Route::get('', TodoIndex::class);
+                Route::post('', Create::class);
             });
     });
 });
