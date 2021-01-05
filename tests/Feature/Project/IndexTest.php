@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Project;
 
-use App\Http\Livewire\GetProjectList;
+use App\Http\Livewire\Project\Index;
 use App\Models\Category;
 use App\Models\Project;
 use App\Models\User;
@@ -14,7 +14,7 @@ use Livewire;
 use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
-class GetProjectListTest extends TestCase
+class IndexTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -40,15 +40,21 @@ class GetProjectListTest extends TestCase
 
         $this->signIn($this->user);
 
-        $this->test = Livewire::test(GetProjectList::class);
+        $this->test = Livewire::test(Index::class);
     }
 
     public function testItWillPrependProjectAndApplyFilters()
     {
+        Project::factory()->create([
+            'completed' => false,
+            'user_id' => $this->user->id,
+            'category_id' => $this->projects->first()->category_id,
+        ]);
+
         $project = Project::factory([
             'user_id' => $this->user->id,
             'cost' => 556.32,
-            'completed' => 1,
+            'completed' => false,
             'category_id' => $this->projects->first()->category_id,
         ])->raw();
 
@@ -56,7 +62,7 @@ class GetProjectListTest extends TestCase
             ->with(['category', 'team'])
             ->withCount('todos');
 
-        Livewire::test(GetProjectList::class)
+        $test = Livewire::test(Index::class)
             ->assertSee('add new project')
             ->assertSet('allProjects', $query->get())
             ->call('sortByHighCost')
@@ -82,7 +88,7 @@ class GetProjectListTest extends TestCase
 
     public function testProjectWillRemovedFromListAfterDeleting()
     {
-        Livewire::test(GetProjectList::class)
+        Livewire::test(Index::class)
             ->assertSee($this->project->name)
             ->emit('project:deleted', 1)
             ->assertDontSee($this->project->name);
@@ -100,7 +106,7 @@ class GetProjectListTest extends TestCase
         $project = Project::factory()->create();
         $project->team()->sync($this->user);
 
-        $this->test = Livewire::test(GetProjectList::class);
+        $this->test = Livewire::test(Index::class);
 
         $this->assertSame(5, $this->test->get('projects')->count());
 
@@ -114,7 +120,7 @@ class GetProjectListTest extends TestCase
         $project = Project::factory()->create();
         $project->team()->sync($this->user);
 
-        $this->test = Livewire::test(GetProjectList::class);
+        $this->test = Livewire::test(Index::class);
 
         $this->assertTrue(
             $this->user->can('teamMember', new Project($project->toArray()))

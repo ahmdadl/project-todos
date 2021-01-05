@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Project;
 
 use App\Models\Category;
 use App\Models\Project;
@@ -14,7 +14,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Str;
 
-class GetProjectList extends Component
+class Index extends Component
 {
     use HasToastNotify;
     use WithPagination;
@@ -134,7 +134,7 @@ class GetProjectList extends Component
             $this->page
         );
 
-        return view('livewire.get-project-list', [
+        return view('livewire.project.index', [
             'data' => $projects,
         ]);
     }

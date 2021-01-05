@@ -7,6 +7,7 @@ use App\Http\Livewire\Category\Show;
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\GetProjectList;
 use App\Http\Livewire\GetTodoList;
+use App\Http\Livewire\Project\Index as ProjectIndex;
 use App\Http\Livewire\TodoList;
 use App\Models\Project;
 use App\Models\User;
@@ -53,7 +54,7 @@ Route::group(
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/projects')->group(function () {
-        Route::get('', GetProjectList::class);
+        Route::get('', ProjectIndex::class);
         Route::prefix('/{project}/{todos?}')
             ->where([
                 'project' => '[a-z0-9]+(?:-[a-z0-9]+)*',
