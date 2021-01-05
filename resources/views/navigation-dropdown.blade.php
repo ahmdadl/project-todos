@@ -61,7 +61,7 @@
 
                     <x-slot name="content">
                         <!-- Account Management -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
+                        <div class="block px-4 py-2 text-xs text-gray-600 dark:text-gray-400">
                             {{ __('Manage Account') }}
                         </div>
 
@@ -107,7 +107,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-200 dark:bg-gray-700">
         <div class="pt-2 pb-3 space-y-1">
             {{-- <x-jet-responsive-nav-link href="{{ route('dashboard') }}"
             :active="request()->routeIs('dashboard')">

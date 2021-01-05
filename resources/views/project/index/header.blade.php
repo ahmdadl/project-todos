@@ -13,7 +13,7 @@
                     target='sortByHighCost, sortByLowCost, resetSortBy'></x-jet-button>
             </x-slot>
             <x-slot name='content'>
-                <div class="block px-4 py-2 text-xs text-gray-400">
+                <div class="block px-4 py-2 text-xs text-gray-600 dark:text-gray-400">
                     {{ __('Filter Projects') }}
                 </div>
                 <x-jet-dropdown-link wire:click.prevent="sortByHighCost"
