@@ -118,8 +118,12 @@ a {
 	opacity: 0;
 }
 
-.lazyloading {
+.lazyloading, .lazyloaded {
 	opacity: 1;
 	transition: opacity 300ms;
 	background: transparent url(./loader.svg) no-repeat center;
+}
+
+.lazyloaded:not([src]) {
+    background-image: none;
 }
