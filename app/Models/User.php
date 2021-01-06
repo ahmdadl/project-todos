@@ -82,6 +82,11 @@ class User extends Authenticatable
         return $this->id === 1;
     }
 
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        return '/user.jpeg';
+    }
+
     public function isTeamMember(int $projectId): bool
     {
         return DB::table('project_user')
