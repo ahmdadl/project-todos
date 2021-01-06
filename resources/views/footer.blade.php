@@ -1,4 +1,4 @@
-<div class='px-2 py-5 bg-gray-900 dark:bg-gray-60 text-white'>
+<div class='px-2 py-5 bg-gray-900 dark:bg-blue-900 dark:border-t dark:border-gray-100 text-white'>
     <div class='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2'>
         @include('footer.social')
         <div class='text-center'>

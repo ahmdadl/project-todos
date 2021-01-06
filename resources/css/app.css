@@ -5,6 +5,9 @@
 @import '../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css';
 /* @import '../../node_modules/@fortawesome/fontawesome-free/css/solid.min.css'; */
 /* @import '../../node_modules/@fortawesome/fontawesome-free/css/brands.min.css'; */
+
+/*! purgecss start ignore */
+
 @font-face {
     font-family: 'Font Awesome 5 Free';
     src: url('./fonts/fa-solid-900.eot?j3ja9h');
@@ -127,3 +130,4 @@ a {
 .lazyloaded:not([src]) {
     background-image: none;
 }
+/*! purgecss end ignore */

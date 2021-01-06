@@ -3,14 +3,27 @@ const colors = require('@tailwindcss/ui/colors');
 const { after } = require('lodash');
 
 module.exports = {
-    purge: [
-        './vendor/laravel/jetstream/**/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-    ],
+    purge: {
+        enable: true,
+        mode: 'all',
+        preserveHtmlElements: false,
+        content: [
+            './vendor/laravel/jetstream/**/*.blade.php',
+            './storage/framework/views/*.php',
+            './resources/views/*.blade.php',
+            './resources/views/**/*.blade.php',
+            './node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css'
+        ],
+        options: {
+            safelist: {
+                // standard: ['bg-blue-500', 'bg-red-500'],
+                // deep: [/bg-green-500/],
+            }
+        }
+    },
 
     theme: {
-        themeVariants: ['dark', 'neon'],
+        themeVariants: ['dark'],
         extend: {
             fontFamily: {
                 sans: [
