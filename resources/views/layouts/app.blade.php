@@ -7,6 +7,7 @@
 
     @livewireStyles
 
+    <script src='/js/lazysizes.min.js' async='' preload></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 

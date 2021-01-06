@@ -25,7 +25,7 @@
                     <div class='grid grid-rows-1 gap-6 mt-3'>
                         <div class=''>
                             <select wire:model.defer='categorySlug'
-                                class='transition bg-transparent border-2 border-gray-400 dark:border-gray-600 p-2 font-semibold dark:bg-gray-800 focus:border-green-500
+                                class='transition bg-transparent border-2 text-black border-gray-400 dark:border-gray-600 p-2 font-semibold dark:bg-gray-800 focus:border-green-500
                                 disabled:opacity-50 invalid:border-red-500 @error('
                                 categorySlug')border-red-500 @enderror' required @if($editMode) disabled='disabled'
                                 @endif>

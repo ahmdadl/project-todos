@@ -8238,6 +8238,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 // window.axios = require('axios');
 // window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// import 'lazysizes';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

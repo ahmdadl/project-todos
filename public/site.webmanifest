@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Project Todos",
+    "short_name": "ptodos",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

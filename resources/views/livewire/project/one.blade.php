@@ -1,8 +1,8 @@
 <div>
     <div class='transition duration-500 ease-linear relative bg-gray-300 dark:bg-gray-700 shadow-lg mb-4 rounded overflow-hidden'>
         <a class='appearance-none cursor-pointer' href='/projects/{{ $project->slug }}' class='text-lg'>
-            <img class='w-full transition-transform duration-500 ease-in-out transform overflow-hidden hover:scale-110'
-                src='{{ $project->img_path }}' />
+            <img class='w-full transition-transform duration-500 ease-in-out transform overflow-hidden hover:scale-110 lazyload'
+                data-src='{{ $project->img_path }}' />
             @if($project->completed)
                 <div class='absolute top-0 left-0 bg-green-600 text-white uppercase p-1 opacity-75'>
                     <i class='fas fa-check'></i>
@@ -25,8 +25,8 @@
                 <div class='px-2'>
                     @foreach(
                         $project->team as $team_user)
-                        <img src="{{ $team_user->profile_photo_url }}"
-                            class='h-10 w-10 rounded-full object-cover border-2 border-gray-300 inline -m-2'
+                        <img data-src="{{ $team_user->profile_photo_url }}"
+                            class='h-10 w-10 rounded-full object-cover border-2 border-gray-300 inline -m-2 lazyload'
                             alt='{{ $team_user->name }} profile photo' title='{{ $team_user->name }}' />
                     @endforeach
                 </div>

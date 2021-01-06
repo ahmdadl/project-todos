@@ -113,3 +113,13 @@ a {
 .social {
     @apply p-2 mx-1 text-gray-400 transition-colors duration-500 ease-linear border border-transparent;
 }
+
+.lazyload {
+	opacity: 0;
+}
+
+.lazyloading {
+	opacity: 1;
+	transition: opacity 300ms;
+	background: transparent url(./loader.svg) no-repeat center;
+}
