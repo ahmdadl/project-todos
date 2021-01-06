@@ -7,5 +7,5 @@
         </span>
     </x-slot>
 
-    <livewire:get-project-list :slug='$category->slug'>
+    <livewire:project.index :slug='$category->slug'>
 </div>

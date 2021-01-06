@@ -27,6 +27,7 @@ class Index extends Component
     public string $sortBy = '';
     public bool $showModal = false;
     public ?string $slug = null;
+    public ?int $categoryId;
 
     private int $projectsCount = 0;
     private int $teamProjectsCount = 0;
@@ -48,22 +49,22 @@ class Index extends Component
 
         $this->getData('asc', false);
 
-        $this->projectsCount = Project::whereUserId($this->user->id)->count(
-            'id'
-        );
+        if (null !== $this->slug) {
+            $this->categoryId = Category::whereSlug($this->slug)->first(
+                'id'
+            )->id;
+        }
 
-        $this->teamProjectsCount = DB::table('project_user')
-            ->whereUserId($this->user->id)
-            ->count('user_id');
+        $this->projectsCount = $this->getProjectsCount();
+        
+        $this->teamProjectsCount = $this->getTeamProjectsCount();
     }
 
     public function hydrate()
     {
         $this->getData('asc', false);
 
-        $this->projectsCount = Project::whereUserId($this->user->id)->count(
-            'id'
-        );
+        $this->projectsCount = $this->getProjectsCount();        
     }
 
     public function appendProject(Project $project)
@@ -170,7 +171,7 @@ class Index extends Component
             ->withCount('todos')
             ->limit($this->perPage)
             ->offset($this->offset);
-        
+
         if (null !== $this->slug) {
             $query->where(
                 'category_id',
@@ -206,5 +207,25 @@ class Index extends Component
         }
 
         $this->projects = $this->allProjects;
+    }
+
+    private function getProjectsCount(): int
+    {
+        if ($this->categoryId) {
+            return Project::whereCategoryId($this->categoryId)->count('id');
+        }
+
+        return Project::whereUserId($this->user->id)->count('id');
+    }
+
+    private function getTeamProjectsCount(): int
+    {
+        if ($this->categoryId) return 0;
+
+        return DB::table(
+            'project_user'
+        )
+            ->whereUserId($this->user->id)
+            ->count('user_id');
     }
 }
