@@ -10,31 +10,31 @@
             <ul class='list-none font-bold' x-data="{
                 arr: [
                     {
-                        count: 100,
+                        count: {{$usersCount}},
                         icon: 'user',
                         txt: 'Users Registerd',
                         color: 'blue'
                     },
                     {
-                        count: 200,
+                        count: {{$projectsCount}},
                         icon: 'book',
                         txt: 'Projects Created',
                         color: 'indigo'
                     },
                     {
-                        count: 200,
+                        count: {{$teamCount}},
                         icon: 'users',
                         txt: 'Project Team Members',
                         color: 'teal'
                     },
                     {
-                        count: 300,
+                        count: {{$todoCount}},
                         icon: 'at',
                         txt: 'Todos Created',
                         color: 'red'
                     },
                     {
-                        count: 250,
+                        count: {{$checkedCount}},
                         icon: 'check',
                         txt: 'Todos is Completed',
                         color: 'green'
@@ -49,9 +49,9 @@
                             num = parseInt($el.parentElement.getAttribute('data-count'));
                             const ival = setInterval(() => {
                                 if (from >= num-1) clearInterval(ival);
-                                from++;
-                            }, 15);
-                        }" x-text='from + "+"'>
+                                from += 10;
+                            }, 5);
+                        }" x-text='from.toLocaleString() + "+"'>
                         </span>
                         <span x-text='i.txt'></span>
                     </li>

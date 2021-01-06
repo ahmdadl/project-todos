@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Category\Index;
 use App\Http\Livewire\Category\Show;
 use App\Http\Livewire\Project\Index as ProjectIndex;
@@ -25,9 +26,7 @@ use Illuminate\Support\Facades\Route;
 // $user = User::whereEmail('user@site.test')->first();
 // $p->each(fn(Project $project) => $project->team()->sync($user));
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeController::class);
 
 // Route::middleware(['auth:sanctum', 'verified'])
 //     ->get('/dashboard', function () {
