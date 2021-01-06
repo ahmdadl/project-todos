@@ -10,7 +10,7 @@
 
 <body class="font-sans antialiased overflow-x-hidden">
     <div
-        class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-blue-900 dark:to-gray-900 dark:text-gray-100">
+        class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-900 dark:to-gray-900 dark:text-gray-100">
 
         <nav class="fixed top-0 left-0 border-b border-blue-900 dark:border-gray-900 bg-blue-900 dark:bg-gray-900 text-white">
             <!-- Primary Navigation Menu -->

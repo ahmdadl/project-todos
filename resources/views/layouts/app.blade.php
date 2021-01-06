@@ -12,7 +12,7 @@
 
 <body class="font-sans antialiased">
     <div
-        class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-blue-900 dark:to-gray-900 dark:text-gray-100">
+        class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-900 dark:to-gray-900 dark:text-gray-100">
         @livewire('navigation-dropdown')
 
             <div class='mt-16'>
