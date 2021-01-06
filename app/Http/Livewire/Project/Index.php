@@ -27,7 +27,7 @@ class Index extends Component
     public string $sortBy = '';
     public bool $showModal = false;
     public ?string $slug = null;
-    public ?int $categoryId;
+    public ?int $categoryId = null;
 
     private int $projectsCount = 0;
     private int $teamProjectsCount = 0;
