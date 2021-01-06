@@ -2,9 +2,14 @@
 
 use Illuminate\Support\Str;
 
+$heroku_db_url = parse_url(
+    env(
+        'DATABASE_URL',
+        'postgres://usoeduhttrtlpz:82cea334e7cf6b9328b326b41f58a9314afd967fc3fa7893e38c34cf67b1a788@ec2-52-48-65-240.eu-west-1.compute.amazonaws.com:5432/d7l8svbh0mf4bh'
+    )
+);
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -35,7 +40,6 @@ return [
     */
 
     'connections' => [
-
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
@@ -59,9 +63,11 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'options' => extension_loaded('pdo_mysql')
+                ? array_filter([
+                    PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                ])
+                : [],
         ],
 
         'pgsql' => [
@@ -71,11 +77,23 @@ return [
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),            'charset' => 'utf8',
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
             'schema' => 'public',
             'sslmode' => 'prefer',
+        ],
+
+        'pg-heroku' => [
+            'driver' => 'pgsql',
+            'host' => $heroku_db_url['host'],
+            'database' => substr($heroku_db_url['path'], 1),
+            'username' => $heroku_db_url['user'],
+            'password' => $heroku_db_url['pass'],
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
         ],
 
         'sqlsrv' => [
@@ -90,7 +108,6 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
-
     ],
 
     /*
@@ -118,12 +135,14 @@ return [
     */
 
     'redis' => [
-
         'client' => env('REDIS_CLIENT', 'phpredis'),
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env(
+                'REDIS_PREFIX',
+                Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'
+            ),
         ],
 
         'default' => [
@@ -141,7 +160,5 @@ return [
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
-
     ],
-
 ];
