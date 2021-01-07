@@ -1,8 +1,8 @@
-require('./bootstrap');
+require('alpinejs');
 
 import '@ryangjchandler/spruce';
 
-require('alpinejs');
+require('./bootstrap');
 
 // @ts-ignore
 window.Spruce.store('toast', {
@@ -11,7 +11,7 @@ window.Spruce.store('toast', {
         this.arr.push({ show: true, message, type });
         setTimeout((_) => {
             this.remove(message);
-        }, 5000);
+        }, 4000);
         // console.log(message, type);
     },
     info(message: string) {
@@ -35,9 +35,17 @@ window.Spruce.store('toast', {
 
 // @ts-ignore
 window.Spruce.store('common', {
-    dark: JSON.parse(localStorage.getItem('dark-theme') as string) || (!!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
+    dark:
+        JSON.parse(localStorage.getItem('dark-theme') as string) ||
+        (!!window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches),
     toggleDark(): void {
         this.dark = !this.dark;
         localStorage.setItem('dark-theme', this.dark);
+    },
+    testMail(mail: string) {
+        return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            mail
+        );
     },
 });

@@ -126,11 +126,15 @@ a {
 .lazyloading,
 .lazyloaded {
     opacity: 1;
-    transition: opacity 300ms;
+    /* transition: all 300ms; */
     background: transparent url(./loader.svg) no-repeat center;
 }
 
 .lazyloaded:not([src]) {
     background-image: none;
 }
+
+/* #splashScreen.hideMe {
+    display: none;
+} */
 /*! purgecss end ignore */

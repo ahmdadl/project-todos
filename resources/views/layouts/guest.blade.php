@@ -1,3 +1,4 @@
+@include('splashscreen')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data
     :class="{'theme-dark': $store.common.dark}">
@@ -9,28 +10,11 @@
 </head>
 
 <body class="font-sans antialiased overflow-x-hidden">
-    <div id="splashScreen">
-        <div style="position: relative">
-            <div style="display: flex; justify-content: center; align-items: center;height: 100vh;">
-                <div class="sk-cube-grid">
-                    <div class="sk-cube sk-cube1"></div>
-                    <div class="sk-cube sk-cube2"></div>
-                    <div class="sk-cube sk-cube3"></div>
-                    <div class="sk-cube sk-cube4"></div>
-                    <div class="sk-cube sk-cube5"></div>
-                    <div class="sk-cube sk-cube6"></div>
-                    <div class="sk-cube sk-cube7"></div>
-                    <div class="sk-cube sk-cube8"></div>
-                    <div class="sk-cube sk-cube9"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div
         class="min-h-screen bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-900 dark:to-gray-900 dark:text-gray-100">
 
-        <nav class="fixed top-0 left-0 border-b border-blue-900 dark:border-gray-900 bg-blue-900 dark:bg-gray-900 text-white">
+        <nav
+            class="fixed top-0 left-0 border-b border-blue-900 dark:border-gray-900 bg-blue-900 dark:bg-gray-900 text-white">
             <!-- Primary Navigation Menu -->
             <div class="px-4 sm:px-6 lg:px-8 relative w-screen">
                 <div class="flex justify-between h-16">
@@ -75,12 +59,21 @@
         </div>
     </div>
     @include('footer')
+
     <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/spruce@2.x.x/dist/spruce.umd.js"></script>
+    <script>
+        window.Spruce.store('common', {
+            dark: JSON.parse(localStorage.getItem('dark-theme')) || (!!window.matchMedia && window
+                .matchMedia('(prefers-color-scheme: dark)').matches),
+            toggleDark() {
+                this.dark = !this.dark;
+                localStorage.setItem('dark-theme', this.dark);
+            },
+            testMail(mail) {
+                return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(mail);
+            },
+        });
+
+    </script>
 </body>
-
-@stack('scripts')
-
-<script>
-    window.Spruce.store("common",{testMail:function(a){return/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(a)},dark:JSON.parse(localStorage.getItem("dark-theme"))||!!window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,toggleDark:function(){this.dark=!this.dark;localStorage.setItem("dark-theme",this.dark)}});
-</script>
 </html>
