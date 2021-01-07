@@ -17,6 +17,8 @@
     @endisset
 </title>
 
+@include('splashscreen')
+
 <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -32,4 +34,5 @@
     } else {
         document.documentElement.classList.remove('theme-dark')
     }
+
 </script>

@@ -49,7 +49,7 @@
                             num = parseInt($el.parentElement.getAttribute('data-count'));
                             const ival = setInterval(() => {
                                 if (from >= num-1) clearInterval(ival);
-                                from += 10;
+                                from += 30;
                             }, 5);
                         }" x-text='from.toLocaleString() + "+"'>
                         </span>
