@@ -8,6 +8,7 @@ use App\Traits\HasToastNotify;
 use Arr;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Str;
 
@@ -56,6 +57,7 @@ class Index extends Component
             if ($t->id === $todoId) {
                 $t->body = $body;
                 $t->completed = $completed;
+                $t->updated_at = Carbon::now();
             }
         });
     }
