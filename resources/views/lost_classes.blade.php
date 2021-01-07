@@ -17,3 +17,5 @@
 <i class='text-blue-700 text-red-700 text-green-700 text-teal-700 text-indigo-700 text-orange-700 text-gray-700 text-yellow-700'></i>
 
 <i class='dark:text-blue-400 dark:text-red-400 dark:text-green-400 dark:text-teal-400 dark:text-indigo-400 dark:text-orange-400 dark:text-gray-400 dark:text-yellow-400'></i>
+
+<i class='fa-user fa-users fa-book'></i>

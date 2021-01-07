@@ -16,6 +16,7 @@
         url('./fonts/fa-solid-900.ttf?j3ja9h') format('truetype'),
         url('./fonts/fa-solid-900.woff?j3ja9h') format('woff'),
         url('./fonts/fa-solid-900.svg?j3ja9h#fa-solid-900') format('svg');
+    font-display: swap;
 }
 .fa,
 .fas {
@@ -30,6 +31,7 @@
         url('./fonts/fa-brands-400.ttf?yvb6gh') format('truetype'),
         url('./fonts/fa-brands-400.woff?yvb6gh') format('woff'),
         url('./fonts/fa-brands-400.svg?yvb6gh#fa-brands-400') format('svg');
+    font-display: swap;
 }
 .fab {
     font-family: 'Font Awesome 5 Brands';
@@ -118,13 +120,14 @@ a {
 }
 
 .lazyload {
-	opacity: 0;
+    opacity: 0;
 }
 
-.lazyloading, .lazyloaded {
-	opacity: 1;
-	transition: opacity 300ms;
-	background: transparent url(./loader.svg) no-repeat center;
+.lazyloading,
+.lazyloaded {
+    opacity: 1;
+    transition: opacity 300ms;
+    background: transparent url(./loader.svg) no-repeat center;
 }
 
 .lazyloaded:not([src]) {
