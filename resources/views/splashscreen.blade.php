@@ -13,6 +13,9 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#3062a9">
 <meta name="theme-color" content="#ffffff">
+<meta name="keywords" content="laravel, livewire, laravel liverwire, laravel 8, laravel jetstream, jetstream, alpineJs, todo, project todos, project features, team">
+<meta name="description" content="just trying laravel jetstream in a new project">
+<meta name="author" content="Ahmed Adel">
 
 <title>
     @isset($title)
