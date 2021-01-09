@@ -56,8 +56,12 @@ class GenerateSiteMap extends Command
         $this->generate();
 
         if (file_exists($this->path)) {
-            unlink($this->path);
+            if (unlink($this->path)) {
+                $this->info('Deleted Successfully');
+            } 
         }
+
+        $this->line('-----------------');
 
         $this->sitemap->store('xml');
 
