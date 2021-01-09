@@ -11,8 +11,9 @@ use URL;
 
 class GenerateSiteMap extends Command
 {
-    private $sitemap;
+    private Sitemap $sitemap;
     public int $count;
+    private string $path;
 
     /**
      * The name and signature of the console command.
@@ -38,6 +39,7 @@ class GenerateSiteMap extends Command
         parent::__construct();
 
         $this->sitemap = $sitemap;
+        $this->path = public_path('sitemap.xml');
     }
 
     /**
@@ -49,13 +51,21 @@ class GenerateSiteMap extends Command
     {
         $this->count = (int) $this->argument('count');
 
-        $this->warn('Generating Sitemap for ' . URL::to('/'));
+        $this->warn('Generating Sitemap for ' . env('APP_URL', url('/')));
 
         $this->generate();
 
+        if (file_exists($this->path)) {
+            unlink($this->path);
+        }
+
         $this->sitemap->store('xml');
 
-        if (file_exists(public_path('sitemap.xml'))) {
+        if (file_exists($this->path)) {
+            $lastUpdated = Carbon::createFromTimestampUTC(
+                fileatime($this->path)
+            )->diffForHumans();
+            $this->info('updated: ' . $lastUpdated);
             $this->info('SiteMap Generated Sussfully');
         } else {
             $this->error('an error has occured');
@@ -107,7 +117,7 @@ class GenerateSiteMap extends Command
         array $images = []
     ): void {
         $this->sitemap->add(
-            URL::to($url),
+            env('APP_URL', url('/')) . $url,
             $updated ?? Carbon::now(),
             $pri,
             null,

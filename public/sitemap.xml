@@ -2,29 +2,29 @@
 <?xml-stylesheet href="/vendor/sitemap/styles/xml.xsl" type="text/xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 	<url>
-	<loc>https://js.test</loc>
+	<loc>https://js.test/</loc>
 		<priority>1.0</priority>
-		<lastmod>2021-01-09T12:13:40+00:00</lastmod>
+		<lastmod>2021-01-09T13:17:29+00:00</lastmod>
 	</url>
 	<url>
 	<loc>https://js.test/login</loc>
 		<priority>1.0</priority>
-		<lastmod>2021-01-09T12:13:40+00:00</lastmod>
+		<lastmod>2021-01-09T13:17:29+00:00</lastmod>
 	</url>
 	<url>
 	<loc>https://js.test/register</loc>
 		<priority>1.0</priority>
-		<lastmod>2021-01-09T12:13:40+00:00</lastmod>
+		<lastmod>2021-01-09T13:17:29+00:00</lastmod>
 	</url>
 	<url>
 	<loc>https://js.test/projects</loc>
 		<priority>0.9</priority>
-		<lastmod>2021-01-09T12:13:40+00:00</lastmod>
+		<lastmod>2021-01-09T13:17:29+00:00</lastmod>
 	</url>
 	<url>
 	<loc>https://js.test/categories</loc>
 		<priority>0.8</priority>
-		<lastmod>2021-01-09T12:13:40+00:00</lastmod>
+		<lastmod>2021-01-09T13:17:29+00:00</lastmod>
 	</url>
 	<url>
 	<loc>https://js.test/projects/natus-et-facilis-est-quia</loc>
