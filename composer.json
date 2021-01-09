@@ -20,6 +20,7 @@
         "laravel/jetstream": "^1.6",
         "laravel/sanctum": "^2.6",
         "laravel/slack-notification-channel": "^2.3",
+        "laravelium/sitemap": "^8.0",
         "livewire/livewire": "^2.0",
         "mailjet/laravel-mailjet": "^2.1",
         "predis/predis": "^1.1",
