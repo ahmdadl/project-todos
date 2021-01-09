@@ -1,9 +1,9 @@
-<div wire:ignore x-data>
-    <div wire:loading>
+<div class='hidden' wire:loading.class.remove='hidden'>
+    <div wire:ignore x-data>
         <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-3 md:gap-5'>
             <template x-for='i in 10' :key='i * Math.random()'>
-                <div>
-                    <svg role="img" width="305" height="254" aria-labelledby="loading-aria" viewBox="0 0 305 254"
+                <div class='h-full w-full'>
+                    <svg role="img"  aria-labelledby="loading-aria" viewBox="0 0 305 254"
                         preserveAspectRatio="none">
                         <title id="loading-aria">Loading...</title>
                         <rect x="0" y="0" width="100%" height="100%" clip-path="url(#clip-path)"
