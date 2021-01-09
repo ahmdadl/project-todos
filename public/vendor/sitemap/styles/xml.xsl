@@ -5,16 +5,12 @@
 <head>
 <meta charset="utf-8"/>
 <title>Project Todos sitemap</title>
-<script type="text/javascript" src="https://cdn.damianoff.com/repo/jquery/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="https://cdn.damianoff.com/repo/jquery.tablesorter/2.0.5/jquery.tablesorter.min.js"></script>
-<script	type="text/javascript"><![CDATA[
-$(document).ready(function() {
-$("#sitemap").tablesorter({sortList:[[6,1],[4,1]],widgets:['zebra']});
-$('.url').click(function(){
-  window.open($(this).html());
-  return false;
-});
-});]]></script>
+<script>
+function show(el) {
+	window.open(el.innerHTML);
+	return false;
+}
+</script>
 <style type="text/css">
 body
 {
@@ -110,7 +106,7 @@ footer
 		<tbody>
 	      <xsl:for-each select="s:urlset/s:url">
 	      <tr>
-	        <td class="url"><xsl:value-of select="s:loc"/></td>
+	        <td class="url" onclick="show(this)"><xsl:value-of select="s:loc"/></td>
 	        <td><xsl:value-of select="count(image:image)"/></td>
 	        <td><xsl:value-of select="concat(s:priority*100,'%')"/></td>
 	        <td><xsl:value-of select="concat(substring(s:lastmod,0,11),concat(' ', substring(s:lastmod,12,5)))"/></td>
