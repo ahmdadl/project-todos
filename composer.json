@@ -25,11 +25,11 @@
         "mailjet/laravel-mailjet": "^2.1",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^4.1",
-        "vinkla/hashids": "^9.1"
+        "vinkla/hashids": "^9.1",
+        "fakerphp/faker": "^1.9.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "nunomaduro/larastan": "^0.6.11",
