@@ -1,31 +1,84 @@
-# Laravel Today
-Find Laravel latest News and Tutorials
+<div align="center">
+    <img src="public/android-chrome-192x192.png" />
+</div>
+
+# Project Todos
+
+Bring all your team together
 ---
-A laravel web scraper to scrap latest laravel news and tutorials from the best websites [list](#providers-list).
+Connect all your team members together with real time project management system
 
-<h2>Visit <a href='https://laravel-today.herokuapp.com/'>Here</a></h2>
+<a href="http://project-features.herokuapp.com/" target="_blank">Demo</a>
 
-## Providers list:
-picked from <a href='https://github.com/chiraggude/awesome-laravel#tutorials--blogs' target='_blank'>chiraggude/awesome-laravel</a>
+<a href="http://abo3adel.github.io/" target="_blank">MyPortfolio</a>
 
-* <a href='https://laravel-news.com/' target='_blank'>Laravel News</a>:
-    * <a href='https://laravel-news.com/category/news' target='_blank'>News</a>
-    * <a href='https://laravel-news.com/category/laravel-tutorials' target='_blank'>Tutorials</a>
-* <a href='https://laraveldaily.com/' target='_blank'>Laravel Daily</a>
-* <a href='https://www.digitalocean.com/community/search?q=laravel&primary_filter=newest&type=tutorials' target='_blank'>DigitalOcean</a>
-* <a href='https://dor.ky/tagged/laravel' target='_blank'>Dor.Ky</a>
-* <a href='https://code.tutsplus.com/categories/laravel/' target='_blank'>Envato Tuts</a>
-* <a href='https://pusher.com/tutorials?tag=Laravel' target='_blank'>Pusher</a>
-* <a href='https://stillat.com/category/laravel-5' target='_blank'>Stillat</a>
-* <a href='https://vegibit.com/tag/laravel/' target='_blank'>Vegibit</a>
+## Features
 
-## Credits
-Providers own all the posts in the website.
+- Real Time Connection (any update to a project or it`s todos will notify subscribed team members isnstantly)
+- User Roles
+- See All active users updating the same project.
+- Category system
+- Unlimited Projects
+- Per Project Team (Create diffrent teams for every project)
+- Unlimited Todos
+
+## Installation
+
+### Prerequisites
+- Laravel 8
+- Livewire 2
+
+Clone the repository
+
+    git clone https://github.com/abo3adel/project-todos.git
+
+Switch to the repo folder
+
+    cd project-todos
+
+Install all the dependencies using composer and npm
+
+    composer install
+    npm install
+
+Copy the example env file and make the required configuration changes in the .env file
+
+    cp .env.example .env
+
+Generate a new application key
+
+    php artisan key:generate
+
+Run the database migrations (**Set the database connection in .env before migrating**)
+
+    php artisan migrate
+
+Seed database with fake data
+    
+    php artisan db:seed
+
+Start the local development server
+
+    php artisan serve
+
+You can now access the server at http://localhost:8000
+
+**TL;DR command list**
+
+    git clone https://github.com/abo3adel/project-todos.git
+    cd project-todos
+    composer install
+    npm install
+    cp .env.example .env
+    php artisan key:generate
+    php artisan migrate
+    php artisan db:seed
+    php artisan serve
 
 ## Contribution
+
 Any ideas are welcome. Feel free to submit any issues or pull requests.
----
-To add new provider <a href='https://laravel-today.herokuapp.com/providers/create/'>Submit Provider</a>
 
 ## License
+
 MIT: <https://abo3adel.mit-license.org>
