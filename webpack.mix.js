@@ -19,19 +19,6 @@ mix.ts('resources/js/app.ts', 'public/js')
         require('postcss-import'),
         precss(),
         tailwind('./tailwind.config.js'),
-        // purgecss({
-        //     content: [
-        //         './vendor/laravel/jetstream/**/*.blade.php',
-        //         './storage/framework/views/*.php',
-        //         './resources/views/**/*.blade.php',
-        //     ],
-        //     safelist: ['theme-dark']
-        // }),
-        // require('postcss-purgefonts')({
-        //     purge_only_fonts: ['Font Awesome 5 Free', 'Font Awesome 5 Brands'],
-        // }),
-        // require('autoprefixer'),
-        // require('postcss-mixins'),
     ])
     .webpackConfig(require('./webpack.config'))
     .version();

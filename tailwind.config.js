@@ -8,11 +8,11 @@ module.exports = {
         mode: 'all',
         preserveHtmlElements: false,
         content: [
-            './vendor/laravel/jetstream/**/*.blade.php',
             './storage/framework/views/*.php',
             './resources/views/*.blade.php',
             './resources/views/**/*.blade.php',
-            './node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css'
+            './resources/js/components/**/*.vue',
+            // './node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css'
         ],
         options: {
             safelist: {
@@ -37,6 +37,10 @@ module.exports = {
             },
             colors: {
                 teal: colors.teal,
+                green: colors.emerald,
+                orange: colors.orange,
+                gray: colors.blueGray,
+                'dark-bg': '#1a202c',
             },
         },
     },
