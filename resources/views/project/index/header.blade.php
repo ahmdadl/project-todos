@@ -1,4 +1,4 @@
-<div class='flex items-center justify-between py-2 px-4 w-100 bg-indigo-400 dark:bg-blue-900 text-white mb-5'>
+<div class='flex items-center justify-between px-4 py-2 mb-5 text-white bg-indigo-400 w-100 dark:bg-blue-900'>
     <h1 class='pt-2'>{{ is_null($slug) ? $user->name : $slug }} Projects</h1>
     <div class='flex items-center'>
         <x-jet-button

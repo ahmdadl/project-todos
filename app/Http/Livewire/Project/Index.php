@@ -24,6 +24,7 @@ class Index extends Component
     public Collection $projects;
     public User $user;
     public bool $onlyCompleted = false;
+    // public bool $byCost = false;
     public string $sortBy = '';
     public bool $showModal = false;
     public ?string $slug = null;
@@ -33,6 +34,17 @@ class Index extends Component
     private int $teamProjectsCount = 0;
 
     protected int $perPage = 15;
+    protected $queryString = [
+        'sortBy' => [
+            'as' => 'price',
+            'except' => '',
+        ],
+        'onlyCompleted' => [
+            'as' => 'completed',
+            'except' => '',
+        ],
+        // 'page' => ['except' => 1]
+    ];
 
     protected $listeners = [
         'modal:closed' => 'closeModal',
@@ -47,7 +59,7 @@ class Index extends Component
     {
         $this->user = auth()->user();
 
-        $this->getData('asc', false);
+        $this->getData();
 
         if (null !== $this->slug) {
             $this->categoryId = Category::whereSlug($this->slug)->first(
@@ -56,15 +68,32 @@ class Index extends Component
         }
 
         $this->projectsCount = $this->getProjectsCount();
-        
+
         $this->teamProjectsCount = $this->getTeamProjectsCount();
     }
 
     public function hydrate()
     {
-        $this->getData('asc', false);
+        $this->projectsCount = $this->getProjectsCount();
+    }
 
-        $this->projectsCount = $this->getProjectsCount();        
+    public function showOnlyCompleted()
+    {
+        $this->onlyCompleted = !$this->onlyCompleted;
+
+        $this->getData();
+    }
+
+    public function sortByHighCost()
+    {
+        $this->sortBy = 'high';
+        $this->getData();
+    }
+
+    public function sortByLowCost()
+    {
+        $this->sortBy = 'low';
+        $this->getData();
     }
 
     public function appendProject(Project $project)
@@ -156,16 +185,13 @@ class Index extends Component
         return ($this->page - 1) * $this->perPage;
     }
 
-    private function getData(
-        string $sortBy = 'asc',
-        bool $sort = true,
-        bool $force = false
-    ): void {
-        if (!$force) {
-            if ($this->sortBy === $sortBy && $sort) {
-                return;
-            }
-        }
+    private function getData(): void
+    {
+        // if (!$force) {
+        //     if ($this->sortBy === $sortBy) {
+        //         return;
+        //     }
+        // }
 
         $query = Project::with(['category', 'team'])
             ->withCount('todos')
@@ -182,9 +208,10 @@ class Index extends Component
             $query->whereUserId($this->user->id);
         }
 
-        if ($sort) {
-            $query->orderBy('cost', $sortBy);
-            $this->sortBy = $sortBy;
+        if ($this->sortBy === 'high') {
+            $query->orderBy('cost', 'DESC');
+        } elseif ($this->sortBy === 'low') {
+            $query->orderBy('cost', 'ASC');
         } else {
             $this->sortBy = '';
             $query->latest();
@@ -220,11 +247,11 @@ class Index extends Component
 
     private function getTeamProjectsCount(): int
     {
-        if ($this->categoryId) return 0;
+        if ($this->categoryId) {
+            return 0;
+        }
 
-        return DB::table(
-            'project_user'
-        )
+        return DB::table('project_user')
             ->whereUserId($this->user->id)
             ->count('user_id');
     }
