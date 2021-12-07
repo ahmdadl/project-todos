@@ -222,6 +222,9 @@ class Index extends Component
             $query->whereCompleted(true);
         }
 
+        // TODO filters not working at project folder
+        // dd($query->toSql(), $query->getBindings());
+
         $this->allProjects = $query->get();
 
         if (is_null($this->slug)) {
