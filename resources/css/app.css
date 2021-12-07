@@ -63,39 +63,47 @@ a {
 }
 
 .alert {
-    @apply py-3 px-4 font-semibold mx-auto rounded shadow;
+    @apply px-4 py-3 mx-auto font-semibold rounded shadow;
     &.alert-danger {
-        @apply bg-red-300 text-red-800;
+        @apply text-red-800 bg-red-300;
     }
     &.alert-success {
-        @apply bg-green-300 text-green-800;
+        /* @apply text-green-800 bg-green-300; */
+        background-color: rgb(6, 194, 6);
+        color: rgb(1, 48, 1);
     }
 }
 
 .form-input {
-    @apply bg-transparent border border-gray-600;
+    @apply bg-transparent border;
+    border-color: gray;
     &:focus {
-        @apply bg-gray-200 shadow-outline-green text-black font-semibold border-green-400;
+        background-color: grey;
+        border-color: green;
+        @apply font-semibold text-black shadow-outline-green;
         &.auth {
-            @apply bg-blue-900 text-white;
+            @apply text-white bg-blue-900;
         }
     }
     &:invalid {
-        @apply shadow-outline-red border-red-500 text-red-700;
+        @apply text-red-700 border-red-500 shadow-outline-red;
     }
 }
 
 .theme-dark .form-input:focus {
-    @apply bg-gray-700 text-white;
+    @apply text-white;
+    background-color: rgb(46, 45, 45);
 }
 
 .toast {
-    @apply transition duration-500 ease-in-out flex items-center  border-l-4 py-2 px-3 shadow-md mt-2;
+    @apply flex items-center px-3 py-2 mt-2 transition duration-500 ease-in-out border-l-4 shadow-md;
     &.toast-default {
         @apply bg-teal-700 border-teal-500;
     }
     &.toast-success {
-        @apply bg-green-700 border-green-500;
+        /* @apply bg-green-700 border-green-500; */
+        background-color: rgb(6, 75, 6);
+        border-color: green;
     }
     &.toast-info {
         @apply bg-blue-700 border-blue-500;
@@ -116,7 +124,8 @@ a {
 }
 
 .social {
-    @apply p-2 mx-1 text-gray-400 transition-colors duration-500 ease-linear border border-transparent;
+    @apply p-2 mx-1 transition-colors duration-500 ease-linear border border-transparent;
+    color: grey;
 }
 
 .lazyload {
