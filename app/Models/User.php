@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function getProfilePhotoUrlAttribute(): string
     {
-        return '/users/' . random_int(1, 11) . '.png';
+        return $this->id === 1 ? '/user.jpeg' : '/users/' . random_int(1, 10) . '.png';
     }
 
     public function isTeamMember(int $projectId): bool
