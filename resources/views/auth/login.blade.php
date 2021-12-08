@@ -8,7 +8,7 @@
             <x-jet-validation-errors class="mb-4 alert alert-danger" />
     
             @if(session('status'))
-                <div class="mb-4 font-medium text-sm text-green-600">
+                <div class="mb-4 text-sm font-medium text-green-600">
                     {{ session('status') }}
                 </div>
             @endif
@@ -23,7 +23,7 @@
                 @endphp
                 <div>
                     <x-jet-label for="email" value="{{ __('Email') }}" />
-                    <x-jet-input id="email" class="block mt-1 w-full auth" type="email" name="email" x-model='email' required
+                    <x-jet-input id="email" class="block w-full mt-1 auth" type="email" name="email" x-model='email' required
                         autofocus />
                     <p class='pt-2 text-red-400' x-show="!$store.common.testMail(email)" x-cloak>
                         {{__('validation.email', [
@@ -34,7 +34,7 @@
     
                 <div class="mt-4">
                     <x-jet-label for="password" value="{{ __('Password') }}" />
-                    <x-jet-input id="password" class="block mt-1 w-full auth" type="password" name="password" x-model='password'
+                    <x-jet-input id="password" class="block w-full mt-1 auth" type="password" name="password" x-model='password'
                         minlength='8' required autocomplete="current-password" />
                     <p class='pt-2 text-red-400' x-show="password.length < 8" x-cloak>
                         {{__('validation.min', [
@@ -53,7 +53,7 @@
     
                 <div class="flex items-center justify-end mt-4">
                     @if(Route::has('password.request'))
-                        <a class="underline text-sm text-gray-300 hover:text-gray-400"
+                        <a class="text-sm text-gray-300 underline hover:text-gray-400"
                             href="{{ route('password.request') }}">
                             {{ __('Forgot your password?') }}
                         </a>
@@ -65,6 +65,16 @@
                     </x-jet-button>
                 </div>
             </form>
+            <div class="p-2 mt-3 rounded" style="background-color: rgba(0, 0, 0, 0.3);">
+                <pre>
+email => admin@site.test
+email => super@site.test
+email => user@site.test
+
+---
+password => password
+                </pre>
+            </div>
         </x-jet-authentication-card>
     </div>
 </x-guest-layout>
