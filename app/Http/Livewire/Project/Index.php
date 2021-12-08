@@ -166,38 +166,6 @@ class Index extends Component
         return ($this->page - 1) * $this->perPage;
     }
 
-    /**
-     * filters
-     */
-    public function showOnlyCompleted(): void
-    {
-        $this->onlyCompleted = !$this->onlyCompleted;
-
-        $this->getData();
-    }
-
-    public function sortByHighCost(): void
-    {
-        $this->sortBy = 'high';
-        $this->getData();
-    }
-
-    public function sortByLowCost(): void
-    {
-        $this->sortBy = 'low';
-        $this->getData();
-    }
-
-    public function resetFilters(): void
-    {
-        if (!$this->onlyCompleted && $this->sortBy === '') return;
-
-        $this->onlyCompleted = false;
-        $this->sortBy = '';
-
-        $this->getData();
-    }
-
     private function getData(): void
     {
         // if (!$force) {

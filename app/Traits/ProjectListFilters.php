@@ -6,51 +6,49 @@ use Illuminate\Support\Collection;
 
 trait ProjectListFilters
 {
-    public function showOnlyCompleted(
-        bool $toggle = true,
-        ?Collection $collection = null
-    ) {
-        if ($toggle) {
-            $this->onlyCompleted = !$this->onlyCompleted;
-            $this->resetPage();
+    public function showOnlyCompleted(): void
+    {
+        $this->onlyCompleted = !$this->onlyCompleted;
+
+        $this->getData();
+    }
+
+    public function sortByHighCost(): void
+    {
+        $this->sortBy = 'high';
+        $this->getData();
+    }
+
+    public function sortByLowCost(): void
+    {
+        $this->sortBy = 'low';
+        $this->getData();
+    }
+
+    public function resetFilters(): void
+    {
+        if (!$this->onlyCompleted && $this->sortBy === '') {
+            return;
         }
 
-        $this->getData($this->sortBy, false, true);
-    }
+        $this->onlyCompleted = false;
+        $this->sortBy = '';
 
-    public function sortByHighCost()
-    {
-        $this->getData('desc');
-    }
-
-    public function sortByLowCost()
-    {
-        $this->getData('asc');
-    }
-
-    public function resetSortBy(): void
-    {
-        $this->getData('asc', false);
-    }
-
-    private function applySort(Collection $collection): Collection
-    {
-        $projects = $collection;
-
-        if (!empty($this->sortBy)) {
-            $projects =
-                $this->sortBy === 'asc'
-                    ? $projects->sortBy('cost')
-                    : $projects->sortByDesc('cost');
-        }
-
-        return $projects;
+        $this->getData();
     }
 
     private function applyFilters(): void
     {
-        $projects = $this->applySort($this->allProjects);
+        // only completed
+        if ($this->onlyCompleted) {
+            $this->projects = $this->allProjects->filter(
+                fn($p) => $p->completed
+            );
+        }
 
-        $this->showOnlyCompleted(false, $projects);
+        // sort by cost
+        if ($this->sortBy) {
+            $this->projects = $this->allProjects->sortBy('cost', SORT_REGULAR, $this->sortBy === 'high');
+        }
     }
 }
