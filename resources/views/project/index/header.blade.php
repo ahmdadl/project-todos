@@ -34,7 +34,7 @@
                         Low Cost
                     </span>
                 </x-jet-dropdown-link>
-                <x-jet-dropdown-link wire:click.prevent="resetSortBy"
+                <x-jet-dropdown-link wire:click.prevent="resetFilters"
                     class="{{ $sortBy === '' ? 'bg-red-800 hover:bg-red-600' : 'text-red-500' }}">
                     <span
                         class='{{ $sortBy === '' ? 'text-white' : '' }}'>

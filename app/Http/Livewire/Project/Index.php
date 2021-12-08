@@ -36,12 +36,12 @@ class Index extends Component
     protected int $perPage = 15;
     protected $queryString = [
         'sortBy' => [
-            'as' => 'price',
+            'as' => 'p',
             'except' => '',
         ],
         'onlyCompleted' => [
-            'as' => 'completed',
-            'except' => '',
+            'as' => 'c',
+            'except' => false,
         ],
         // 'page' => ['except' => 1]
     ];
@@ -75,25 +75,6 @@ class Index extends Component
     public function hydrate()
     {
         $this->projectsCount = $this->getProjectsCount();
-    }
-
-    public function showOnlyCompleted()
-    {
-        $this->onlyCompleted = !$this->onlyCompleted;
-
-        $this->getData();
-    }
-
-    public function sortByHighCost()
-    {
-        $this->sortBy = 'high';
-        $this->getData();
-    }
-
-    public function sortByLowCost()
-    {
-        $this->sortBy = 'low';
-        $this->getData();
     }
 
     public function appendProject(Project $project)
@@ -185,6 +166,38 @@ class Index extends Component
         return ($this->page - 1) * $this->perPage;
     }
 
+    /**
+     * filters
+     */
+    public function showOnlyCompleted(): void
+    {
+        $this->onlyCompleted = !$this->onlyCompleted;
+
+        $this->getData();
+    }
+
+    public function sortByHighCost(): void
+    {
+        $this->sortBy = 'high';
+        $this->getData();
+    }
+
+    public function sortByLowCost(): void
+    {
+        $this->sortBy = 'low';
+        $this->getData();
+    }
+
+    public function resetFilters(): void
+    {
+        if (!$this->onlyCompleted && $this->sortBy === '') return;
+
+        $this->onlyCompleted = false;
+        $this->sortBy = '';
+
+        $this->getData();
+    }
+
     private function getData(): void
     {
         // if (!$force) {
@@ -222,17 +235,30 @@ class Index extends Component
             $query->whereCompleted(true);
         }
 
-        // TODO filters not working at project folder
-        // dd($query->toSql(), $query->getBindings());
-
         $this->allProjects = $query->get();
 
+        // homepage only
         if (is_null($this->slug)) {
             if ($this->page === 1) {
                 $teamProjects = $this->user->load('team_projects')
                     ->team_projects;
 
                 $this->allProjects = $this->allProjects->merge($teamProjects);
+
+                // apply filters
+
+                // only completed
+                if ($this->onlyCompleted) {
+                    $this->allProjects = $this->allProjects->filter(
+                        fn($p) => $p->completed
+                    );
+                }
+
+                // sort by cost
+                if ($this->sortBy) {
+                    // php8 named args is awesome
+                    $this->allProjects = $this->allProjects->sortBy('cost', descending: $this->sortBy === 'high');
+                }
             }
         }
 
