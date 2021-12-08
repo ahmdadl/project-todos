@@ -52,7 +52,7 @@ Route::group(
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/projects')->group(function () {
         Route::get('', ProjectIndex::class);
-        Route::prefix('/{project}/{todos?}')
+        Route::prefix('/{project}')
             ->where([
                 'project' => '[a-z0-9]+(?:-[a-z0-9]+)*',
             ])
