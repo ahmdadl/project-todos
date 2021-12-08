@@ -256,8 +256,7 @@ class Index extends Component
 
                 // sort by cost
                 if ($this->sortBy) {
-                    // php8 named args is awesome
-                    $this->allProjects = $this->allProjects->sortBy('cost', descending: $this->sortBy === 'high');
+                    $this->allProjects = $this->allProjects->sortBy('cost', SORT_REGULAR, $this->sortBy === 'high');
                 }
             }
         }
