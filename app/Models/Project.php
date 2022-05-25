@@ -54,8 +54,8 @@ class Project extends Model
 
     public function getImgPathAttribute(): string
     {
-        // return Storage::disk('public')->url($this->image);
-        return '/project.jpg';
+        return Storage::disk('public')->url($this->image);
+        // return '/project.jpg';
     }
 
     public function sluggable(): array
