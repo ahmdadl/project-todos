@@ -16,11 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment("local")) {
-            $this->app->register(TelescopeServiceProvider::class);
-            $this->app->register(TinkerServiceProvider::class);
-            $this->app->register(DebugbarServiceProvider::class);
-        }
+        // if ($this->app->environment("local")) {
+        //     $this->app->register(TelescopeServiceProvider::class);
+        //     $this->app->register(TinkerServiceProvider::class);
+        //     $this->app->register(DebugbarServiceProvider::class);
+        // }
     }
 
     /**
