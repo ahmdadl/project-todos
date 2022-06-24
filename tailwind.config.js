@@ -6,7 +6,7 @@ module.exports = {
     purge: {
         enable: true,
         mode: 'all',
-        preserveHtmlElements: false,
+        preserveHtmlElements: true,
         content: [
             './storage/framework/views/*.php',
             './resources/views/*.blade.php',

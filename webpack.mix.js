@@ -1,7 +1,7 @@
 const mix = require('laravel-mix');
 const tailwind = require('tailwindcss');
 const precss = require('precss');
-const purgecss = require('@fullhuman/postcss-purgecss');
+// const purgecss = require('@fullhuman/postcss-purgecss');
 
 /*
  |--------------------------------------------------------------------------

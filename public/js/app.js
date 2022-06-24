@@ -8249,6 +8249,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   wsHost: window.location.hostname,
   wsPort: 6001,
   forceTLS: false,
+  disableStats: true
 });
 
 /***/ }),
@@ -8260,8 +8261,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\laragon\www\js\resources\js\app.ts */"./resources/js/app.ts");
-module.exports = __webpack_require__(/*! E:\laragon\www\js\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! E:\laragon\www\project-todos\resources\js\app.ts */"./resources/js/app.ts");
+module.exports = __webpack_require__(/*! E:\laragon\www\project-todos\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })
