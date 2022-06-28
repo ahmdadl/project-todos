@@ -2,7 +2,7 @@ import '@ryangjchandler/spruce';
 
 import 'alpinejs';
 
-// require('./bootstrap');
+require('./bootstrap');
 
 // @ts-ignore
 window.Spruce.store('toast', {

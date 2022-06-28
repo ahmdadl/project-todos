@@ -71,14 +71,14 @@
 
     </script>
 
-    <script src='/js/lazysizes.min.js' defer></script>
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
     @stack('modals')
 
     @livewireScripts
 
-        @stack('scripts')
+    <script src='/js/lazysizes.min.js' defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
+
+    @stack('scripts')
 </body>
 
 </html>
