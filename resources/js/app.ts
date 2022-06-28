@@ -1,8 +1,8 @@
-require('alpinejs');
-
 import '@ryangjchandler/spruce';
 
-require('./bootstrap');
+import 'alpinejs';
+
+// require('./bootstrap');
 
 // @ts-ignore
 window.Spruce.store('toast', {

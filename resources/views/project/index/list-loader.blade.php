@@ -2,10 +2,10 @@
     <div wire:ignore x-data>
         <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-3 md:gap-5'>
             <template x-for='i in 10' :key='i * Math.random()'>
-                <div class='h-full w-full'>
+                <div class='w-full h-full'>
                     <svg role="img"  aria-labelledby="loading-aria" viewBox="0 0 305 254"
                         preserveAspectRatio="none">
-                        <title id="loading-aria">Loading...</title>
+                        <title>Loading...</title>
                         <rect x="0" y="0" width="100%" height="100%" clip-path="url(#clip-path)"
                             style='fill: url("#fill");'></rect>
                         <defs>

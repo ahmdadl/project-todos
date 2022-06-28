@@ -1,0 +1,37 @@
+<IfModule mod_expires.c>
+    <FilesMatch "\.(bmp|css|cur|gif|ico|jpe?g|js|png|svgz?|webp|webmanifest)$">
+    Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+</ifModule>
+
+# Dynamic Brotli:
+<IfModule mod_brotli.c>
+    <IfModule mod_filter.c>
+        AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css
+        AddOutputFilterByType BROTLI_COMPRESS application/x-javascript application/javascript application/ecmascript text/javascript application/javascript application/json
+        AddOutputFilterByType BROTLI_COMPRESS application/rss+xml
+        AddOutputFilterByType BROTLI_COMPRESS application/xml
+        AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+        AddOutputFilterByType BROTLI_COMPRESS application/x-font-ttf application/vnd.ms-fontobject image/x-icon
+    </IfModule>
+</IfModule>
+ 
+# Dynamic gzip:
+<IfModule mod_deflate.c>
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+        AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/ecmascript text/javascript application/javascript application/json
+        AddOutputFilterByType DEFLATE application/rss+xml
+        AddOutputFilterByType DEFLATE application/xml
+        AddOutputFilterByType DEFLATE image/svg+xml
+        AddOutputFilterByType DEFLATE application/x-font-ttf application/vnd.ms-fontobject image/x-icon
+    </IfModule>
+</IfModule>
+ 
+#Now some content won't benefit from brotli, like already pre-compressed content,
+#So let us not bother with it
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp)$ no-brotli no-gzip dont-vary
+ 
+# Make sure proxies don't deliver the wrong content
+# It would be ebtter of course if AddOutputFilterByType owuld allow us to set env, but whatever.
+Header append Vary Accept-Encoding env=!dont-vary
